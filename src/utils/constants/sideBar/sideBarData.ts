@@ -47,9 +47,9 @@ function sideBarData (): SideBarItemProps[] {
                     icon: logOut,
                     label: "Transfer",
                     showBadge: false,
-                    disabled: true,
-                    appName: "DHIS2-App-Name",
-                    route: "#"
+                    disabled: false,
+                    appName: "SEMIS - Student Transfer",
+                    route: "/student-transfer"
                 }
             ]
         },
