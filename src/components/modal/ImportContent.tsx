@@ -21,7 +21,7 @@ function ImportContent({ setOpen }: ContentProps): React.ReactElement {
   return (
     <div>
       <WithPadding>
-        <Subtitle label={"Import modal content component"} />
+        <Subtitle label={"Transfer students modal content component"} />
         <Divider />
       </WithPadding>
 

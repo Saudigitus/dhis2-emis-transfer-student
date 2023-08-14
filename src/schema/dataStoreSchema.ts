@@ -21,6 +21,12 @@ interface registration {
     section: string
 }
 
+interface transfer {
+    destinySchool: string
+    programStage: string
+    status: string
+}
+
 interface dataStoreRecord {
     attendance: attendance
     key: string
@@ -28,6 +34,7 @@ interface dataStoreRecord {
     performance: performance
     program: string
     registration: registration
+    transfer: transfer
     ["socio-economics"]: programStages
 
 }

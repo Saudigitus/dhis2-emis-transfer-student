@@ -6,45 +6,44 @@ import ImportContent from '../../../modal/ImportContent';
 import DropdownButtonComponent from '../../../buttons/DropdownButton';
 import { type FlyoutOptionsProps } from '../../../../types/buttons/FlyoutOptions';
 import { useParams } from '../../../../hooks/commons/useQueryParams';
-import Tooltip from '@material-ui/core/Tooltip';
+import { Tooltip } from '@material-ui/core';
 
-function EnrollmentActionsButtons() {
+function TransferActionsButtons() {
   const [open, setOpen] = useState<boolean>(false);
-  const [openImport, setOpenImport] = useState<boolean>(false);
+  const [openTranfer, setOpenTranfer] = useState<boolean>(false);
   const { useQuery } = useParams();
   const orgUnit = useQuery().get("school")
 
   const enrollmentOptions: FlyoutOptionsProps[] = [
-    { label: "Import students", divider: true, onClick: () => { setOpenImport(true); } },
-    { label: "Export empty template", divider: false, onClick: () => { alert("Export empty template"); } },
-    { label: "Export template with data", divider: false, onClick: () => { alert("Export template with data"); } }
+    { label: "Transfer students", divider: true, onClick: () => { setOpenTranfer(true); } }
   ];
 
   return (
     <div>
       <ButtonStrip>
-        <Tooltip title={orgUnit === null ? "Please select an organisation unit before" : ""}>
-          <span>
-            <Button disabled={orgUnit == null} onClick={() => { setOpen(true); }} icon={<IconAddCircle24 />}>Enrol single student</Button>
-          </span>
-        </Tooltip>
 
         <Tooltip title={orgUnit === null ? "Please select an organisation unit before" : ""}>
           <span>
             <DropdownButtonComponent
               disabled={orgUnit == null}
-              name="Bulk enrollment"
+              name="Bulk approval"
               icon={<IconUserGroup16 />}
               options={enrollmentOptions}
             />
           </span>
         </Tooltip>
+
+        <Tooltip title={orgUnit === null ? "Please select an organisation unit before" : ""}>
+          <span>
+            <Button disabled={orgUnit == null} onClick={() => { setOpenTranfer(true); }} icon={<IconAddCircle24 />}>Perfom transfer</Button>
+          </span>
+        </Tooltip>
       </ButtonStrip>
 
       {open && <ModalComponent title="Single Student Enrollment" open={open} setOpen={setOpen}><ModalContentComponent setOpen={setOpen} /></ModalComponent>}
-      {openImport && <ModalComponent title="Import Students" open={openImport} setOpen={setOpenImport}><ImportContent setOpen={setOpen} /></ModalComponent>}
+      {openTranfer && <ModalComponent title="Tranfer Students" open={openTranfer} setOpen={setOpenTranfer}><ImportContent setOpen={setOpenTranfer} /></ModalComponent>}
     </div>
   )
 }
 
-export default EnrollmentActionsButtons
+export default TransferActionsButtons
