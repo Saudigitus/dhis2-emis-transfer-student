@@ -30,3 +30,7 @@ body {
 .MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline {
     border-color: rgb(211, 47, 47) !important;
 }
+
+button.jsx-3104059459 {
+    border-bottom: 1px solid white !important;
+}

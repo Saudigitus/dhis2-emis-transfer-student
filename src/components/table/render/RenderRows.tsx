@@ -11,6 +11,7 @@ import { DataStoreState } from '../../../schema/dataStoreSchema';
 interface RenderHeaderProps {
     rowsData: any[]
     headerData: CustomAttributeProps[]
+    loading: boolean
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -37,11 +38,11 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-function RenderRows({ headerData, rowsData }: RenderHeaderProps): React.ReactElement {
+function RenderRows({ headerData, rowsData, loading }: RenderHeaderProps): React.ReactElement {
     const classes = useStyles()
     const getDataStore = useRecoilValue(DataStoreState)
 
-    if (rowsData.length === 0) {
+    if (rowsData.length === 0 && !loading) {
         return (
             <RowTable
                 className={classes.row}
