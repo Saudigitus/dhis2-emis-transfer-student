@@ -16,11 +16,12 @@ import SwitchButtonView from "./buttons/MultipleButtons/SwitchButtonView";
 import GroupForm from "./form/GroupForm";
 import TEIGenericForm from "./teiComponent/TEIForm";
 import EventGenericForm from "./eventComponent/EventForm";
+import TabComponent from "./tabs/TabComponent";
 
 export {
     SideBar, MainHeader, Table, DropdownButtonComponent,
     FlyoutMenuComponent, SimpleButtons, WithPadding, WithBorder,
     ModalComponent, ModalContentComponent, OrgUnitTree,
     SimpleSearch, Title, Subtitle, Item, MenuItemContainer, SwitchButtonView,
-    GroupForm, TEIGenericForm, EventGenericForm
+    GroupForm, TEIGenericForm, EventGenericForm, TabComponent
 }
