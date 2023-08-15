@@ -1,7 +1,7 @@
 import React from 'react'
 import WithPadding from '../../../../template/WithPadding'
 import { Chip } from "@dhis2/ui";
-import EnrollmentActionsButtons from '../../enrollmentButtons/EnrollmentActionsButtons';
+import TransferActionsButtons from '../../tranferActionsButtons/transferActionsButtons';
 
 function WorkingLits() {
   return (
@@ -19,7 +19,7 @@ function WorkingLits() {
           </Chip>
         </div>
 
-        <EnrollmentActionsButtons/>
+        <TransferActionsButtons/>
       </div>
     </WithPadding>
   )
