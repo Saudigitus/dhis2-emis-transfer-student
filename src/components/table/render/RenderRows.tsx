@@ -1,12 +1,14 @@
 import React from 'react'
 import i18n from '@dhis2/d2-i18n';
 import classNames from 'classnames';
+import { ButtonStrip, IconThumbUp24, IconThumbDown24 } from "@dhis2/ui"
 import { makeStyles, type Theme, createStyles } from '@material-ui/core/styles';
 import { RowCell, RowTable } from '../components';
 import { type CustomAttributeProps } from '../../../types/table/AttributeColumns';
 import { showValueBasedOnColumn } from '../../../utils/commons/getValueBasedOnColumn';
 import { useRecoilValue } from 'recoil';
 import { DataStoreState } from '../../../schema/dataStoreSchema';
+import { LinkedCamera } from '@material-ui/icons';
 
 interface RenderHeaderProps {
     rowsData: any[]
@@ -77,6 +79,14 @@ function RenderRows({ headerData, rowsData, loading }: RenderHeaderProps): React
                             className={classNames(classes.row, classes.dataRow)}
                         >
                             {cells}
+                            {/* <RowCell
+                            className={classNames(classes.cell, classes.bodyCell)}
+                        >
+                            <ButtonStrip>
+                                <IconThumbUp24 error/>
+                                <IconThumbDown24 style={{color: "red"}}/>
+                            </ButtonStrip>
+                        </RowCell> */}
                         </RowTable>
                     );
                 })

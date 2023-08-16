@@ -81,6 +81,7 @@ function ContentFilter(props: ContentFilterProps) {
 
     const onQuerySubmit = () => {
         const copyHeader = { ...filtersValues }
+        console.log("headers", headers)
         for (const [key, value] of Object.entries(copyHeader)) {
             const variableType = headers.find(x => x.id === key)?.type
             if (typeof value === 'object') {
@@ -94,7 +95,7 @@ function ContentFilter(props: ContentFilterProps) {
                     } else attributesQuerybuilder.push([`${key}:eq:${value}`])
                 } else
                     if (value?.includes(',')) {
-                        const newValue = value.replaceAll(",", ";") as string
+                        const newValue = value.replaceAll(",", "") as string
                         if (variableType === "dataElement") {
                             dataElementsQuerybuilder.push([`${key}:in:${newValue}`])
                         } else attributesQuerybuilder.push([`${key}:in:${newValue}`])

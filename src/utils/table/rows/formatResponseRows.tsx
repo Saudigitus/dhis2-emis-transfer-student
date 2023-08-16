@@ -9,28 +9,41 @@ interface attributesProps {
 }
 
 interface formatResponseRowsProps {
-    eventsInstances: [{
+    transferInstances: [{
         trackedEntity: string
         dataValues: dataValuesProps[]
     }]
-    teiInstances: [{
+    registrationInstances: Array<{
+        trackedEntity: string
+        dataValues: dataValuesProps[]
+    }>
+    teiInstances: Array<{
         trackedEntity: string
         attributes: attributesProps[]
-    }]
+    }>
 }
 
 type RowsProps = Record<string, string | number | boolean | any>;
 
-export function formatResponseRows({ eventsInstances, teiInstances }: formatResponseRowsProps): RowsProps[] {
+export function formatResponseRows({ transferInstances, registrationInstances, teiInstances }: formatResponseRowsProps): RowsProps[] {
     const allRows: RowsProps[] = []
-    for (const event of eventsInstances || []) {
+    for (const event of transferInstances) {
         const teiDetails = teiInstances.find(tei => tei.trackedEntity === event.trackedEntity)
-        allRows.push({ ...dataValues(event.dataValues), ...(attributes((teiDetails?.attributes) ?? [])) })
+        const registrationDetails = registrationInstances.find(tei => tei.trackedEntity === event.trackedEntity)
+        allRows.push({ ...transferDataValues(event.dataValues), ...(attributes((teiDetails?.attributes) ?? [])), ...registrationDataValues(registrationDetails?.dataValues) })
     }
     return allRows;
 }
 
-function dataValues(data: dataValuesProps[]): RowsProps {
+function transferDataValues(data: dataValuesProps[]): RowsProps {
+    const localData: RowsProps = {}
+    for (const dataElement of data) {
+        localData[dataElement.dataElement] = dataElement.value
+    }
+    return localData
+}
+
+function registrationDataValues(data: dataValuesProps[]): RowsProps {
     const localData: RowsProps = {}
     for (const dataElement of data) {
         localData[dataElement.dataElement] = dataElement.value
