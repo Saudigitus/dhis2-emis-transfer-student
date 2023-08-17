@@ -4,11 +4,15 @@ import classNames from 'classnames';
 import { makeStyles, createStyles, type Theme } from '@material-ui/core/styles';
 import HeaderCell from '../components/head/HeaderCell';
 import { type CustomAttributeProps } from '../../../types/table/AttributeColumns';
+import { useRecoilValue } from 'recoil';
+import { DataStoreState } from '../../../schema/dataStoreSchema';
+import { removeColumById } from '../../../utils/commons/tableRowsColumns';
 
 interface renderHeaderProps {
     rowsHeader: CustomAttributeProps[]
     orderBy: string
     order: "asc" | "desc"
+    selectedTab: string
     // TODO resolve this bug.👇
     createSortHandler: (property: string) => any
 }
@@ -48,11 +52,12 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 function RenderHeader(props: renderHeaderProps): React.ReactElement {
-    const { rowsHeader, order, orderBy, createSortHandler } = props
+    const { rowsHeader, order, orderBy, selectedTab, createSortHandler } = props
+    const getDataStore = useRecoilValue(DataStoreState)
     const classes = useStyles()
 
     const headerCells = useMemo(() => {
-        return rowsHeader?.filter(x => x.visible)?.map((column, index) => (
+        return removeColumById(rowsHeader, getDataStore, selectedTab)?.filter(x => x.visible)?.map((column, index) => (
             <HeaderCell
                 key={column.id}
                 className={classNames(classes.cell, classes.headerCell)}
@@ -63,7 +68,7 @@ function RenderHeader(props: renderHeaderProps): React.ReactElement {
                     direction={orderBy === column.id ? order : 'asc'}
                     createSortHandler={createSortHandler(column.id)}
                 >
-                    {column.header}
+                   {column.header}
                     {orderBy === column.id
                         ? (
                             <span className={classes.visuallyHidden}>
@@ -74,14 +79,17 @@ function RenderHeader(props: renderHeaderProps): React.ReactElement {
                 </SortLabel>
             </HeaderCell>
         ))
-    }, [rowsHeader]);
+    }, [removeColumById(rowsHeader, getDataStore, selectedTab)]);
 
     return (
         <thead>
-            <RowTable
-                className={classes.row}
-            >
+            <RowTable className={classes.row}>
                 {headerCells}
+                {selectedTab === "incoming" &&
+                    <HeaderCell className={classNames(classes.cell, classes.headerCell)}>
+                        Actions
+                    </HeaderCell>
+                }
             </RowTable>
         </thead>
     )
