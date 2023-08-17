@@ -120,7 +120,7 @@ export function useTableData() {
                 instances: []
             }
         }
-        const initialFilter = [(dataStoreState != null) && `${dataStoreState?.transfer?.destinySchool as unknown as string}:eq:${school}`, ...headerFieldsState?.dataElements];
+        const initialFilter = [`${dataStoreState?.transfer?.destinySchool as unknown as string}:eq:${school}`, ...headerFieldsState?.dataElements];
         const tranferResults: TransferQueryResults = await engine.query(EVENT_QUERY({
             ouMode: undefined,
             page,
@@ -128,7 +128,7 @@ export function useTableData() {
             program: dataStoreState?.program as unknown as string,
             order: "createdAt:desc",
             programStage: dataStoreState?.transfer?.programStage as unknown as string,
-            filter: selectedTab === "incoming" ? initialFilter : headerFieldsState?.dataElements,
+            filter: (dataStoreState != null) && selectedTab === "incoming" ? initialFilter : headerFieldsState?.dataElements,
             filterAttributes: headerFieldsState?.attributes,
             orgUnit: selectedTab === "outgoing" ? school : undefined
         })).catch((error) => {
