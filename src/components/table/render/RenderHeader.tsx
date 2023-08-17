@@ -78,10 +78,11 @@ function RenderHeader(props: renderHeaderProps): React.ReactElement {
 
     return (
         <thead>
-            <RowTable
-                className={classes.row}
-            >
+            <RowTable className={classes.row}>
                 {headerCells}
+                <HeaderCell className={classNames(classes.cell, classes.headerCell)}>
+                    Actions
+                </HeaderCell>
             </RowTable>
         </thead>
     )

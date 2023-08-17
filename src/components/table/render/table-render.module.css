@@ -5,3 +5,10 @@
     line-height: 15px;
     letter-spacing: 0em;
 }
+
+.approveIcon {
+    color: #1D7E0D !important;
+}
+.rejectIcon {
+    color: #E93710 !important;
+}

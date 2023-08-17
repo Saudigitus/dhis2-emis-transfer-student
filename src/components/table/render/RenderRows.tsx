@@ -8,8 +8,8 @@ import { type CustomAttributeProps } from '../../../types/table/AttributeColumns
 import { showValueBasedOnColumn } from '../../../utils/commons/getValueBasedOnColumn';
 import { useRecoilValue } from 'recoil';
 import { DataStoreState } from '../../../schema/dataStoreSchema';
-import { LinkedCamera } from '@material-ui/icons';
-
+import styles from "./table-render.module.css"
+import { IconButton } from '@material-ui/core';
 interface RenderHeaderProps {
     rowsData: any[]
     headerData: CustomAttributeProps[]
@@ -79,14 +79,18 @@ function RenderRows({ headerData, rowsData, loading }: RenderHeaderProps): React
                             className={classNames(classes.row, classes.dataRow)}
                         >
                             {cells}
-                            {/* <RowCell
+                            <RowCell
                             className={classNames(classes.cell, classes.bodyCell)}
                         >
                             <ButtonStrip>
-                                <IconThumbUp24 error/>
-                                <IconThumbDown24 style={{color: "red"}}/>
+                                <IconButton size="small" className={styles.approveIcon}>
+                                      <IconThumbUp24/>
+                                </IconButton>
+                                <IconButton size="small" className={styles.rejectIcon}>
+                                    <IconThumbDown24/>
+                                </IconButton>
                             </ButtonStrip>
-                        </RowCell> */}
+                        </RowCell>
                         </RowTable>
                     );
                 })
