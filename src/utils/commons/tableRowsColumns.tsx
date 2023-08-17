@@ -12,4 +12,12 @@ function showValueBasedOnColumn(column: CustomAttributeProps, value: string, dat
     return value
 }
 
-export { showValueBasedOnColumn }
+function removeColumById (columns: CustomAttributeProps[], dataStore: any, selectedTab: string) {
+    if (selectedTab === "incoming") {
+        const newRowsHeader = columns?.filter((x: any) => x.id !== dataStore?.transfer?.status)
+        return newRowsHeader
+    }
+    return columns
+}
+
+export { showValueBasedOnColumn, removeColumById }

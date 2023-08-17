@@ -63,8 +63,9 @@ function Table() {
                   order="asc"
                   orderBy="desc"
                   rowsHeader={columns}
+                  selectedTab={selectedTabState?.value}
                 />
-               {!loading && <RenderRows headerData={columns} rowsData={tableData} loading={loading} />}
+               {!loading && <RenderRows headerData={columns} rowsData={tableData} loading={loading} selectedTab={selectedTabState?.value} />}
               </>
             </TableComponent>
             {loading && (

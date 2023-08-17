@@ -120,7 +120,7 @@ export function useTableData() {
                 instances: []
             }
         }
-        const initialFilter = [`${dataStoreState?.transfer?.destinySchool as unknown as string}:eq:${school}`, ...headerFieldsState?.dataElements];
+        const initialFilter = [(dataStoreState != null) && `${dataStoreState?.transfer?.destinySchool as unknown as string}:eq:${school}`, ...headerFieldsState?.dataElements];
         const tranferResults: TransferQueryResults = await engine.query(EVENT_QUERY({
             ouMode: undefined,
             page,
