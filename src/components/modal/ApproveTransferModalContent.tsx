@@ -9,9 +9,10 @@ import { ApprovalButtonClicked } from "../../schema/approvalButtonClicked";
 
 interface ContentProps {
   setOpen: (value: boolean) => void
+  handleCloseApproval: () => void
 }
 function ApproveTranfer(props: ContentProps): React.ReactElement {
-  const { setOpen } = props;
+  const { setOpen, handleCloseApproval } = props;
   const selectedTei = useRecoilValue(RowSelectionState).selectedRows[0]
   const clickedButton = useRecoilValue(ApprovalButtonClicked)
   const { useQuery } = useParams();
@@ -21,7 +22,7 @@ function ApproveTranfer(props: ContentProps): React.ReactElement {
 
   const modalActions = [
     { id: "cancel", type: "button", label: "Cancel", disabled: loading, onClick: () => { setOpen(false) } },
-    { id: "confirm", type: "button", label: "Confirm", primary: true, disabled: loading, loading, onClick: () => { void (clickedButton === "approve" ? transferTEI(school, selectedTei) : rejectTEI(selectedTei?.transferInstance)) } }
+    { id: "confirm", type: "button", label: "Confirm", primary: true, disabled: loading, loading, onClick: () => { void (clickedButton === "approve" ? transferTEI(school, selectedTei, handleCloseApproval) : rejectTEI(selectedTei?.transferInstance, handleCloseApproval)) } }
   ];
 
   return (
@@ -37,13 +38,13 @@ function ApproveTranfer(props: ContentProps): React.ReactElement {
 
         {clickedButton === "approve"
         ? <div className="py-2">
-            Are you sure you want to{" "} <span className="text-danger"> approve the transfer </span> of{" "}  <strong> {selectedTei?.teiInstance?.trackedEntityType ?? ""} {selectedTei?.teiInstance?.trackedEntity ?? ""} </strong>{" "} from{" "}
-            <strong>{selectedTei?.teiInstance?.trackedEntity}</strong>{" "} to{" "}
+            Are you sure you want to{" "} <span className="text-danger"> approve the transfer </span> of{" "}  <strong> student </strong>{" "} from{" "}
+            <strong>School</strong>{" "} to{" "}
             <strong>{schoolName}</strong>?
           </div>
         : <div className="py-2">
-            Are you sure you want to{" "} <span className="text-danger"> reject the transfer </span> of{" "}  <strong> {selectedTei?.teiInstance?.trackedEntityType ?? ""} {selectedTei?.teiInstance?.trackedEntity ?? ""} </strong>{" "} from{" "}
-            <strong>{selectedTei?.teiInstance?.trackedEntity}</strong>{" "} to{" "}
+            Are you sure you want to{" "} <span className="text-danger"> reject the transfer </span> of{" "}  <strong> student </strong>{" "} from{" "}
+            <strong>School</strong>{" "} to{" "}
             <strong>{schoolName}</strong>?
           </div>
         }

@@ -115,7 +115,7 @@ function Table() {
           open={open}
           setOpen={setOpen}
         >
-          <ApproveTranferContent setOpen={setOpen} selectedTei={selectedTei} />
+          <ApproveTranferContent setOpen={setOpen} handleCloseApproval={handleCloseApproval} />
         </ModalComponent>
       )}
     </Paper>

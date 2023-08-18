@@ -1,7 +1,7 @@
 import { useDataEngine } from '@dhis2/app-runtime'
 import { useState } from 'react'
 import { useEditDataElement } from '../events/useEditDataElement'
-import { useRecoilValue } from 'recoil'
+import { atom, useRecoilState, useRecoilValue } from 'recoil'
 import { DataStoreState } from '../../schema/dataStoreSchema'
 
 interface TransferQueryProps {
@@ -29,13 +29,19 @@ const TRANSFERQUERY = {
     }
 }
 
+export const teiRefetch = atom({
+    key: "refetch-tei",
+    default: false
+})
+
 export function useTransferTEI() {
     const engine = useDataEngine()
     const dataStoreState = useRecoilValue(DataStoreState);
     const [loading, setloading] = useState(false)
     const { mutateValues } = useEditDataElement()
+    const [refetch, setRefetch] = useRecoilState<boolean>(teiRefetch)
 
-    const transferTEI = async (ou: any, selectedTei: any) => {
+    const transferTEI = async (ou: any, selectedTei: any, handleCloseApproval: () => void) => {
         setloading(true)
             await engine.mutate(TRANSFERQUERY, {
                 variables: {
@@ -53,19 +59,24 @@ export function useTransferTEI() {
             })
             .then(async (res) => {
                 await mutateValues(selectedTei?.transferInstance, dataStoreState?.transfer?.status, "Approved")
+                setRefetch(!refetch)
+                handleCloseApproval()
             }).catch(e => {
                 console.log("Faailed", e)
             })
-        setloading(false)
+            setloading(false)
     }
 
-    const rejectTEI = async (event: any) => {
+    const rejectTEI = async (event: any, handleCloseApproval: () => void) => {
         console.log("event", event)
         setloading(true)
             await mutateValues(event, dataStoreState?.transfer?.status, "Reproved")
             .then(async (res) => {
                 console.log("Faailed", res)
+                setRefetch(!refetch)
+                handleCloseApproval()
             }).catch(e => {
+                setloading(false)
                 console.log("Faailed", e)
             })
         setloading(false)

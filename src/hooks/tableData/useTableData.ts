@@ -186,12 +186,6 @@ export function useTableData() {
                 setTimeout(hide, 5000);
             })
             : { results: { instances: [] } }
-
-            console.log("AllData", formatAllSelectedRow({
-                transferInstances: tranferResults?.results?.instances,
-                registrationInstances: registrationValuesByTei?.results?.instances,
-                teiInstances: teiResults.results.instances
-            }))
         setSelected({
             ...selected,
             rows: formatAllSelectedRow({
