@@ -15,6 +15,9 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { HeaderFieldsState } from "../../../schema/headersSchema";
 import { teiRefetch } from "../../../hooks/tei/usePostTei";
 import { TabsState } from "../../../schema/tabSchema";
+import ModalComponent from "../../modal/Modal";
+import ApproveTranferContent from "../../modal/ApproveTransferModalContent";
+import { RowSelectionState } from "../../../schema/tableSelectedRowsSchema";
 
 const usetStyles = makeStyles({
   tableContainer: {
@@ -29,15 +32,24 @@ function Table() {
   const { useQuery } = useParams();
   const headerFieldsState = useRecoilValue(HeaderFieldsState);
   const selectedTabState = useRecoilValue(TabsState);
+  const selectedRowState = useRecoilValue(RowSelectionState);
   const [page, setpage] = useState(1);
   const [pageSize, setpageSize] = useState(10);
   const [refetch] = useRecoilState(teiRefetch);
-
-  console.log("selectedTab", selectedTabState);
+  const [open, setOpen] = useState<boolean>(false);
+  const [selectedTei, setSelectedTei] = useState({});
 
   useEffect(() => {
     void getData(page, pageSize, selectedTabState?.value);
-  }, [columns, useQuery(), headerFieldsState, page, pageSize, refetch, selectedTabState]);
+  }, [
+    columns,
+    useQuery(),
+    headerFieldsState,
+    page,
+    pageSize,
+    refetch,
+    selectedTabState
+  ]);
 
   const onPageChange = (newPage: number) => {
     setpage(newPage);
@@ -48,6 +60,10 @@ function Table() {
     setpage(1);
   };
 
+  const handleOpenApproval = () => { setOpen(true); };
+  const handleCloseApproval = () => { setOpen(false); };
+
+  console.log("selectedRow", selectedRowState)
   return (
     <Paper>
       <WorkingLits />
@@ -65,7 +81,16 @@ function Table() {
                   rowsHeader={columns}
                   selectedTab={selectedTabState?.value}
                 />
-               {!loading && <RenderRows headerData={columns} rowsData={tableData} loading={loading} selectedTab={selectedTabState?.value} />}
+                {!loading && (
+                  <RenderRows
+                    headerData={columns}
+                    rowsData={tableData}
+                    loading={loading}
+                    selectedTab={selectedTabState?.value}
+                    handleOpenApproval={handleOpenApproval}
+                    setSelectedTeid={setSelectedTei}
+                  />
+                )}
               </>
             </TableComponent>
             {loading && (
@@ -84,6 +109,15 @@ function Table() {
           />
         </WithBorder>
       </WithPadding>
+      {open && (
+        <ModalComponent
+          title="Approve Incomming Student Transfer"
+          open={open}
+          setOpen={setOpen}
+        >
+          <ApproveTranferContent setOpen={setOpen} selectedTei={selectedTei} />
+        </ModalComponent>
+      )}
     </Paper>
   );
 }

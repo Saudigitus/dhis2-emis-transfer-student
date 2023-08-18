@@ -1,12 +1,13 @@
 
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { DataStoreState } from "../../schema/dataStoreSchema";
 import { useState } from "react";
 import { useDataEngine } from "@dhis2/app-runtime";
-import { formatResponseRows } from "../../utils/table/rows/formatResponseRows";
+import { formatAllSelectedRow, formatResponseRows } from "../../utils/table/rows/formatResponseRows";
 import { useParams } from "../commons/useQueryParams";
 import { HeaderFieldsState } from "../../schema/headersSchema";
 import useShowAlerts from "../commons/useShowAlert";
+import { RowSelectionState } from "../../schema/tableSelectedRowsSchema";
 
 type TableDataProps = Record<string, string>;
 
@@ -61,7 +62,7 @@ const TEI_QUERY = ({ ouMode, pageSize, program, trackedEntity, orgUnit, order }:
             pageSize,
             trackedEntity,
             orgUnit,
-            fields: "trackedEntity,createdAt,orgUnit,attributes[attribute,value],enrollments[enrollment,status,orgUnit,enrolledAt]"
+            fields: "trackedEntity,trackedEntityType,createdAt,orgUnit,attributes[attribute,value],enrollments[enrollment,status,orgUnit,orgUnitName,enrolledAt]"
         }
     }
 })
@@ -105,6 +106,8 @@ export function useTableData() {
     const engine = useDataEngine();
     const dataStoreState = useRecoilValue(DataStoreState);
     const headerFieldsState = useRecoilValue(HeaderFieldsState)
+    const [selected, setSelected] = useRecoilState(RowSelectionState);
+
     const { urlParamiters } = useParams()
     const [loading, setLoading] = useState<boolean>(false)
     const [tableData, setTableData] = useState<TableDataProps[]>([])
@@ -184,6 +187,19 @@ export function useTableData() {
             })
             : { results: { instances: [] } }
 
+            console.log("AllData", formatAllSelectedRow({
+                transferInstances: tranferResults?.results?.instances,
+                registrationInstances: registrationValuesByTei?.results?.instances,
+                teiInstances: teiResults.results.instances
+            }))
+        setSelected({
+            ...selected,
+            rows: formatAllSelectedRow({
+                transferInstances: tranferResults?.results?.instances,
+                registrationInstances: registrationValuesByTei?.results?.instances,
+                teiInstances: teiResults.results.instances
+            })
+        })
         setTableData(formatResponseRows({
             transferInstances: tranferResults?.results?.instances,
             registrationInstances: registrationValuesByTei?.results?.instances,
