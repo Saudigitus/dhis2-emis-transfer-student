@@ -114,7 +114,8 @@ export function useTableData() {
     const { hide, show } = useShowAlerts()
     const school = urlParamiters().school as unknown as string
 
-    console.log("filterState", [`kQbquG7UivM:eq:${school}`, ...headerFieldsState?.dataElements], school)
+    const incomingInitialFilter = [`${dataStoreState?.transfer?.destinySchool as unknown as string}:in:${school}`, `${dataStoreState?.transfer?.status as unknown as string}:in:Pending`, ...headerFieldsState?.dataElements];
+    const outgoingInitialFilter = [`${dataStoreState?.transfer?.status as unknown as string}:in:Pending`, ...headerFieldsState?.dataElements];
 
     async function getData(page: number, pageSize: number, selectedTab: string) {
         setLoading(true)
@@ -123,7 +124,6 @@ export function useTableData() {
                 instances: []
             }
         }
-        const initialFilter = [`${dataStoreState?.transfer?.destinySchool as unknown as string}:eq:${school}`, ...headerFieldsState?.dataElements];
         const tranferResults: TransferQueryResults = await engine.query(EVENT_QUERY({
             ouMode: undefined,
             page,
@@ -131,7 +131,7 @@ export function useTableData() {
             program: dataStoreState?.program as unknown as string,
             order: "createdAt:desc",
             programStage: dataStoreState?.transfer?.programStage as unknown as string,
-            filter: (dataStoreState != null) && selectedTab === "incoming" ? initialFilter : headerFieldsState?.dataElements,
+            filter: (dataStoreState != null) && selectedTab === "incoming" ? incomingInitialFilter : outgoingInitialFilter,
             filterAttributes: headerFieldsState?.attributes,
             orgUnit: selectedTab === "outgoing" ? school : undefined
         })).catch((error) => {

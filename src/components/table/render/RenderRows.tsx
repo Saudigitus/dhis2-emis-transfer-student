@@ -19,7 +19,6 @@ interface RenderHeaderProps {
     loading: boolean
     selectedTab: string
     handleOpenApproval: () => void
-    setSelectedTeid: (value: any) => void
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -46,7 +45,7 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-function RenderRows({ headerData, rowsData, loading, selectedTab, handleOpenApproval, setSelectedTeid }: RenderHeaderProps): React.ReactElement {
+function RenderRows({ headerData, rowsData, loading, selectedTab, handleOpenApproval }: RenderHeaderProps): React.ReactElement {
     const classes = useStyles()
     const getDataStore = useRecoilValue(DataStoreState)
     const [selected, setSelected] = useRecoilState(RowSelectionState);

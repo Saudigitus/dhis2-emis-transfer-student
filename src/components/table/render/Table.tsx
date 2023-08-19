@@ -18,6 +18,7 @@ import { TabsState } from "../../../schema/tabSchema";
 import ModalComponent from "../../modal/Modal";
 import ApproveTranferContent from "../../modal/ApproveTransferModalContent";
 import { RowSelectionState } from "../../../schema/tableSelectedRowsSchema";
+import { ApprovalButtonClicked } from "../../../schema/approvalButtonClicked";
 
 const usetStyles = makeStyles({
   tableContainer: {
@@ -37,7 +38,7 @@ function Table() {
   const [pageSize, setpageSize] = useState(10);
   const [refetch] = useRecoilState(teiRefetch);
   const [open, setOpen] = useState<boolean>(false);
-  const [selectedTei, setSelectedTei] = useState({});
+  const clickedButton = useRecoilValue(ApprovalButtonClicked)
 
   useEffect(() => {
     void getData(page, pageSize, selectedTabState?.value);
@@ -88,7 +89,6 @@ function Table() {
                     loading={loading}
                     selectedTab={selectedTabState?.value}
                     handleOpenApproval={handleOpenApproval}
-                    setSelectedTeid={setSelectedTei}
                   />
                 )}
               </>
@@ -111,7 +111,7 @@ function Table() {
       </WithPadding>
       {open && (
         <ModalComponent
-          title="Approve Incomming Student Transfer"
+          title={`${clickedButton === "approve" ? "Approve" : "Reject"} Incomming Student Transfer`}
           open={open}
           setOpen={setOpen}
         >
