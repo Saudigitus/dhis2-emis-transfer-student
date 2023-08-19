@@ -1,14 +1,8 @@
-const getValueColor = (value: string) => {
-  switch (value) {
-    case "Pending":
-      return "#F87E0D";
-    case "Approved":
-      return "#277314";
-    case "Reproved":
-      return "#D64D4D";
-    default:
-      return "black";
-  }
-};
+type ColorMapping = Record<string, string>;
 
-export { getValueColor };
+const valueColorMapping: ColorMapping = {
+  Pending: "#F87E0D",
+  Approved: "#277314",
+  Reproved: "#D64D4D"
+};
+export { valueColorMapping };

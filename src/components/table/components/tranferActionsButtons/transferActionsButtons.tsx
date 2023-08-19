@@ -7,12 +7,15 @@ import DropdownButtonComponent from '../../../buttons/DropdownButton';
 import { type FlyoutOptionsProps } from '../../../../types/buttons/FlyoutOptions';
 import { useParams } from '../../../../hooks/commons/useQueryParams';
 import { Tooltip } from '@material-ui/core';
+import { useRecoilValue } from 'recoil';
+import { TabsState } from '../../../../schema/tabSchema';
 
 function TransferActionsButtons() {
   const [open, setOpen] = useState<boolean>(false);
   const [openTranfer, setOpenTranfer] = useState<boolean>(false);
   const { useQuery } = useParams();
   const orgUnit = useQuery().get("school")
+  const selectedTabState = useRecoilValue(TabsState).value
 
   const enrollmentOptions: FlyoutOptionsProps[] = [
     { label: "Transfer students", divider: true, onClick: () => { setOpenTranfer(true); } }
@@ -21,8 +24,8 @@ function TransferActionsButtons() {
   return (
     <div>
       <ButtonStrip>
-
-        <Tooltip title={orgUnit === null ? "Please select an organisation unit before" : ""}>
+        {selectedTabState === "incoming"
+        ? <Tooltip title={orgUnit === null ? "Please select an organisation unit before" : ""}>
           <span>
             <DropdownButtonComponent
               disabled={orgUnit == null}
@@ -32,12 +35,12 @@ function TransferActionsButtons() {
             />
           </span>
         </Tooltip>
-
-        <Tooltip title={orgUnit === null ? "Please select an organisation unit before" : ""}>
+        : <Tooltip title={orgUnit === null ? "Please select an organisation unit before" : ""}>
           <span>
             <Button disabled={orgUnit == null} onClick={() => { setOpenTranfer(true); }} icon={<IconAddCircle24 />}>Perfom transfer</Button>
           </span>
         </Tooltip>
+}
       </ButtonStrip>
 
       {open && <ModalComponent title="Single Student Enrollment" open={open} setOpen={setOpen}><ModalContentComponent setOpen={setOpen} /></ModalComponent>}

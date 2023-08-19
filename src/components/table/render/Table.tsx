@@ -36,8 +36,8 @@ function Table() {
   console.log("selectedTab", selectedTabState);
 
   useEffect(() => {
-    void getData(page, pageSize);
-  }, [columns, useQuery(), headerFieldsState, page, pageSize, refetch]);
+    void getData(page, pageSize, selectedTabState?.value);
+  }, [columns, useQuery(), headerFieldsState, page, pageSize, refetch, selectedTabState]);
 
   const onPageChange = (newPage: number) => {
     setpage(newPage);
@@ -63,12 +63,13 @@ function Table() {
                   order="asc"
                   orderBy="desc"
                   rowsHeader={columns}
+                  selectedTab={selectedTabState?.value}
                 />
-                <RenderRows headerData={columns} rowsData={tableData} loading={loading} />
+               {!loading && <RenderRows headerData={columns} rowsData={tableData} loading={loading} selectedTab={selectedTabState?.value} />}
               </>
             </TableComponent>
             {loading && (
-              <CenteredContent className="p-3">
+              <CenteredContent className="p-4">
                 <CircularLoader />
               </CenteredContent>
             )}
