@@ -6,15 +6,19 @@ import { makeStyles, type Theme, createStyles } from '@material-ui/core/styles';
 import { RowCell, RowTable } from '../components';
 import { type CustomAttributeProps } from '../../../types/table/AttributeColumns';
 import { removeColumById, showValueBasedOnColumn } from '../../../utils/commons/tableRowsColumns';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { DataStoreState } from '../../../schema/dataStoreSchema';
 import styles from "./table-render.module.css"
 import { IconButton } from '@material-ui/core';
+import { RowSelectionState } from '../../../schema/tableSelectedRowsSchema';
+import { checkIsRowSelected } from '../../../utils/commons/arrayUtils';
+import { ApprovalButtonClicked } from '../../../schema/approvalButtonClicked';
 interface RenderHeaderProps {
     rowsData: any[]
     headerData: CustomAttributeProps[]
     loading: boolean
     selectedTab: string
+    handleOpenApproval: () => void
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -41,9 +45,17 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-function RenderRows({ headerData, rowsData, loading, selectedTab }: RenderHeaderProps): React.ReactElement {
+function RenderRows({ headerData, rowsData, loading, selectedTab, handleOpenApproval }: RenderHeaderProps): React.ReactElement {
     const classes = useStyles()
     const getDataStore = useRecoilValue(DataStoreState)
+    const [selected, setSelected] = useRecoilState(RowSelectionState);
+    const [clickedButton, setClickedButton] = useRecoilState(ApprovalButtonClicked)
+
+    console.log("clickedButton: ", clickedButton)
+    const onToggle = (rawRowData: object) => {
+        handleOpenApproval();
+        setSelected({ ...selected, selectedRows: checkIsRowSelected(rawRowData, selected), isAllRowsSelected: selected.rows.length === checkIsRowSelected(rawRowData, selected).length })
+    }
 
     if (rowsData.length === 0 && !loading) {
         return (
@@ -83,10 +95,10 @@ function RenderRows({ headerData, rowsData, loading, selectedTab }: RenderHeader
                             {selectedTab === "incoming" &&
                                 <RowCell className={classNames(classes.cell, classes.bodyCell)}>
                                     <ButtonStrip>
-                                        <IconButton size="small" className={styles.approveIcon}>
+                                        <IconButton size="small" className={styles.approveIcon} onClick={() => { onToggle(selected.rows[index]); setClickedButton("approve") }}>
                                             <IconThumbUp24/>
                                         </IconButton>
-                                        <IconButton size="small" className={styles.rejectIcon}>
+                                        <IconButton size="small" className={styles.rejectIcon} onClick={() => { onToggle(selected.rows[index]); setClickedButton("reject") }}>
                                             <IconThumbDown24/>
                                         </IconButton>
                                     </ButtonStrip>

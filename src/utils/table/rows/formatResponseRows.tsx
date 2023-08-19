@@ -30,7 +30,7 @@ export function formatResponseRows({ transferInstances, registrationInstances, t
     for (const event of transferInstances) {
         const teiDetails = teiInstances.find(tei => tei.trackedEntity === event.trackedEntity)
         const registrationDetails = registrationInstances.find(tei => tei.trackedEntity === event.trackedEntity)
-        allRows.push({ ...transferDataValues(event.dataValues), ...(attributes((teiDetails?.attributes) ?? [])), ...registrationDataValues(registrationDetails?.dataValues) })
+        allRows.push({teiId: event?.trackedEntity, ...transferDataValues(event.dataValues), ...(attributes((teiDetails?.attributes) ?? [])), ...registrationDataValues(registrationDetails?.dataValues) })
     }
     return allRows;
 }
@@ -57,4 +57,17 @@ function attributes(data: attributesProps[]): RowsProps {
         localData[attribute.attribute] = attribute.value
     }
     return localData
+}
+
+export function formatAllSelectedRow ({ transferInstances, registrationInstances, teiInstances }: formatResponseRowsProps) {
+    const formattedRows = [];
+    for (const iterator of transferInstances) {
+        const newRow = {
+            teiInstance: teiInstances.find(tei => tei.trackedEntity === iterator.trackedEntity),
+            registrationInstance: registrationInstances.find((ev: any) => ev.trackedEntity === iterator.trackedEntity),
+            transferInstance: iterator
+        }
+        formattedRows.push(newRow);
+    }
+    return formattedRows;
 }
