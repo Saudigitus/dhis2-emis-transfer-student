@@ -13,6 +13,7 @@ import { IconButton } from '@material-ui/core';
 import { RowSelectionState } from '../../../schema/tableSelectedRowsSchema';
 import { checkIsRowSelected } from '../../../utils/commons/arrayUtils';
 import { ApprovalButtonClicked } from '../../../schema/approvalButtonClicked';
+import { OuState } from '../../../schema/orgUnitsSchema';
 interface RenderHeaderProps {
     rowsData: any[]
     headerData: CustomAttributeProps[]
@@ -50,6 +51,7 @@ function RenderRows({ headerData, rowsData, loading, selectedTab, handleOpenAppr
     const getDataStore = useRecoilValue(DataStoreState)
     const [selected, setSelected] = useRecoilState(RowSelectionState);
     const [clickedButton, setClickedButton] = useRecoilState(ApprovalButtonClicked)
+    const ousData = useRecoilValue(OuState)
 
     console.log("clickedButton: ", clickedButton)
     const onToggle = (rawRowData: object) => {
@@ -82,7 +84,7 @@ function RenderRows({ headerData, rowsData, loading, selectedTab, handleOpenAppr
                             className={classNames(classes.cell, classes.bodyCell)}
                         >
                             <div>
-                                {showValueBasedOnColumn(column, row[column.id], getDataStore)}
+                                {showValueBasedOnColumn(column, row[column.id], getDataStore, ousData)}
                             </div>
                         </RowCell>
                     ));

@@ -28,7 +28,7 @@ function TransferActionsButtons() {
         ? <Tooltip title={orgUnit === null ? "Please select an organisation unit before" : ""}>
           <span>
             <DropdownButtonComponent
-              disabled={orgUnit == null}
+              disabled
               name="Bulk approval"
               icon={<IconUserGroup16 />}
               options={enrollmentOptions}
@@ -37,7 +37,7 @@ function TransferActionsButtons() {
         </Tooltip>
         : <Tooltip title={orgUnit === null ? "Please select an organisation unit before" : ""}>
           <span>
-            <Button disabled={orgUnit == null} onClick={() => { setOpenTranfer(true); }} icon={<IconAddCircle24 />}>Perfom transfer</Button>
+            <Button disabled onClick={() => { setOpenTranfer(true); }} icon={<IconAddCircle24 />}>Perfom transfer</Button>
           </span>
         </Tooltip>
 }
