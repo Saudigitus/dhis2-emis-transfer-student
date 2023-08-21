@@ -37,4 +37,4 @@ function removeColumById (columns: CustomAttributeProps[], dataStore: any, selec
     return columns
 }
 
-export { showValueBasedOnColumn, removeColumById, showHeaderBasedOnColumn }
+export { showValueBasedOnColumn, removeColumById }
