@@ -6,9 +6,9 @@ import { type CustomAttributeProps } from '../../types/table/AttributeColumns';
 import { getOuName } from '../ous/getOuDisplayName';
 import { IconButton } from '@material-ui/core';
 
-function showValueBasedOnColumn(column: CustomAttributeProps, value: string, dataStore: any, ous: Array<{id: string, name: string}>, onToggle: (arg: object) => void, setClickedButton: (arg: string) => void, selected: object, index: number, selectedTab: string) {
+function showValueBasedOnColumn(column: CustomAttributeProps, value: string, dataStore: any, ous: Array<{id: string, name: string}>, onToggle: (arg: object) => void, setClickedButton: (arg: string) => void) {
     if (column.id === dataStore?.transfer?.status) {
-        if (value === "Pending" && selectedTab === "incoming") {
+        if (value === "Pending") {
             return (
                 <ButtonStrip>
                     <IconButton size="small" className={styles.approveIcon} onClick={() => { onToggle(selected.rows[index]); setClickedButton("approve") }}>
@@ -37,4 +37,4 @@ function removeColumById (columns: CustomAttributeProps[], dataStore: any, selec
     return columns
 }
 
-export { showValueBasedOnColumn, removeColumById, showHeaderBasedOnColumn }
+export { showValueBasedOnColumn, removeColumById }

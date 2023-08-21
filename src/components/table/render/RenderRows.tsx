@@ -1,15 +1,12 @@
 import React from 'react'
 import i18n from '@dhis2/d2-i18n';
 import classNames from 'classnames';
-import { ButtonStrip, IconThumbUp24, IconThumbDown24 } from "@dhis2/ui"
 import { makeStyles, type Theme, createStyles } from '@material-ui/core/styles';
 import { RowCell, RowTable } from '../components';
 import { type CustomAttributeProps } from '../../../types/table/AttributeColumns';
-import { removeColumById, showValueBasedOnColumn } from '../../../utils/commons/tableRowsColumns';
+import { showValueBasedOnColumn } from '../../../utils/commons/tableRowsColumns';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { DataStoreState } from '../../../schema/dataStoreSchema';
-import styles from "./table-render.module.css"
-import { IconButton } from '@material-ui/core';
 import { RowSelectionState } from '../../../schema/tableSelectedRowsSchema';
 import { checkIsRowSelected } from '../../../utils/commons/arrayUtils';
 import { ApprovalButtonClicked } from '../../../schema/approvalButtonClicked';
@@ -78,13 +75,13 @@ function RenderRows({ headerData, rowsData, loading, selectedTab, handleOpenAppr
         <React.Fragment>
             {
                 rowsData.map((row, index) => {
-                    const cells = removeColumById(headerData, getDataStore, selectedTab)?.filter(x => x.visible)?.map(column => (
+                    const cells = headerData?.filter(x => x.visible)?.map(column => (
                         <RowCell
                             key={column.id}
                             className={classNames(classes.cell, classes.bodyCell)}
                         >
                             <div>
-                                {showValueBasedOnColumn(column, row[column.id], getDataStore, ousData)}
+                                {showValueBasedOnColumn(column, row[column.id], getDataStore, ousData, onToggle, setClickedButton, selected, index, selectedTab)}
                             </div>
                         </RowCell>
                     ));
@@ -94,18 +91,6 @@ function RenderRows({ headerData, rowsData, loading, selectedTab, handleOpenAppr
                             className={classNames(classes.row, classes.dataRow)}
                         >
                             {cells}
-                            {selectedTab === "incoming" &&
-                                <RowCell className={classNames(classes.cell, classes.bodyCell)}>
-                                    <ButtonStrip>
-                                        <IconButton size="small" className={styles.approveIcon} onClick={() => { onToggle(selected.rows[index]); setClickedButton("approve") }}>
-                                            <IconThumbUp24/>
-                                        </IconButton>
-                                        <IconButton size="small" className={styles.rejectIcon} onClick={() => { onToggle(selected.rows[index]); setClickedButton("reject") }}>
-                                            <IconThumbDown24/>
-                                        </IconButton>
-                                    </ButtonStrip>
-                                </RowCell>
-                            }
                         </RowTable>
                     );
                 })
