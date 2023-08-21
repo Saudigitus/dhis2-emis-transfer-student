@@ -8,7 +8,7 @@ import { showValueBasedOnColumn } from '../../../utils/commons/tableRowsColumns'
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { DataStoreState } from '../../../schema/dataStoreSchema';
 import { RowSelectionState } from '../../../schema/tableSelectedRowsSchema';
-import { checkIsRowSelected } from '../../../utils/commons/arrayUtils';
+import { checkIsRowSelected, replaceSelectedRow } from '../../../utils/commons/arrayUtils';
 import { ApprovalButtonClicked } from '../../../schema/approvalButtonClicked';
 import { OuState } from '../../../schema/orgUnitsSchema';
 interface RenderHeaderProps {
@@ -52,7 +52,7 @@ function RenderRows({ headerData, rowsData, loading, selectedTab, handleOpenAppr
 
     const onToggle = (rawRowData: object) => {
         handleOpenApproval();
-        setSelected({ ...selected, selectedRows: checkIsRowSelected(rawRowData, selected), isAllRowsSelected: selected.rows.length === checkIsRowSelected(rawRowData, selected).length })
+        setSelected({ ...selected, selectedRows: replaceSelectedRow(rawRowData), isAllRowsSelected: selected.rows.length === replaceSelectedRow(rawRowData).length })
     }
 
     const openTeiInCaptureApp = (event: object) => {

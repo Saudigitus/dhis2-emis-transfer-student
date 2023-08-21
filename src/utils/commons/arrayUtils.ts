@@ -11,3 +11,8 @@ export const checkIsRowSelected = (rawRowData: object, selected: SelectionSchema
     }
     return newArray;
 }
+
+export const replaceSelectedRow = (rawRowData: object) => {
+    const newArray = [rawRowData]; // Cria um novo array com o novo objeto
+    return newArray;
+}

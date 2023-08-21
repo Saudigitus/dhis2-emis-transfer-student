@@ -16,7 +16,7 @@ export const useEditDataElement = () => {
 
     const [mutate] = useDataMutation(UPDATE_DATAELEMENT_QUERY, {
         onComplete: () => {
-            show({ message: `Student transfer ${clickedButton === "approve" ? "Approved" : "Rejected"} successfuly`, type: { success: true } })
+            show({ message: `Student transfer ${clickedButton === "approve" ? "Approved" : "Reproved"} successfuly`, type: { success: true } })
         },
         onError: (error) => {
             show({
