@@ -7,6 +7,6 @@ export type SelectedTabSchema = z.infer<typeof selectedTabSchema>
 
 export const TabsState = atom<SelectedTabSchema>({
     key: "tabs-state",
-    default: { name: "Incoming transfer", value: "incoming" }
+    default: { name: "Outgoing transfer", value: "outgoing" }
 
 })

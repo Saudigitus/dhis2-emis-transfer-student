@@ -114,8 +114,7 @@ export function useTableData() {
     const { hide, show } = useShowAlerts()
     const school = urlParamiters().school as unknown as string
 
-    const incomingInitialFilter = [`${dataStoreState?.transfer?.destinySchool as unknown as string}:in:${school}`, `${dataStoreState?.transfer?.status as unknown as string}:in:Pending`, ...headerFieldsState?.dataElements];
-    const outgoingInitialFilter = [`${dataStoreState?.transfer?.status as unknown as string}:in:Pending`, ...headerFieldsState?.dataElements];
+    const incomingInitialFilter = [`${dataStoreState?.transfer?.destinySchool as unknown as string}:in:${school}`, ...headerFieldsState?.dataElements];
 
     async function getData(page: number, pageSize: number, selectedTab: string) {
         setLoading(true)
@@ -131,7 +130,7 @@ export function useTableData() {
             program: dataStoreState?.program as unknown as string,
             order: "createdAt:desc",
             programStage: dataStoreState?.transfer?.programStage as unknown as string,
-            filter: (dataStoreState != null) && selectedTab === "incoming" ? incomingInitialFilter : outgoingInitialFilter,
+            filter: (dataStoreState != null) && selectedTab === "incoming" ? incomingInitialFilter : headerFieldsState?.dataElements,
             filterAttributes: headerFieldsState?.attributes,
             orgUnit: selectedTab === "outgoing" ? school : undefined
         })).catch((error) => {
