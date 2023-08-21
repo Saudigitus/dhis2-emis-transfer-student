@@ -47,13 +47,17 @@ function RenderRows({ headerData, rowsData, loading, selectedTab, handleOpenAppr
     const classes = useStyles()
     const getDataStore = useRecoilValue(DataStoreState)
     const [selected, setSelected] = useRecoilState(RowSelectionState);
-    const [clickedButton, setClickedButton] = useRecoilState(ApprovalButtonClicked)
+    const [, setClickedButton] = useRecoilState(ApprovalButtonClicked)
     const ousData = useRecoilValue(OuState)
 
-    console.log("clickedButton: ", clickedButton)
     const onToggle = (rawRowData: object) => {
         handleOpenApproval();
         setSelected({ ...selected, selectedRows: checkIsRowSelected(rawRowData, selected), isAllRowsSelected: selected.rows.length === checkIsRowSelected(rawRowData, selected).length })
+    }
+
+    const openTeiInCaptureApp = (event: object) => {
+        const { trackedEntity, enrollment, orgUnit, program } = event;
+        window.open(`https://emis.dhis2.org/dev/dhis-web-capture/index.html#/enrollment?enrollmentId=${enrollment}&orgUnitId=${orgUnit}&programId=${program}&teiId=${trackedEntity}`, '_blank')
     }
 
     if (rowsData.length === 0 && !loading) {
@@ -88,6 +92,7 @@ function RenderRows({ headerData, rowsData, loading, selectedTab, handleOpenAppr
                     return (
                         <RowTable
                             key={index}
+                            onClick={() => { openTeiInCaptureApp(selected?.rows[index]?.transferInstance); }}
                             className={classNames(classes.row, classes.dataRow)}
                         >
                             {cells}
