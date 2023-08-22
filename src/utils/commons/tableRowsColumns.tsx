@@ -10,16 +10,14 @@ function showValueBasedOnColumn(column: CustomAttributeProps, value: string, dat
     if (column.id === dataStore?.transfer?.status) {
         if (value === "Pending" && selectedTab === "incoming") {
             return (
-                <div onClick={(event) => { event.stopPropagation() }}>
-                   <ButtonStrip>
-                        <IconButton size="small" className={styles.approveIcon} onClick={() => { onToggle(selected.rows[index]); setClickedButton("approve") }}>
-                            <IconThumbUp24/>
-                        </IconButton>
-                        <IconButton size="small" className={styles.rejectIcon} onClick={() => { onToggle(selected.rows[index]); setClickedButton("reject") }}>
-                            <IconThumbDown24/>
-                        </IconButton>
-                    </ButtonStrip>
-                </div>
+                <ButtonStrip>
+                    <IconButton size="small" className={styles.approveIcon} onClick={() => { onToggle(selected.rows[index]); setClickedButton("approve") }}>
+                        <IconThumbUp24/>
+                    </IconButton>
+                    <IconButton size="small" className={styles.rejectIcon} onClick={() => { onToggle(selected.rows[index]); setClickedButton("reject") }}>
+                        <IconThumbDown24/>
+                    </IconButton>
+                </ButtonStrip>
             )
         } else {
             return <h6 className={styles.transferStatusLabel} style={{color: valueColorMapping[value]}}>{value}</h6>

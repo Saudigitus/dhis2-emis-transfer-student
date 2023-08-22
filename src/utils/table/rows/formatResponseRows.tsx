@@ -30,31 +30,37 @@ export function formatResponseRows({ transferInstances, registrationInstances, t
     for (const event of transferInstances) {
         const teiDetails = teiInstances.find(tei => tei.trackedEntity === event.trackedEntity)
         const registrationDetails = registrationInstances.find(tei => tei.trackedEntity === event.trackedEntity)
-        allRows.push({teiId: event?.trackedEntity, ...transferDataValues(event.dataValues), ...(attributes((teiDetails?.attributes) ?? [])), ...registrationDataValues(registrationDetails?.dataValues) })
+        allRows.push({teiId: event?.trackedEntity, ...transferDataValues(event?.dataValues), ...(attributes((teiDetails?.attributes) ?? [])), ...registrationDataValues(registrationDetails?.dataValues) })
     }
     return allRows;
 }
 
 function transferDataValues(data: dataValuesProps[]): RowsProps {
     const localData: RowsProps = {}
-    for (const dataElement of data) {
-        localData[dataElement.dataElement] = dataElement.value
+    if (data) {
+        for (const dataElement of data) {
+            localData[dataElement.dataElement] = dataElement.value
+        }
     }
     return localData
 }
 
 function registrationDataValues(data: dataValuesProps[]): RowsProps {
     const localData: RowsProps = {}
-    for (const dataElement of data) {
-        localData[dataElement.dataElement] = dataElement.value
+    if (data) {
+       for (const dataElement of data) {
+            localData[dataElement.dataElement] = dataElement.value
+        }
     }
     return localData
 }
 
 function attributes(data: attributesProps[]): RowsProps {
     const localData: RowsProps = {}
-    for (const attribute of data) {
-        localData[attribute.attribute] = attribute.value
+    if (data) {
+        for (const attribute of data) {
+            localData[attribute.attribute] = attribute.value
+        }
     }
     return localData
 }

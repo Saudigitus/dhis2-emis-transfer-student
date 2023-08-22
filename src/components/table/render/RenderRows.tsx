@@ -8,7 +8,7 @@ import { showValueBasedOnColumn } from '../../../utils/commons/tableRowsColumns'
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { DataStoreState } from '../../../schema/dataStoreSchema';
 import { RowSelectionState } from '../../../schema/tableSelectedRowsSchema';
-import { checkIsRowSelected, replaceSelectedRow } from '../../../utils/commons/arrayUtils';
+import { replaceSelectedRow } from '../../../utils/commons/arrayUtils';
 import { ApprovalButtonClicked } from '../../../schema/approvalButtonClicked';
 import { OuState } from '../../../schema/orgUnitsSchema';
 interface RenderHeaderProps {
@@ -55,11 +55,6 @@ function RenderRows({ headerData, rowsData, loading, selectedTab, handleOpenAppr
         setSelected({ ...selected, selectedRows: replaceSelectedRow(rawRowData), isAllRowsSelected: selected.rows.length === replaceSelectedRow(rawRowData).length })
     }
 
-    const openTeiInCaptureApp = (event: object) => {
-        const { trackedEntity, enrollment, orgUnit, program } = event;
-        window.open(`https://emis.dhis2.org/dev/dhis-web-capture/index.html#/enrollment?enrollmentId=${enrollment}&orgUnitId=${orgUnit}&programId=${program}&teiId=${trackedEntity}`, '_blank')
-    }
-
     if (rowsData.length === 0 && !loading) {
         return (
             <RowTable
@@ -92,7 +87,6 @@ function RenderRows({ headerData, rowsData, loading, selectedTab, handleOpenAppr
                     return (
                         <RowTable
                             key={index}
-                            onClick={() => { openTeiInCaptureApp(selected?.rows[index]?.transferInstance); }}
                             className={classNames(classes.row, classes.dataRow)}
                         >
                             {cells}
