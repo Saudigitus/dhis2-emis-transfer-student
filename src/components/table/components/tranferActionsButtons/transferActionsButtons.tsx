@@ -9,13 +9,17 @@ import { useParams } from '../../../../hooks/commons/useQueryParams';
 import { Tooltip } from '@material-ui/core';
 import { useRecoilValue } from 'recoil';
 import { TabsState } from '../../../../schema/tabSchema';
+import { NavLink } from 'react-router-dom';
+import { useConfig } from '@dhis2/app-runtime';
 
 function TransferActionsButtons() {
   const [open, setOpen] = useState<boolean>(false);
   const [openTranfer, setOpenTranfer] = useState<boolean>(false);
   const { useQuery } = useParams();
   const orgUnit = useQuery().get("school")
+  const orgUnitName = useQuery().get("schoolName")
   const selectedTabState = useRecoilValue(TabsState).value
+  const { baseUrl } = useConfig();
 
   const enrollmentOptions: FlyoutOptionsProps[] = [
     { label: "Transfer students", divider: true, onClick: () => { setOpenTranfer(true); } }
@@ -37,7 +41,11 @@ function TransferActionsButtons() {
         </Tooltip>
         : <Tooltip title={orgUnit === null ? "Please select an organisation unit before" : ""}>
           <span>
-            <Button disabled onClick={() => { setOpenTranfer(true); }} icon={<IconAddCircle24 />}>Perfom transfer</Button>
+          <NavLink
+            to={`${baseUrl}/api/apps/SEMIS - Student Transfer Execute/index.html#/student-transfer-execute?school=${orgUnit}&schoolName=${orgUnitName}`}
+          >
+            <Button disabled={orgUnit === null} icon={<IconAddCircle24 />}>Perfom transfer</Button>
+          </NavLink>
           </span>
         </Tooltip>
 }
