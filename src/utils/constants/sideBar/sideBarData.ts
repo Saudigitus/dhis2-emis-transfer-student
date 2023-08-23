@@ -48,7 +48,7 @@ function sideBarData (): SideBarItemProps[] {
                     label: "Transfer",
                     showBadge: false,
                     disabled: false,
-                    appName: "SEMIS - Student Transfer",
+                    appName: "SEMIS-Student-Transfer",
                     route: "/student-transfer"
                 }
             ]
