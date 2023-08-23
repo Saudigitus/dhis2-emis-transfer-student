@@ -23,6 +23,7 @@ interface registration {
 
 interface transfer {
     destinySchool: string
+    originSchool: string
     programStage: string
     status: string
 }

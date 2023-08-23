@@ -23,7 +23,7 @@ function showValueBasedOnColumn(column: CustomAttributeProps, value: string, dat
             return <h6 className={styles.transferStatusLabel} style={{color: valueColorMapping[value]}}>{value}</h6>
         }
     }
-    if (column.id === dataStore?.transfer?.destinySchool) {
+    if (column.id === dataStore?.transfer?.destinySchool || column.id === dataStore?.transfer?.originSchool) {
         return getOuName(ous, value)
     }
     return value

@@ -115,7 +115,8 @@ export function useTableData() {
     const school = urlParamiters().school as unknown as string
 
     const incomingInitialFilter = [`${dataStoreState?.transfer?.destinySchool as unknown as string}:in:${school}`, ...headerFieldsState?.dataElements];
-
+    const outgoingInitialFilter = [`${dataStoreState?.transfer?.originSchool as unknown as string}:in:${school}`, ...headerFieldsState?.dataElements];
+   
     async function getData(page: number, pageSize: number, selectedTab: string) {
         setLoading(true)
         const registrationValuesByTei: RegistrationQueryResults = {
@@ -130,9 +131,13 @@ export function useTableData() {
             program: dataStoreState?.program as unknown as string,
             order: "createdAt:desc",
             programStage: dataStoreState?.transfer?.programStage as unknown as string,
-            filter: (dataStoreState != null) && selectedTab === "incoming" ? incomingInitialFilter : headerFieldsState?.dataElements,
+            filter: (dataStoreState != null) && selectedTab === "incoming"
+            ? incomingInitialFilter
+            : (selectedTab === "outgoing")
+              ? outgoingInitialFilter
+              : headerFieldsState?.dataElements,
             filterAttributes: headerFieldsState?.attributes,
-            orgUnit: selectedTab === "outgoing" ? school : undefined
+            orgUnit:undefined
         })).catch((error) => {
             show({
                 message: `${("Could not get data")}: ${error.message}`,
