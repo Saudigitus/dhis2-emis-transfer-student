@@ -1,13 +1,13 @@
 {
   "type": "app",
-  "name": "SEMIS - Student Transfer",
-  "description": "SEMIS - Student Transfer",
+  "name": "SEMIS-Staff-Transfer",
+  "description": "SEMIS-Staff-Transfer",
   "version": "1.0.0",
   "author": {
     "name": "Hisp Mozambique (Saudigitus)",
     "email": "info@saudigitus.org"
   },
-  "title": "SEMIS - Student Transfer",
+  "title": "SEMIS-Staff-Transfer",
   "entryPoints": {
     "app": "index.html"
   }

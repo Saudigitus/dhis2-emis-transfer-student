@@ -6,7 +6,7 @@ export default function InitialMessage(): React.ReactElement {
     return (
         <div className={styles.containerInit}>
             <Paper elevation={1} className={styles.paperInit}>
-                <h2>SEMIS - Student Tranfer</h2>
+                <h2>SEMIS - Staff Tranfer</h2>
                 <span>Follow the instructions to proceed:</span>
                 <ul>
                     <li className={styles.paperOtherText}>Select the  Organization unit you want to view data</li>
