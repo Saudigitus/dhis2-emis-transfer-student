@@ -1,8 +1,8 @@
 import { type ParamsMapping } from "../../types/menu/MenuItemTypes";
 
 const paramsMapping: ParamsMapping = {
-    RhABRLO2Fae: "class",
-    iDSrFrrVgmX: "academicYear",
-    kNNoif9gASf: "grade"
+    XseYNLVUYut: "employmentType",
+    // flmSlK0TYGQ: "academicYear",
+    DDDJ2QeiQz8: "position"
 }
 export { paramsMapping }

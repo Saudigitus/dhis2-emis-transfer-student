@@ -1,10 +1,8 @@
 import React, { useState } from 'react'
-import { IconUserGroup16, IconAddCircle24, Button, ButtonStrip } from "@dhis2/ui";
+import { IconAddCircle24, Button, ButtonStrip } from "@dhis2/ui";
 import ModalComponent from '../../../modal/Modal';
 import ModalContentComponent from '../../../modal/ModalContent';
 import ImportContent from '../../../modal/ImportContent';
-import DropdownButtonComponent from '../../../buttons/DropdownButton';
-import { type FlyoutOptionsProps } from '../../../../types/buttons/FlyoutOptions';
 import { useParams } from '../../../../hooks/commons/useQueryParams';
 import { Tooltip } from '@material-ui/core';
 import { useRecoilValue } from 'recoil';
@@ -17,17 +15,12 @@ function TransferActionsButtons() {
   const orgUnit = useQuery().get("school")
   const selectedTabState = useRecoilValue(TabsState).value
 
-  const enrollmentOptions: FlyoutOptionsProps[] = [
-    { label: "Transfer students", divider: true, onClick: () => { setOpenTranfer(true); } }
-  ];
-
   return (
     <div>
       <ButtonStrip>
         {selectedTabState === "incoming"
         ? <Tooltip title={orgUnit === null ? "Please select an organisation unit before" : ""}>
           <span>
-            
           </span>
         </Tooltip>
         : <Tooltip title={orgUnit === null ? "Please select an organisation unit before" : ""}>
