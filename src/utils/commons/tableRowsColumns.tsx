@@ -21,7 +21,7 @@ function showValueBasedOnColumn(column: CustomAttributeProps, value: string, dat
                 </ButtonStrip>
             )
         } else {
-            return <h6 className={styles.transferStatusLabel} style={{color: valueColorMapping[value]}}>{value}</h6>
+            return <h6 className={styles.transferStatusLabel} style={{color: valueColorMapping[value]}}>{value ?? "---"}</h6>
         }
     }
     if (column.valueType === Attribute.valueType.ORGANISATION_UNIT as unknown as CustomAttributeProps["valueType"]) {

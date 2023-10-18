@@ -1,24 +1,8 @@
 import { useDataEngine } from '@dhis2/app-runtime'
 import { useState } from 'react'
 import { useEditDataElement } from '../events/useEditDataElement'
-import { atom, useRecoilState, useRecoilValue } from 'recoil'
-import { DataStoreState } from '../../schema/dataStoreSchema'
-
-interface TransferQueryProps {
-    program: string
-    ou: string
-    trackedEntityInstance: string
-}
-
-/* const TRANSFERQUERY = {
-    resource: "tracker/ownership/transfer",
-    type: 'update',
-    params: ({ program, ou, trackedEntityInstance }: TransferQueryProps) => ({
-        program,
-        ou,
-        trackedEntityInstance
-    })
-} */
+import { atom, useRecoilState } from 'recoil'
+import { getSelectedKey } from '../../utils/commons/dataStore/getSelectedKey'
 
 const TRANSFERQUERY = {
     resource: 'tracker',
@@ -36,7 +20,8 @@ export const teiRefetch = atom({
 
 export function useTransferTEI() {
     const engine = useDataEngine()
-    const dataStoreState = useRecoilValue(DataStoreState);
+    const { getDataStoreData } = getSelectedKey();
+
     const [loading, setloading] = useState(false)
     const { mutateValues } = useEditDataElement()
     const [refetch, setRefetch] = useRecoilState<boolean>(teiRefetch)
@@ -58,7 +43,7 @@ export function useTransferTEI() {
                 }
             })
             .then(async (res) => {
-                await mutateValues(selectedTei?.transferInstance, dataStoreState?.transfer?.status, "Approved")
+                await mutateValues(selectedTei?.transferInstance, getDataStoreData?.transfer?.status, "Approved")
                 setRefetch(!refetch)
                 handleCloseApproval()
             }).catch(e => {
@@ -70,7 +55,7 @@ export function useTransferTEI() {
     const rejectTEI = async (event: any, handleCloseApproval: () => void) => {
         console.log("event", event)
         setloading(true)
-            await mutateValues(event, dataStoreState?.transfer?.status, "Reproved")
+            await mutateValues(event, getDataStoreData?.transfer?.status, "Reproved")
             .then(async (res) => {
                 console.log("Faailed", res)
                 setRefetch(!refetch)

@@ -1,6 +1,5 @@
 
 import { useRecoilState, useRecoilValue } from "recoil";
-import { DataStoreState } from "../../schema/dataStoreSchema";
 import { useState } from "react";
 import { useDataEngine } from "@dhis2/app-runtime";
 import { formatAllSelectedRow, formatResponseRows } from "../../utils/table/rows/formatResponseRows";
@@ -8,6 +7,7 @@ import { useParams } from "../commons/useQueryParams";
 import { HeaderFieldsState } from "../../schema/headersSchema";
 import useShowAlerts from "../commons/useShowAlert";
 import { RowSelectionState } from "../../schema/tableSelectedRowsSchema";
+import { getSelectedKey } from "../../utils/commons/dataStore/getSelectedKey";
 
 type TableDataProps = Record<string, string>;
 
@@ -104,7 +104,7 @@ interface RegistrationQueryResults {
 
 export function useTableData() {
     const engine = useDataEngine();
-    const dataStoreState = useRecoilValue(DataStoreState);
+    const { getDataStoreData } = getSelectedKey();
     const headerFieldsState = useRecoilValue(HeaderFieldsState)
     const [selected, setSelected] = useRecoilState(RowSelectionState);
 
@@ -114,7 +114,7 @@ export function useTableData() {
     const { hide, show } = useShowAlerts()
     const school = urlParamiters().school as unknown as string
 
-    const incomingInitialFilter = [`${dataStoreState?.transfer?.destinySchool as unknown as string}:in:${school}`, ...headerFieldsState?.dataElements];
+    const incomingInitialFilter = [`${getDataStoreData?.transfer?.destinySchool as unknown as string}:in:${school}`, ...headerFieldsState?.dataElements];
 
     async function getData(page: number, pageSize: number, selectedTab: string) {
         setLoading(true)
@@ -127,10 +127,10 @@ export function useTableData() {
             ouMode: undefined,
             page,
             pageSize,
-            program: dataStoreState?.program as unknown as string,
+            program: getDataStoreData?.program as unknown as string,
             order: "createdAt:desc",
-            programStage: dataStoreState?.transfer?.programStage as unknown as string,
-            filter: (dataStoreState != null) && selectedTab === "incoming" ? incomingInitialFilter : headerFieldsState?.dataElements,
+            programStage: getDataStoreData?.transfer?.programStage as unknown as string,
+            filter: (getDataStoreData != null) && selectedTab === "incoming" ? incomingInitialFilter : headerFieldsState?.dataElements,
             filterAttributes: headerFieldsState?.attributes,
             orgUnit: selectedTab === "outgoing" ? school : undefined
         })).catch((error) => {
@@ -150,9 +150,9 @@ export function useTableData() {
                     ouMode: undefined,
                     page,
                     pageSize,
-                    program: dataStoreState?.program as unknown as string,
+                    program: getDataStoreData?.program as unknown as string,
                     order: "createdAt:desc",
-                    programStage: dataStoreState?.registration?.programStage as unknown as string,
+                    programStage: getDataStoreData?.registration?.programStage as unknown as string,
                     // filter: headerFieldsState?.dataElements,
                     // filterAttributes: headerFieldsState?.attributes,
                     orgUnit: undefined,
@@ -174,7 +174,7 @@ export function useTableData() {
                 ouMode: "ALL",
                 order: "created:desc",
                 pageSize,
-                program: dataStoreState?.program as unknown as string,
+                program: getDataStoreData?.program as unknown as string,
                 orgUnit: undefined,
                 trackedEntity: trackedEntityToFetch
             })).catch((error) => {
