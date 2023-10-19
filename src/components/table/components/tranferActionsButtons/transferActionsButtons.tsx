@@ -7,12 +7,15 @@ import { useParams } from '../../../../hooks/commons/useQueryParams';
 import { Tooltip } from '@material-ui/core';
 import { useRecoilValue } from 'recoil';
 import { TabsState } from '../../../../schema/tabSchema';
+import { useConfig } from '@dhis2/app-runtime';
 
 function TransferActionsButtons() {
   const [open, setOpen] = useState<boolean>(false);
   const [openTranfer, setOpenTranfer] = useState<boolean>(false);
+  const { baseUrl } = useConfig()
   const { useQuery } = useParams();
   const orgUnit = useQuery().get("school")
+  const orgUnitName = useQuery().get("schoolName")
   const selectedTabState = useRecoilValue(TabsState).value
 
   return (
@@ -25,7 +28,9 @@ function TransferActionsButtons() {
         </Tooltip>
         : <Tooltip title={orgUnit === null ? "Please select an organisation unit before" : ""}>
           <span>
-            <Button disabled onClick={() => { setOpenTranfer(true); }} icon={<IconAddCircle24 />}>New transfer</Button>
+            <a href={`${baseUrl}/api/apps/SEMIS-Staff-Transfer-Execute/index.html#/staff-transfer?school=${orgUnit}&schoolName=${orgUnitName}`}>
+              <Button disabled={orgUnit === null} icon={<IconAddCircle24 />}>New transfer</Button>
+            </a>
           </span>
         </Tooltip>
 }
