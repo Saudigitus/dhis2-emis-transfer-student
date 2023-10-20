@@ -16,6 +16,7 @@ export interface ProgramConfig {
                     compulsory: boolean
                     dataElement: {
                         displayName: string
+                        formName: string
                         id: string
                         valueType: string
                         optionSet: {
@@ -36,6 +37,7 @@ export interface ProgramConfig {
                 generated: boolean
                 pattern?: string
                 displayName: string
+                formName: string
                 id: string
                 valueType: string
                 optionSet: { id: string, options: [{ value: string, label: string }] }

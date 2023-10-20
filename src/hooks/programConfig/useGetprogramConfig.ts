@@ -15,8 +15,8 @@ const PROGRAMQUERY = (id: string) => ({
                 "access",
                 "id,displayName,description,programType,version",
                 "trackedEntityType[id,trackedEntityTypeAttributes[trackedEntityAttribute[id]]]",
-                "programTrackedEntityAttributes[mandatory,displayInList,trackedEntityAttribute[generated,pattern,id,displayName,valueType,optionSet[options[code~rename(value),displayName~rename(label)]]]]",
-                "programStages[id,displayName,autoGenerateEvent,programStageDataElements[displayInReports,compulsory,dataElement[id,displayName,valueType,optionSet[options[code~rename(value),displayName~rename(label)]]]]]"
+                "programTrackedEntityAttributes[mandatory,displayInList,trackedEntityAttribute[generated,pattern,id,displayName,formName,valueType,optionSet[options[code~rename(value),displayName~rename(label)]]]]",
+                "programStages[id,displayName,autoGenerateEvent,programStageDataElements[displayInReports,compulsory,dataElement[id,displayName,formName,valueType,optionSet[options[code~rename(value),displayName~rename(label)]]]]]"
             ]
         }
     }
