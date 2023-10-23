@@ -29,6 +29,10 @@ interface transfer {
     destinySchool: string
     programStage: string
     status: string
+    statusOptions: [{
+        code: string
+        key: string
+    }]
 }
 
 export interface dataStoreRecord {
