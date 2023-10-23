@@ -9,7 +9,7 @@ function headBarData(selectedOptions: SelectedOptionsTypes, dataStoreData: dataS
             value: selectedOptions?.schoolName ?? "Select a school",
             placeholder: "Search for organisation unit",
             component: "orgUnitTree"
-        },
+        }/* ,
         {
             id: "981ed8a3",
             label: "Grade",
@@ -33,7 +33,7 @@ function headBarData(selectedOptions: SelectedOptionsTypes, dataStoreData: dataS
             placeholder: "Search for academic year",
             dataElementId: dataStoreData?.registration?.academicYear ?? "",
             component: "menuItemContainer"
-        }
+        } */
     ]
 }
 export { headBarData }
