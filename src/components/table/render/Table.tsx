@@ -16,9 +16,9 @@ import { HeaderFieldsState } from "../../../schema/headersSchema";
 import { TabsState } from "../../../schema/tabSchema";
 import ModalComponent from "../../modal/Modal";
 import ApproveTranferContent from "../../modal/ApproveTransferModalContent";
-import { RowSelectionState } from "../../../schema/tableSelectedRowsSchema";
 import { ApprovalButtonClicked } from "../../../schema/approvalButtonClicked";
 import { teiRefetch } from "../../../hooks/tei/useTransfer";
+import { loadingOusState } from "../../../schema/loadingOusSchema";
 
 const usetStyles = makeStyles({
   tableContainer: {
@@ -33,7 +33,7 @@ function Table() {
   const { useQuery } = useParams();
   const headerFieldsState = useRecoilValue(HeaderFieldsState);
   const selectedTabState = useRecoilValue(TabsState);
-  const selectedRowState = useRecoilValue(RowSelectionState);
+  const loadingOus = useRecoilValue(loadingOusState);
   const [page, setpage] = useState(1);
   const [pageSize, setpageSize] = useState(10);
   const [refetch] = useRecoilState(teiRefetch);
@@ -81,25 +81,25 @@ function Table() {
                   rowsHeader={columns}
                   selectedTab={selectedTabState?.value}
                 />
-                {!loading && (
+                {!loading && !loadingOus && (
                   <RenderRows
                     headerData={columns}
                     rowsData={tableData}
-                    loading={loading}
+                    loading={loading || loadingOus}
                     selectedTab={selectedTabState?.value}
                     handleOpenApproval={handleOpenApproval}
                   />
                 )}
               </>
             </TableComponent>
-            {loading && (
+            {(loading || loadingOus) && (
               <CenteredContent className="p-4">
                 <CircularLoader />
               </CenteredContent>
             )}
           </div>
           <Pagination
-            loading={loading}
+            loading={loading || loadingOus}
             onPageChange={onPageChange}
             onRowsPerPageChange={onRowsPerPageChange}
             page={page}
