@@ -17,6 +17,7 @@ interface EventQueryProps {
     ouMode: string | undefined
     program: string
     order: string
+    programStatus: string
     programStage: string
     orgUnit: string | undefined
     filter?: string[]
@@ -33,13 +34,14 @@ interface TeiQueryProps {
     order: string
 }
 
-const EVENT_QUERY = ({ ouMode, page, pageSize, program, order, programStage, filter, orgUnit, filterAttributes, trackedEntity }: EventQueryProps) => ({
+const EVENT_QUERY = ({ ouMode, page, pageSize, program, order, programStage, filter, orgUnit, filterAttributes, trackedEntity, programStatus }: EventQueryProps) => ({
     results: {
         resource: "tracker/events",
         params: {
             order,
             page,
             pageSize,
+            programStatus,
             ouMode,
             program,
             programStage,
@@ -119,6 +121,7 @@ export function useTableData() {
             pageSize,
             program: getDataStoreData?.program as unknown as string,
             order: "createdAt:desc",
+            programStatus: "ACTIVE",
             programStage: getDataStoreData?.transfer?.programStage as unknown as string,
             filter: (getDataStoreData != null) && selectedTab === "incoming" ? incomingInitialFilter : headerFieldsState?.dataElements,
             filterAttributes: headerFieldsState?.attributes,
