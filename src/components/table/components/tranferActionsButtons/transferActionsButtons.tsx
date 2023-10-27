@@ -25,7 +25,9 @@ function TransferActionsButtons() {
         </Tooltip>
         : <Tooltip title={orgUnit === null ? "Please select an organisation unit before" : ""}>
           <span>
-            <Button disabled onClick={() => { setOpenTranfer(true); }} icon={<IconAddCircle24 />}>New transfer</Button>
+            <a href={`${baseUrl}/api/apps/SEMIS-Staff-Transfer-Execute/index.html#/staff-transfer?school=${orgUnit}&schoolName=${orgUnitName}`}>
+              <Button disabled={orgUnit === null} icon={<IconAddCircle24 />}>New transfer</Button>
+            </a>
           </span>
         </Tooltip>
 }

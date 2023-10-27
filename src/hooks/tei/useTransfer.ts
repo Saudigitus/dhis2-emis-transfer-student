@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useEditDataElement } from '../events/useEditDataElement'
 import { atom, useRecoilState } from 'recoil'
 import { getSelectedKey } from '../../utils/commons/dataStore/getSelectedKey'
+import { useTransferConst } from '../../utils/constants/transferOptions/statusOptions'
 
 const TRANSFERQUERY = {
     resource: 'tracker',
@@ -24,6 +25,7 @@ export function useTransferTEI() {
     const [loading, setloading] = useState(false)
     const { mutateValues } = useEditDataElement()
     const [refetch, setRefetch] = useRecoilState<boolean>(teiRefetch)
+    const { transferConst } = useTransferConst()
 
     const transferTEI = async (ou: any, selectedTei: any, handleCloseApproval: () => void) => {
         setloading(true)
@@ -42,7 +44,7 @@ export function useTransferTEI() {
                 }
             })
             .then(async (res) => {
-                await mutateValues(selectedTei?.transferInstance, getDataStoreData?.transfer?.status, "Approved")
+                await mutateValues(selectedTei?.transferInstance, getDataStoreData?.transfer?.status, transferConst("approved") as string)
                 setRefetch(!refetch)
                 handleCloseApproval()
             }).catch(e => {
@@ -54,7 +56,7 @@ export function useTransferTEI() {
     const rejectTEI = async (event: any, handleCloseApproval: () => void) => {
         console.log("event", event)
         setloading(true)
-            await mutateValues(event, getDataStoreData?.transfer?.status, "Reproved")
+            await mutateValues(event, getDataStoreData?.transfer?.status, transferConst("reproved") as string)
             .then(async (res) => {
                 console.log("Faailed", res)
                 setRefetch(!refetch)
