@@ -38,7 +38,7 @@ function TransferActionsButtons() {
         </Tooltip>
         : <Tooltip title={orgUnit === null ? "Please select an organisation unit before" : ""}>
           <span>
-             <a href={`${baseUrl}/api/apps/SEMIS-Student-Transfer-Execute/index.html#/student-transfer?school=${orgUnit}&schoolName=${orgUnitName}`}>
+             <a href={`${baseUrl}/api/apps/SEMIS-Student-Transfer-Execute/index.html#/student-transfer?sectionType=student&school=${orgUnit}&schoolName=${orgUnitName}`}>
             <Button disabled={orgUnit === null} icon={<IconAddCircle24 />}>Perfom transfer</Button></a>
           </span>
         </Tooltip>
