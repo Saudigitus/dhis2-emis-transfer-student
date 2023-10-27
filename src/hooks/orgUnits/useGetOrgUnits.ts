@@ -1,12 +1,12 @@
-import { useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { useDataQuery } from "@dhis2/app-runtime";
-import { useEffect } from "react";
 import useShowAlerts from "../commons/useShowAlert";
-import { OuState } from "../../schema/orgUnitsSchema";
+import { loadingOusState } from "../../schema/loadingOusSchema";
 
-const ORGUNIT_QUERY = {
+const ORGUNIT_QUERY: any = (id: string) => ({
     results: {
         resource: "organisationUnits",
+        id,
         params: {
             fields: [
                 "id,name"
@@ -14,13 +14,14 @@ const ORGUNIT_QUERY = {
             paging: false
         }
     }
-}
+})
 
-export function useGetOusData() {
-    const setOuState = useSetRecoilState(OuState);
+export function useGetOusData(id: string) {
+    const [, setOuLoading] = useRecoilState(loadingOusState);
     const { hide, show } = useShowAlerts()
 
-    const { data, loading } = useDataQuery<{ results: { organisationUnits: Array<{ id: string, name: string }> } }>(ORGUNIT_QUERY, {
+    const { data, loading } = useDataQuery<{ results: { id: string, name: string } }>(ORGUNIT_QUERY(id), {
+        onComplete: () => { setOuLoading(false) },
         onError(error) {
             show({
                 message: `${("Could not get data")}: ${error.message}`,
@@ -30,12 +31,8 @@ export function useGetOusData() {
         }
     })
 
-    useEffect(() => {
-        setOuState(data?.results?.organisationUnits);
-    }, [loading])
-
     return {
-        data,
+        ouName: data?.results?.name,
         loading
     }
 }
