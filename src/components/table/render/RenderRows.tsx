@@ -6,11 +6,11 @@ import { RowCell, RowTable } from '../components';
 import { type CustomAttributeProps } from '../../../types/table/AttributeColumns';
 import { showValueBasedOnColumn } from '../../../utils/commons/tableRowsColumns';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { DataStoreState } from '../../../schema/dataStoreSchema';
 import { RowSelectionState } from '../../../schema/tableSelectedRowsSchema';
 import { replaceSelectedRow } from '../../../utils/commons/arrayUtils';
 import { ApprovalButtonClicked } from '../../../schema/approvalButtonClicked';
 import { OuState } from '../../../schema/orgUnitsSchema';
+import { getSelectedKey } from '../../../utils/commons/dataStore/getSelectedKey';
 interface RenderHeaderProps {
     rowsData: any[]
     headerData: CustomAttributeProps[]
@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function RenderRows({ headerData, rowsData, loading, selectedTab, handleOpenApproval }: RenderHeaderProps): React.ReactElement {
     const classes = useStyles()
-    const getDataStore = useRecoilValue(DataStoreState)
+    const { getDataStoreData } = getSelectedKey();
     const [selected, setSelected] = useRecoilState(RowSelectionState);
     const [, setClickedButton] = useRecoilState(ApprovalButtonClicked)
     const ousData = useRecoilValue(OuState)
@@ -80,7 +80,7 @@ function RenderRows({ headerData, rowsData, loading, selectedTab, handleOpenAppr
                             className={classNames(classes.cell, classes.bodyCell)}
                         >
                             <div>
-                                {showValueBasedOnColumn(column, row[column.id], getDataStore, ousData, onToggle, setClickedButton, selected, index, selectedTab)}
+                                {showValueBasedOnColumn(column, row[column.id], getDataStoreData, ousData, onToggle, setClickedButton, selected, index, selectedTab)}
                             </div>
                         </RowCell>
                     ));

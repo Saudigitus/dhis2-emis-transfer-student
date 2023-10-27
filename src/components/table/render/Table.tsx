@@ -13,12 +13,12 @@ import { useTableData } from "../../../hooks/tableData/useTableData";
 import { useParams } from "../../../hooks/commons/useQueryParams";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { HeaderFieldsState } from "../../../schema/headersSchema";
-import { teiRefetch } from "../../../hooks/tei/usePostTei";
 import { TabsState } from "../../../schema/tabSchema";
 import ModalComponent from "../../modal/Modal";
 import ApproveTranferContent from "../../modal/ApproveTransferModalContent";
 import { RowSelectionState } from "../../../schema/tableSelectedRowsSchema";
 import { ApprovalButtonClicked } from "../../../schema/approvalButtonClicked";
+import { teiRefetch } from "../../../hooks/tei/useTransfer";
 
 const usetStyles = makeStyles({
   tableContainer: {

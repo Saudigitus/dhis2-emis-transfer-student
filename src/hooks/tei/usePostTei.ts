@@ -1,6 +1,7 @@
 import { useDataMutation } from "@dhis2/app-runtime"
 import useShowAlerts from '../commons/useShowAlert';
 import { atom, useRecoilState } from "recoil";
+import { teiRefetch } from "./useTransfer";
 
 const POST_TEI: any = {
     resource: "tracker",
@@ -10,11 +11,6 @@ const POST_TEI: any = {
         async: false
     }
 }
-
-export const teiRefetch = atom({
-    key: "refetch-tei",
-    default: false
-})
 
 export default function usePostTei() {
     const { hide, show } = useShowAlerts()

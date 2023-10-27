@@ -5,6 +5,7 @@ import { valueColorMapping } from './getValueColor';
 import { type CustomAttributeProps } from '../../types/table/AttributeColumns';
 import { getOuName } from '../ous/getOuDisplayName';
 import { IconButton } from '@material-ui/core';
+import { Attribute } from '../../types/generated/models';
 
 function showValueBasedOnColumn(column: CustomAttributeProps, value: string, dataStore: any, ous: Array<{id: string, name: string}>, onToggle: (arg: object) => void, setClickedButton: (arg: string) => void, selected: object, index: number, selectedTab: string) {
     if (column.id === dataStore?.transfer?.status) {
@@ -20,10 +21,10 @@ function showValueBasedOnColumn(column: CustomAttributeProps, value: string, dat
                 </ButtonStrip>
             )
         } else {
-            return <h6 className={styles.transferStatusLabel} style={{color: valueColorMapping[value]}}>{value}</h6>
+            return <h6 className={styles.transferStatusLabel} style={{color: valueColorMapping[value]}}>{value ?? "---"}</h6>
         }
     }
-    if (column.id === dataStore?.transfer?.destinySchool || column.id === dataStore?.transfer?.originSchool) {
+    if (column.valueType === Attribute.valueType.ORGANISATION_UNIT as unknown as CustomAttributeProps["valueType"] && (value !== "")) {
         return getOuName(ous, value)
     }
     return value
