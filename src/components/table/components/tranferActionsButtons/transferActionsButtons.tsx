@@ -7,12 +7,15 @@ import { useParams } from '../../../../hooks/commons/useQueryParams';
 import { Tooltip } from '@material-ui/core';
 import { useRecoilValue } from 'recoil';
 import { TabsState } from '../../../../schema/tabSchema';
+import { useConfig } from '@dhis2/app-runtime';
 
 function TransferActionsButtons() {
   const [open, setOpen] = useState<boolean>(false);
   const [openTranfer, setOpenTranfer] = useState<boolean>(false);
+  const { baseUrl } = useConfig()
   const { useQuery } = useParams();
   const orgUnit = useQuery().get("school")
+  const orgUnitName = useQuery().get("schoolName")
   const selectedTabState = useRecoilValue(TabsState).value
 
   return (
