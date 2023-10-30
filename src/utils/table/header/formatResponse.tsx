@@ -12,11 +12,11 @@ export function formatResponse(data: ProgramConfig, programStageId: string | und
         return data?.programTrackedEntityAttributes?.map((item) => {
             return {
                 id: item.trackedEntityAttribute.id,
-                displayName: item.trackedEntityAttribute.displayName,
-                header: item.trackedEntityAttribute.displayName,
+                displayName: item.trackedEntityAttribute.formName ?? item.trackedEntityAttribute.displayName,
+                header: item.trackedEntityAttribute.formName ?? item.trackedEntityAttribute.displayName,
                 required: item.mandatory,
-                name: item.trackedEntityAttribute.displayName,
-                labelName: item.trackedEntityAttribute.displayName,
+                name: item.trackedEntityAttribute.formName ?? item.trackedEntityAttribute.displayName,
+                labelName: item.trackedEntityAttribute.formName ?? item.trackedEntityAttribute.displayName,
                 valueType: item.trackedEntityAttribute.optionSet?.options?.length > 0 ? Attribute.valueType.LIST as unknown as CustomAttributeProps["valueType"] : item.trackedEntityAttribute.valueType as unknown as CustomAttributeProps["valueType"],
                 options: { optionSet: item.trackedEntityAttribute.optionSet },
                 visible: item.displayInList,
@@ -33,11 +33,11 @@ export function formatResponse(data: ProgramConfig, programStageId: string | und
                 ? originalData?.programStageDataElements?.map((programStageDataElement) => {
                     return {
                         id: programStageDataElement.dataElement.id,
-                        displayName: programStageDataElement.dataElement.displayName,
-                        header: programStageDataElement.dataElement.displayName,
+                        displayName: programStageDataElement.dataElement.formName ?? programStageDataElement.dataElement.displayName,
+                        header: programStageDataElement.dataElement.formName ?? programStageDataElement.dataElement.displayName,
                         required: programStageDataElement.compulsory,
-                        name: programStageDataElement.dataElement.displayName,
-                        labelName: programStageDataElement.dataElement.displayName,
+                        name: programStageDataElement.dataElement.formName ?? programStageDataElement.dataElement.displayName,
+                        labelName: programStageDataElement.dataElement.formName ?? programStageDataElement.dataElement.displayName,
                         valueType: programStageDataElement.dataElement.optionSet?.options?.length > 0 ? Attribute.valueType.LIST as unknown as CustomAttributeProps["valueType"] : programStageDataElement.dataElement.valueType as unknown as CustomAttributeProps["valueType"],
                         options: { optionSet: programStageDataElement.dataElement.optionSet },
                         visible: programStageDataElement.displayInReports,

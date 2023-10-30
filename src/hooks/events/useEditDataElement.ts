@@ -2,6 +2,7 @@ import { useDataMutation } from "@dhis2/app-runtime"
 import useShowAlerts from "../commons/useShowAlert"
 import { useRecoilValue } from "recoil"
 import { ApprovalButtonClicked } from "../../schema/approvalButtonClicked"
+import { useTransferConst } from "../../utils/constants/transferOptions/statusOptions"
 
 const UPDATE_DATAELEMENT_QUERY = {
     resource: 'events',
@@ -13,10 +14,11 @@ const UPDATE_DATAELEMENT_QUERY = {
 export const useEditDataElement = () => {
     const { hide, show } = useShowAlerts()
     const clickedButton = useRecoilValue(ApprovalButtonClicked)
+    const { transferConst } = useTransferConst()
 
     const [mutate] = useDataMutation(UPDATE_DATAELEMENT_QUERY, {
         onComplete: () => {
-            show({ message: `Student transfer ${clickedButton === "approve" ? "Approved" : "Reproved"} successfuly`, type: { success: true } })
+            show({ message: `Student transfer ${clickedButton === "approve" ? transferConst("approved") as string : transferConst("reproved") as string} successfuly`, type: { success: true } })
         },
         onError: (error) => {
             show({

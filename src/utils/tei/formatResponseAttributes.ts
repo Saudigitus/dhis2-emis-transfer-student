@@ -9,7 +9,7 @@ export function formatResponseTEI(attributes: ProgramConfig) {
             headers.push({
                 required: trackedEntityAttribute?.mandatory,
                 name: trackedEntityAttribute?.trackedEntityAttribute?.id,
-                labelName: trackedEntityAttribute?.trackedEntityAttribute?.displayName,
+                labelName: trackedEntityAttribute?.trackedEntityAttribute?.formName ?? trackedEntityAttribute?.trackedEntityAttribute?.displayName,
                 valueType: ((trackedEntityAttribute?.trackedEntityAttribute?.optionSet) != null) ? Attribute.valueType.LIST as unknown as CustomAttributeProps["valueType"] : trackedEntityAttribute?.trackedEntityAttribute?.valueType as unknown as CustomAttributeProps["valueType"],
                 options: { optionSet: trackedEntityAttribute?.trackedEntityAttribute.optionSet },
                 visible: true,
@@ -19,8 +19,8 @@ export function formatResponseTEI(attributes: ProgramConfig) {
                 error: false,
                 content: "",
                 id: trackedEntityAttribute?.trackedEntityAttribute?.id,
-                displayName: trackedEntityAttribute?.trackedEntityAttribute?.displayName,
-                header: trackedEntityAttribute?.trackedEntityAttribute?.displayName,
+                displayName: trackedEntityAttribute?.trackedEntityAttribute?.formName ?? trackedEntityAttribute?.trackedEntityAttribute?.displayName,
+                header: trackedEntityAttribute?.trackedEntityAttribute?.formName ?? trackedEntityAttribute?.trackedEntityAttribute?.displayName,
                 type: VariablesTypes.Attribute,
                 programStage: "",
                 value: undefined

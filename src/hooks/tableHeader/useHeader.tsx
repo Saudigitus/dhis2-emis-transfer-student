@@ -2,15 +2,15 @@ import { useRecoilValue } from "recoil";
 import { useState } from "react";
 import { ProgramConfigState } from "../../schema/programSchema";
 import { formatResponse } from "../../utils/table/header/formatResponse";
-import { DataStoreState } from "../../schema/dataStoreSchema";
+import { getSelectedKey } from "../../utils/commons/dataStore/getSelectedKey";
 
 export function useHeader() {
     const programConfigState = useRecoilValue(ProgramConfigState);
     const [columnHeader, setcolumnHeader] = useState()
-    const transferState = useRecoilValue(DataStoreState)
+    const { getDataStoreData } = getSelectedKey()
 
     return {
-        columns: formatResponse(programConfigState, transferState?.transfer?.programStage),
+        columns: formatResponse(programConfigState, getDataStoreData?.transfer?.programStage),
         columnHeader,
         setcolumnHeader
     }

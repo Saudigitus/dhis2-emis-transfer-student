@@ -1,6 +1,5 @@
 
 import { useRecoilState, useRecoilValue } from "recoil";
-import { DataStoreState } from "../../schema/dataStoreSchema";
 import { useState } from "react";
 import { useDataEngine } from "@dhis2/app-runtime";
 import { formatAllSelectedRow, formatResponseRows } from "../../utils/table/rows/formatResponseRows";
@@ -8,6 +7,7 @@ import { useParams } from "../commons/useQueryParams";
 import { HeaderFieldsState } from "../../schema/headersSchema";
 import useShowAlerts from "../commons/useShowAlert";
 import { RowSelectionState } from "../../schema/tableSelectedRowsSchema";
+import { getSelectedKey } from "../../utils/commons/dataStore/getSelectedKey";
 
 type TableDataProps = Record<string, string>;
 
@@ -17,6 +17,7 @@ interface EventQueryProps {
     ouMode: string | undefined
     program: string
     order: string
+    programStatus: string
     programStage: string
     orgUnit: string | undefined
     filter?: string[]
@@ -33,13 +34,14 @@ interface TeiQueryProps {
     order: string
 }
 
-const EVENT_QUERY = ({ ouMode, page, pageSize, program, order, programStage, filter, orgUnit, filterAttributes, trackedEntity }: EventQueryProps) => ({
+const EVENT_QUERY = ({ ouMode, page, pageSize, program, order, programStage, filter, orgUnit, filterAttributes, trackedEntity, programStatus }: EventQueryProps) => ({
     results: {
         resource: "tracker/events",
         params: {
             order,
             page,
             pageSize,
+            programStatus,
             ouMode,
             program,
             programStage,
@@ -96,15 +98,9 @@ interface TeiQueryResults {
     }
 }
 
-interface RegistrationQueryResults {
-    results: {
-        instances: any
-    }
-}
-
 export function useTableData() {
     const engine = useDataEngine();
-    const dataStoreState = useRecoilValue(DataStoreState);
+    const { getDataStoreData } = getSelectedKey();
     const headerFieldsState = useRecoilValue(HeaderFieldsState)
     const [selected, setSelected] = useRecoilState(RowSelectionState);
 
@@ -114,23 +110,20 @@ export function useTableData() {
     const { hide, show } = useShowAlerts()
     const school = urlParamiters().school as unknown as string
 
-    const incomingInitialFilter = [`${dataStoreState?.transfer?.destinySchool as unknown as string}:in:${school}`, ...headerFieldsState?.dataElements];
+    const incomingInitialFilter = [`${getDataStoreData?.transfer?.destinySchool as unknown as string}:in:${school}`, ...headerFieldsState?.dataElements];
 
     async function getData(page: number, pageSize: number, selectedTab: string) {
         setLoading(true)
-        const registrationValuesByTei: RegistrationQueryResults = {
-            results: {
-                instances: []
-            }
-        }
+
         const tranferResults: TransferQueryResults = await engine.query(EVENT_QUERY({
             ouMode: undefined,
             page,
             pageSize,
-            program: dataStoreState?.program as unknown as string,
+            program: getDataStoreData?.program as unknown as string,
             order: "createdAt:desc",
-            programStage: dataStoreState?.transfer?.programStage as unknown as string,
-            filter: (dataStoreState != null) && selectedTab === "incoming" ? incomingInitialFilter : headerFieldsState?.dataElements,
+            programStatus: "ACTIVE",
+            programStage: getDataStoreData?.transfer?.programStage as unknown as string,
+            filter: (getDataStoreData != null) && selectedTab === "incoming" ? incomingInitialFilter : headerFieldsState?.dataElements,
             filterAttributes: headerFieldsState?.attributes,
             orgUnit: selectedTab === "outgoing" ? school : undefined
         })).catch((error) => {
@@ -141,40 +134,14 @@ export function useTableData() {
             setTimeout(hide, 5000);
         })
 
-        const trackedEntityIds = tranferResults?.results?.instances.map((x: { trackedEntity: string, orgUnit: string }) => ({trackedEntity: x.trackedEntity, orgUnit: x.orgUnit}))
         const trackedEntityToFetch = tranferResults?.results?.instances.map((x: { trackedEntity: string }) => x.trackedEntity).toString().replaceAll(",", ";")
-
-        if (trackedEntityIds?.length > 0) {
-            for (const tei of trackedEntityIds) {
-                const registrationResults: RegistrationQueryResults = await engine.query(EVENT_QUERY({
-                    ouMode: undefined,
-                    page,
-                    pageSize,
-                    program: dataStoreState?.program as unknown as string,
-                    order: "createdAt:desc",
-                    programStage: dataStoreState?.registration?.programStage as unknown as string,
-                    // filter: headerFieldsState?.dataElements,
-                    // filterAttributes: headerFieldsState?.attributes,
-                    orgUnit: undefined,
-                    trackedEntity: tei.trackedEntity
-                })).catch((error) => {
-                    show({
-                        message: `${("Could not get data")}: ${error.message}`,
-                        type: { critical: true }
-                    });
-                    setTimeout(hide, 5000);
-                })
-
-                registrationValuesByTei.results.instances.push(...registrationResults?.results?.instances)
-            }
-        }
 
         const teiResults: TeiQueryResults = trackedEntityToFetch?.length > 0
             ? await engine.query(TEI_QUERY({
                 ouMode: "ALL",
                 order: "created:desc",
                 pageSize,
-                program: dataStoreState?.program as unknown as string,
+                program: getDataStoreData?.program as unknown as string,
                 orgUnit: undefined,
                 trackedEntity: trackedEntityToFetch
             })).catch((error) => {
@@ -189,13 +156,11 @@ export function useTableData() {
             ...selected,
             rows: formatAllSelectedRow({
                 transferInstances: tranferResults?.results?.instances,
-                registrationInstances: registrationValuesByTei?.results?.instances,
                 teiInstances: teiResults.results.instances
             })
         })
         setTableData(formatResponseRows({
             transferInstances: tranferResults?.results?.instances,
-            registrationInstances: registrationValuesByTei?.results?.instances,
             teiInstances: teiResults.results.instances
         }));
 
