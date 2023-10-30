@@ -6,9 +6,9 @@ import { IconButton } from '@material-ui/core';
 import { Attribute } from '../../types/generated/models';
 import OuNameContainer from './OuName';
 
-function showValueBasedOnColumn(column: CustomAttributeProps, value: string, dataStore: any, onToggle: (arg: object) => void, setClickedButton: (arg: string) => void, selected: object, index: number, selectedTab: string, valueColorMapping: Record<string, string>) {
+function showValueBasedOnColumn(column: CustomAttributeProps, value: string, dataStore: any, onToggle: (arg: object) => void, setClickedButton: (arg: string) => void, selected: object, index: number, selectedTab: string, valueColorMapping: Record<string, string>, pendingStatus: string) {
     if (column.id === dataStore?.transfer?.status) {
-        if (value === "Pending" && selectedTab === "incoming") {
+        if (value === pendingStatus && selectedTab === "incoming") {
             return (
                 <ButtonStrip>
                     <IconButton size="small" className={styles.approveIcon} onClick={() => { onToggle(selected.rows[index]); setClickedButton("approve") }}>

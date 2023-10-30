@@ -11,6 +11,7 @@ import { replaceSelectedRow } from '../../../utils/commons/arrayUtils';
 import { ApprovalButtonClicked } from '../../../schema/approvalButtonClicked';
 import { getSelectedKey } from '../../../utils/commons/dataStore/getSelectedKey';
 import usetGetOptionColorMapping from '../../../hooks/optionSets/usetGetOptionColorMapping';
+import { useTransferConst } from '../../../utils/constants/transferOptions/statusOptions';
 interface RenderHeaderProps {
     rowsData: any[]
     headerData: CustomAttributeProps[]
@@ -49,6 +50,7 @@ function RenderRows({ headerData, rowsData, loading, selectedTab, handleOpenAppr
     const [selected, setSelected] = useRecoilState(RowSelectionState);
     const [, setClickedButton] = useRecoilState(ApprovalButtonClicked)
     const valueColorMapping = usetGetOptionColorMapping()
+    const { transferConst } = useTransferConst()
 
     const onToggle = (rawRowData: object) => {
         handleOpenApproval();
@@ -80,7 +82,7 @@ function RenderRows({ headerData, rowsData, loading, selectedTab, handleOpenAppr
                             className={classNames(classes.cell, classes.bodyCell)}
                         >
                             <div>
-                                {showValueBasedOnColumn(column, row[column.id], getDataStoreData, onToggle, setClickedButton, selected, index, selectedTab, valueColorMapping)}
+                                {showValueBasedOnColumn(column, row[column.id], getDataStoreData, onToggle, setClickedButton, selected, index, selectedTab, valueColorMapping, transferConst("pending") as string)}
                             </div>
                         </RowCell>
                     ));
