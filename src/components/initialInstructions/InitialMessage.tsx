@@ -10,7 +10,6 @@ export default function InitialMessage(): React.ReactElement {
                 <span>Follow the instructions to proceed:</span>
                 <ul>
                     <li className={styles.paperOtherText}>Select the  Organization unit you want to view data</li>
-                    <li className={styles.paperOtherText}>Use global filters(Class, Grade and Academic Year)</li>
                 </ul>
                 <span>How to perform operations:</span>
                 <ul>
