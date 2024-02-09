@@ -7,8 +7,8 @@ import { useRecoilState } from "recoil";
 import { TabsState } from "../../../../../schema/tabSchema";
 
 const tabsElements: TabElementsProps[] = [
-  { name: "Incoming transfer", value: "incoming" },
-  { name: "Outgoing transfer", value: "outgoing" }
+  { name: "Outgoing transfer", value: "outgoing" },
+  { name: "Incoming transfer", value: "incoming" }
 ];
 
 function WorkingLits() {

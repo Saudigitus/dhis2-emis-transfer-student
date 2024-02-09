@@ -1,6 +1,5 @@
 import { type formType } from "../../types/form/initialFormTypes";
 import { reducer } from "../commons/formatDistinctValue";
-import { performanceProgramStages } from "../constants/enrollmentForm/performanceProgramStages";
 
 export const teiPostBody = (enrollmentsData: any[], programId: string, orgUnit: string, enrollmentDate: string) => {
     const form: formType = {

@@ -1,18 +1,17 @@
 import React from 'react'
 import i18n from '@dhis2/d2-i18n';
 import classNames from 'classnames';
-import { ButtonStrip, IconThumbUp24, IconThumbDown24 } from "@dhis2/ui"
 import { makeStyles, type Theme, createStyles } from '@material-ui/core/styles';
 import { RowCell, RowTable } from '../components';
 import { type CustomAttributeProps } from '../../../types/table/AttributeColumns';
-import { removeColumById, showValueBasedOnColumn } from '../../../utils/commons/tableRowsColumns';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { DataStoreState } from '../../../schema/dataStoreSchema';
-import styles from "./table-render.module.css"
-import { IconButton } from '@material-ui/core';
+import { showValueBasedOnColumn } from '../../../utils/commons/tableRowsColumns';
+import { useRecoilState } from 'recoil';
 import { RowSelectionState } from '../../../schema/tableSelectedRowsSchema';
-import { checkIsRowSelected } from '../../../utils/commons/arrayUtils';
+import { replaceSelectedRow } from '../../../utils/commons/arrayUtils';
 import { ApprovalButtonClicked } from '../../../schema/approvalButtonClicked';
+import { getSelectedKey } from '../../../utils/commons/dataStore/getSelectedKey';
+import usetGetOptionColorMapping from '../../../hooks/optionSets/usetGetOptionColorMapping';
+import { useTransferConst } from '../../../utils/constants/transferOptions/statusOptions';
 interface RenderHeaderProps {
     rowsData: any[]
     headerData: CustomAttributeProps[]
@@ -47,14 +46,15 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function RenderRows({ headerData, rowsData, loading, selectedTab, handleOpenApproval }: RenderHeaderProps): React.ReactElement {
     const classes = useStyles()
-    const getDataStore = useRecoilValue(DataStoreState)
+    const { getDataStoreData } = getSelectedKey();
     const [selected, setSelected] = useRecoilState(RowSelectionState);
-    const [clickedButton, setClickedButton] = useRecoilState(ApprovalButtonClicked)
+    const [, setClickedButton] = useRecoilState(ApprovalButtonClicked)
+    const valueColorMapping = usetGetOptionColorMapping()
+    const { transferConst } = useTransferConst()
 
-    console.log("clickedButton: ", clickedButton)
     const onToggle = (rawRowData: object) => {
         handleOpenApproval();
-        setSelected({ ...selected, selectedRows: checkIsRowSelected(rawRowData, selected), isAllRowsSelected: selected.rows.length === checkIsRowSelected(rawRowData, selected).length })
+        setSelected({ ...selected, selectedRows: replaceSelectedRow(rawRowData), isAllRowsSelected: selected.rows.length === replaceSelectedRow(rawRowData).length })
     }
 
     if (rowsData.length === 0 && !loading) {
@@ -76,13 +76,13 @@ function RenderRows({ headerData, rowsData, loading, selectedTab, handleOpenAppr
         <React.Fragment>
             {
                 rowsData.map((row, index) => {
-                    const cells = removeColumById(headerData, getDataStore, selectedTab)?.filter(x => x.visible)?.map(column => (
+                    const cells = headerData?.filter(x => x.visible)?.map(column => (
                         <RowCell
                             key={column.id}
                             className={classNames(classes.cell, classes.bodyCell)}
                         >
                             <div>
-                                {showValueBasedOnColumn(column, row[column.id], getDataStore)}
+                                {showValueBasedOnColumn(column, row[column.id], getDataStoreData, onToggle, setClickedButton, selected, index, selectedTab, valueColorMapping, transferConst("pending") as string)}
                             </div>
                         </RowCell>
                     ));
@@ -92,18 +92,6 @@ function RenderRows({ headerData, rowsData, loading, selectedTab, handleOpenAppr
                             className={classNames(classes.row, classes.dataRow)}
                         >
                             {cells}
-                            {selectedTab === "incoming" &&
-                                <RowCell className={classNames(classes.cell, classes.bodyCell)}>
-                                    <ButtonStrip>
-                                        <IconButton size="small" className={styles.approveIcon} onClick={() => { onToggle(selected.rows[index]); setClickedButton("approve") }}>
-                                            <IconThumbUp24/>
-                                        </IconButton>
-                                        <IconButton size="small" className={styles.rejectIcon} onClick={() => { onToggle(selected.rows[index]); setClickedButton("reject") }}>
-                                            <IconThumbDown24/>
-                                        </IconButton>
-                                    </ButtonStrip>
-                                </RowCell>
-                            }
                         </RowTable>
                     );
                 })

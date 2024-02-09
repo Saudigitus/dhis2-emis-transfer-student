@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react'
 import { useRecoilValue } from 'recoil';
 import { ProgramConfigState } from '../../schema/programSchema';
-import { DataStoreState } from '../../schema/dataStoreSchema';
 import { formatResponseEvents } from '../../utils/events/formatResponseEvents';
 import { formatResponseTEI } from '../../utils/tei/formatResponseAttributes';
+import { getSelectedKey } from '../../utils/commons/dataStore/getSelectedKey';
 
 export default function useGetEnrollmentForm() {
     const [enrollmentsData, setEnrollmentsData] = useState<any[]>([])
     const getProgram = useRecoilValue(ProgramConfigState);
-    const getDataStoreData = useRecoilValue(DataStoreState);
+    const { getDataStoreData } = getSelectedKey();
 
     const buildForm = () => {
         if (getDataStoreData != null && getProgram !== undefined) {

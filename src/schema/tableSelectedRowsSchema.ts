@@ -22,14 +22,8 @@ export const selectionSchema = z.object({
         }),
         transferInstance: z.object({
             event: z.string(),
-            dataValues: z.array(z.object({
-                dataElement: z.string(),
-                value: z.string()
-            }))
-
-        }),
-        registrationInstance: z.object({
-            event: z.string(),
+            orgUnit: z.string(),
+            orgUnitName: z.string(),
             dataValues: z.array(z.object({
                 dataElement: z.string(),
                 value: z.string()

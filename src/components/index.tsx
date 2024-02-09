@@ -8,7 +8,6 @@ import FlyoutMenuComponent from "./menu/FlyoutMenu";
 import WithPadding from "./template/WithPadding";
 import WithBorder from "./template/WithBorder";
 import ModalComponent from "./modal/Modal";
-import ModalContentComponent from "./modal/ModalContent";
 import Title from "./text/Title";
 import { Item, MenuItemContainer } from "./menuItem/index"
 import Subtitle from "./text/subtitle";
@@ -21,7 +20,7 @@ import TabComponent from "./tabs/TabComponent";
 export {
     SideBar, MainHeader, Table, DropdownButtonComponent,
     FlyoutMenuComponent, SimpleButtons, WithPadding, WithBorder,
-    ModalComponent, ModalContentComponent, OrgUnitTree,
+    ModalComponent, OrgUnitTree,
     SimpleSearch, Title, Subtitle, Item, MenuItemContainer, SwitchButtonView,
     GroupForm, TEIGenericForm, EventGenericForm, TabComponent
 }
