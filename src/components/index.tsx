@@ -1,26 +1,23 @@
-import Table from "./table/render/Table"
+import Badge from "./badge/Badge";
+import DropdownButtonComponent from "./buttons/DropdownButton";
+import DragDropList from "./dragDrop/DragDropList";
+import DragDropItems from "./dragDrop/DragDropItems";
+import InitialMessage from "./initialInstructions/InitialMessage";
 import { SideBar, MainHeader } from "./layout/index"
-import SimpleButtons from "./buttons/Button";
+import FlyoutMenuComponent from "./menu/FlyoutMenu";
+import { Item, MenuItemContainer } from "./menuItem/index"
+import ModalComponent from "./modal/Modal";
 import { OrgUnitTree } from "./orgUnitTree/index"
 import { SimpleSearch } from "./search/index"
-import DropdownButtonComponent from "./buttons/DropdownButton";
-import FlyoutMenuComponent from "./menu/FlyoutMenu";
+import Table from "./table/render/Table"
+import TabComponent from "./tabs/TabComponent";
 import WithPadding from "./template/WithPadding";
 import WithBorder from "./template/WithBorder";
-import ModalComponent from "./modal/Modal";
 import Title from "./text/Title";
-import { Item, MenuItemContainer } from "./menuItem/index"
-import Subtitle from "./text/subtitle";
-import SwitchButtonView from "./buttons/MultipleButtons/SwitchButtonView";
-import GroupForm from "./form/GroupForm";
-import TEIGenericForm from "./teiComponent/TEIForm";
-import EventGenericForm from "./eventComponent/EventForm";
-import TabComponent from "./tabs/TabComponent";
+import Subtitle from "./text/Subtitle";
 
 export {
-    SideBar, MainHeader, Table, DropdownButtonComponent,
-    FlyoutMenuComponent, SimpleButtons, WithPadding, WithBorder,
-    ModalComponent, OrgUnitTree,
-    SimpleSearch, Title, Subtitle, Item, MenuItemContainer, SwitchButtonView,
-    GroupForm, TEIGenericForm, EventGenericForm, TabComponent
+    Badge, SideBar, MainHeader, Table, DropdownButtonComponent, DragDropList, DragDropItems,
+    FlyoutMenuComponent,WithPadding, WithBorder, InitialMessage, ModalComponent, OrgUnitTree,
+    SimpleSearch, Title, Subtitle, Item, MenuItemContainer, TabComponent
 }

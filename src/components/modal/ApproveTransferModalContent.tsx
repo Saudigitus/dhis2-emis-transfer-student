@@ -1,12 +1,12 @@
 import React from "react";
-import { ModalActions, Button, ButtonStrip } from "@dhis2/ui";
-import WithPadding from "../template/WithPadding";
-import { useParams } from "../../hooks/commons/useQueryParams";
-import { useTransferTEI } from "../../hooks/tei/useTransfer";
 import { useRecoilValue } from "recoil";
+import WithPadding from "../template/WithPadding";
+import { useTransferTEI } from "../../hooks/tei/useTransfer";
+import { ModalActions, Button, ButtonStrip } from "@dhis2/ui";
+import { useParams } from "../../hooks/commons/useQueryParams";
+import { attributeFilter } from "../../utils/tei/getAttributeValue";
 import { RowSelectionState } from "../../schema/tableSelectedRowsSchema";
 import { ApprovalButtonClicked } from "../../schema/approvalButtonClicked";
-import { attributeFilter } from "../../utils/tei/getAttributeValue";
 
 interface ContentProps {
   setOpen: (value: boolean) => void

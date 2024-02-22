@@ -1,5 +1,5 @@
-import { Paper } from '@material-ui/core'
 import React from 'react'
+import { Paper } from '@material-ui/core'
 import styles from './initial.module.css'
 
 export default function InitialMessage(): React.ReactElement {

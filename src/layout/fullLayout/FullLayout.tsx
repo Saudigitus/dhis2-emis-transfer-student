@@ -1,9 +1,9 @@
 import React from 'react'
-import style from "../Layout.module.css"
+import style from "../layout.module.css"
 import { MainHeader, SideBar } from '../../components'
-import { useGetInitialValues } from '../../hooks/initialValues/useGetInitialValues'
 import { CenteredContent, CircularLoader } from "@dhis2/ui";
 import { getSelectedKey } from '../../utils/commons/dataStore/getSelectedKey'
+import { useGetInitialValues } from '../../hooks/initialValues/useGetInitialValues'
 import { useGetProgramConfig } from '../../hooks/programConfig/useGetprogramConfig'
 
 export default function FullLayout({ children }: { children: React.ReactNode }) {

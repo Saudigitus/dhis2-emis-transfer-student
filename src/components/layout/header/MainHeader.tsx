@@ -1,5 +1,5 @@
 import React from 'react'
-import style from "./MainHeader.module.css"
+import style from "./mainHeader.module.css"
 import { headBarData } from '../../../utils/constants/headBar/headBarData'
 import HeaderItem from './HeaderItem'
 import { useParams } from '../../../hooks/commons/useQueryParams'

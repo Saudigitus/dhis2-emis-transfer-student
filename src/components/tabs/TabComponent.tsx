@@ -1,7 +1,7 @@
-import { TabBar, Tab } from "@dhis2/ui";
 import React from "react";
-import { type TabBarProps } from "../../types/tabs/TabsTypes";
+import { TabBar, Tab } from "@dhis2/ui";
 import WithPadding from "../template/WithPadding";
+import { type TabBarProps } from "../../types/tabs/TabsTypes";
 
 function TabComponent(props: TabBarProps): React.ReactElement {
   const { elements, selectedValue, setSelectedValue } = props;
