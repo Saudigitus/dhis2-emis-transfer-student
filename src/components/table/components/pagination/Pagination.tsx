@@ -9,7 +9,6 @@ import { disableNextPage } from '../../../../utils/table/pagination/pagination';
 import { rowsPerPages } from '../../../../utils/constants/pagination/pagination';
 
 
-
 function Pagination(props: PaginationProps): React.ReactElement {
     const { page, rowsPerPage, onPageChange, onRowsPerPageChange, loading, totalPerPage } = props;
     

@@ -17,18 +17,18 @@ function ContentFilter(props: ContentFilterProps) {
     const [filtersValues, setfiltersValues] = useState<FiltersValuesProps>({})
     const [localFilters, setlocalFilters] = useState<CustomAttributeProps[]>([])
     const [fieldsFilled, setfieldsFilled] = useState<FiltersValuesProps>({})
-    const [anchorEl, setAnchorEl] = useState(null)
+    const [anchorEl, setAnchorEl] = useState<EventTarget | null>(null);
     const [resetValues, setresetValues] = useState("")
     const [headerFieldsStateValues, setHeaderFieldsState] = useRecoilState(HeaderFieldsState)
-    const attributesQuerybuilder: any[][] = [];
-    const dataElementsQuerybuilder: any[][] = [];
+    const attributesQuerybuilder: string[][] = [];
+    const dataElementsQuerybuilder: string[][] = [];
 
     useEffect(() => {
         const copyHeader = [...headers]
         setlocalFilters(copyHeader.slice(0, 4))
     }, [headers])
 
-    const handleClick = (event: any) => {
+    const handleClick = (event: MouseEvent) => {
         setAnchorEl(event.currentTarget);
     };
 
@@ -79,7 +79,6 @@ function ContentFilter(props: ContentFilterProps) {
 
     const onQuerySubmit = () => {
         const copyHeader = { ...filtersValues }
-        console.log("headers", headers)
         for (const [key, value] of Object.entries(copyHeader)) {
             const variableType = headers.find(x => x.id === key)?.type
             if (typeof value === 'object') {

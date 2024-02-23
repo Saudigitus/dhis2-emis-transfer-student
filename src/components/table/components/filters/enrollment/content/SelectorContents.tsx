@@ -24,9 +24,10 @@ function SelectorContents(props: SelectorContentsProps) {
     return (
         <>
             <FilterComponents
-                type={colum.valueType}
-                column={colum}
                 {...props}
+                column={colum}
+                type={colum.valueType}
+                options={colum.options}
             />
             <div
                 className={classes.buttonsContainer}

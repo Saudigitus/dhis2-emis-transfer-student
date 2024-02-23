@@ -34,6 +34,7 @@ interface RenderHeaderProps {
     createSortHandler?: (property: string) => any
     rowsData?: any[]
     headerData?: CustomAttributeProps[]
+    selectedTab: string
 }
 
 interface RenderRowsProps {

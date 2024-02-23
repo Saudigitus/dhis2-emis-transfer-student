@@ -1,6 +1,6 @@
 
-import { useRecoilState, useRecoilValue } from "recoil";
 import { useState } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { useDataEngine } from "@dhis2/app-runtime";
 import { formatAllSelectedRow, formatResponseRows } from "../../utils/table/rows/formatResponseRows";
 import { useParams } from "../commons/useQueryParams";
@@ -8,31 +8,9 @@ import { HeaderFieldsState } from "../../schema/headersSchema";
 import useShowAlerts from "../commons/useShowAlert";
 import { RowSelectionState } from "../../schema/tableSelectedRowsSchema";
 import { getSelectedKey } from "../../utils/commons/dataStore/getSelectedKey";
-
-type TableDataProps = Record<string, string>;
-
-interface EventQueryProps {
-    page: number
-    pageSize: number
-    ouMode: string | undefined
-    program: string
-    order: string
-    programStatus: string
-    programStage: string
-    orgUnit: string | undefined
-    filter?: string[]
-    filterAttributes?: string[]
-    trackedEntity?: string
-}
-
-interface TeiQueryProps {
-    program: string
-    pageSize: number
-    ouMode: string
-    trackedEntity: string
-    orgUnit?: string
-    order: string
-}
+import { EventQueryProps, TransferQueryResults } from "../../types/api/WithoutRegistrationProps";
+import { TeiQueryProps, TeiQueryResults } from "../../types/api/WithRegistrationProps";
+import { TableDataProps } from "../../types/table/TableContentProps";
 
 const EVENT_QUERY = ({ ouMode, page, pageSize, program, order, programStage, filter, orgUnit, filterAttributes, trackedEntity, programStatus }: EventQueryProps) => ({
     results: {
@@ -69,34 +47,6 @@ const TEI_QUERY = ({ ouMode, pageSize, program, trackedEntity, orgUnit, order }:
     }
 })
 
-interface dataValuesProps {
-    dataElement: string
-    value: string
-}
-
-interface attributesProps {
-    attribute: string
-    value: string
-}
-
-interface TransferQueryResults {
-    results: {
-        instances: [{
-            trackedEntity: string
-            orgUnit: string
-            dataValues: dataValuesProps[]
-        }]
-    }
-}
-
-interface TeiQueryResults {
-    results: {
-        instances: Array<{
-            trackedEntity: string
-            attributes: attributesProps[]
-        }>
-    }
-}
 
 export function useTableData() {
     const engine = useDataEngine();
@@ -116,7 +66,7 @@ export function useTableData() {
         setLoading(true)
 
         const tranferResults: TransferQueryResults = await engine.query(EVENT_QUERY({
-            ouMode: undefined,
+            ouMode: undefined as unknown as string,
             page,
             pageSize,
             program: getDataStoreData?.program as unknown as string,
@@ -125,14 +75,15 @@ export function useTableData() {
             programStage: getDataStoreData?.transfer?.programStage as unknown as string,
             filter: (getDataStoreData != null) && selectedTab === "incoming" ? incomingInitialFilter : headerFieldsState?.dataElements,
             filterAttributes: headerFieldsState?.attributes,
-            orgUnit: selectedTab === "outgoing" ? school : undefined
+            orgUnit: selectedTab === "outgoing" ? school : undefined as unknown as string,
+            trackedEntity: undefined as unknown as string,
         })).catch((error) => {
             show({
                 message: `${("Could not get data")}: ${error.message}`,
                 type: { critical: true }
             });
             setTimeout(hide, 5000);
-        })
+        }) as unknown as TransferQueryResults
 
         const trackedEntityToFetch = tranferResults?.results?.instances.map((x: { trackedEntity: string }) => x.trackedEntity).toString().replaceAll(",", ";")
 
@@ -142,7 +93,7 @@ export function useTableData() {
                 order: "created:desc",
                 pageSize,
                 program: getDataStoreData?.program as unknown as string,
-                orgUnit: undefined,
+                orgUnit: undefined as unknown as string,
                 trackedEntity: trackedEntityToFetch
             })).catch((error) => {
                 show({
@@ -150,8 +101,8 @@ export function useTableData() {
                     type: { critical: true }
                 });
                 setTimeout(hide, 5000);
-            })
-            : { results: { instances: [] } }
+            }) as unknown as TeiQueryResults
+            : { results: { instances: [] } } as unknown as TeiQueryResults
         setSelected({
             ...selected,
             rows: formatAllSelectedRow({

@@ -1,10 +1,11 @@
-import { useDataMutation } from "@dhis2/app-runtime"
-import useShowAlerts from "../commons/useShowAlert"
 import { useRecoilValue } from "recoil"
+import useShowAlerts from "../commons/useShowAlert"
+import { useDataMutation } from "@dhis2/app-runtime"
+import type { Event, DataElement } from "../../types/generated"
 import { ApprovalButtonClicked } from "../../schema/approvalButtonClicked"
 import { useTransferConst } from "../../utils/constants/transferOptions/statusOptions"
 
-const UPDATE_DATAELEMENT_QUERY = {
+const UPDATE_DATAELEMENT_QUERY : any = {
     resource: 'events',
     type: 'update',
     id: ({ id }: any) => id,
@@ -29,7 +30,7 @@ export const useEditDataElement = () => {
         }
     })
 
-    async function mutateValues(event: any, dataElement: any, value: string) {
+    async function mutateValues(event: Event, dataElement: DataElement['id'], value: string) {
         const data = {
             event: event?.event,
             orgUnit: event?.orgUnit,

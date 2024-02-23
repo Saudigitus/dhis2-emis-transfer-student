@@ -1,7 +1,7 @@
+import { useMemo } from "react";
 import { Attribute } from "../../../types/generated/models";
 import { type ProgramConfig } from "../../../types/programConfig/ProgramConfig";
-import { VariablesTypes, type CustomAttributeProps } from "../../../types/table/AttributeColumns";
-import { useMemo } from "react";
+import { VariablesTypes, type CustomAttributeProps } from "../../../types/variables/AttributeColumns";
 
 export function formatResponse(data: ProgramConfig, programStageId: string | undefined): CustomAttributeProps[] {
     const headerResponse = useMemo(() => {
