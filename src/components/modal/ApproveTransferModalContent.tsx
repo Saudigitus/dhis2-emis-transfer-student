@@ -4,15 +4,12 @@ import WithPadding from "../template/WithPadding";
 import { useTransferTEI } from "../../hooks/tei/useTransfer";
 import { ModalActions, Button, ButtonStrip } from "@dhis2/ui";
 import { useParams } from "../../hooks/commons/useQueryParams";
+import { ApproveTranferProps } from "../../types/modal/ModalTypes";
 import { attributeFilter } from "../../utils/tei/getAttributeValue";
 import { RowSelectionState } from "../../schema/tableSelectedRowsSchema";
 import { ApprovalButtonClicked } from "../../schema/approvalButtonClicked";
 
-interface ContentProps {
-  setOpen: (value: boolean) => void
-  handleCloseApproval: () => void
-}
-function ApproveTranfer(props: ContentProps): React.ReactElement {
+function ApproveTranfer(props: ApproveTranferProps): React.ReactElement {
   const { setOpen, handleCloseApproval } = props;
   const selectedTei = useRecoilValue(RowSelectionState).selectedRows[0]
   const clickedButton = useRecoilValue(ApprovalButtonClicked)

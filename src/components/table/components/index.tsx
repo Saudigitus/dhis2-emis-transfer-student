@@ -7,7 +7,6 @@ import TableComponent from "./table/TableComponent"
 import HeaderFilters from "./head/HeaderFilters"
 
 export {
-    RowCell, RowTable,
-    HeadCell, Pagination, SortLabel,
-    TableComponent, HeaderFilters
+    RowCell, RowTable, HeadCell, Pagination,
+    SortLabel,TableComponent, HeaderFilters
 }

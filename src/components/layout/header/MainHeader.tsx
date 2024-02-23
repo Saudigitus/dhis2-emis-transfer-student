@@ -1,14 +1,14 @@
 import React from 'react'
-import style from "./mainHeader.module.css"
-import { headBarData } from '../../../utils/constants/headBar/headBarData'
 import HeaderItem from './HeaderItem'
+import style from "./mainHeader.module.css"
 import { useParams } from '../../../hooks/commons/useQueryParams'
+import { headBarData } from '../../../utils/constants/headBar/headBarData'
 import { getSelectedKey } from '../../../utils/commons/dataStore/getSelectedKey'
 
 export default function MainHeader(): React.ReactElement {
     const { urlParamiters } = useParams();
-    const { getDataStoreData } = getSelectedKey();
     const selectedOptions = urlParamiters();
+    const { getDataStoreData } = getSelectedKey();
 
     return (
         <nav className={style.MainHeaderContainer}>

@@ -1,18 +1,9 @@
 import React, { useMemo } from 'react'
-import { RowTable, SortLabel } from '../components'
 import classNames from 'classnames';
-import { makeStyles, createStyles, type Theme } from '@material-ui/core/styles';
+import { RowTable } from '../components'
 import HeaderCell from '../components/head/HeaderCell';
-import { type CustomAttributeProps } from '../../../types/table/AttributeColumns';
-
-interface renderHeaderProps {
-    rowsHeader: CustomAttributeProps[]
-    orderBy: string
-    order: "asc" | "desc"
-    selectedTab: string
-    // TODO resolve this bug.👇
-    createSortHandler: (property: string) => any
-}
+import { RenderHeaderProps } from '../../../types/table/TableContentProps';
+import { makeStyles, createStyles, type Theme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -48,8 +39,8 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-function RenderHeader(props: renderHeaderProps): React.ReactElement {
-    const { rowsHeader, order, orderBy, createSortHandler } = props
+function RenderHeader(props: RenderHeaderProps): React.ReactElement {
+    const { rowsHeader } = props
     const classes = useStyles()
 
     const headerCells = useMemo(() => {

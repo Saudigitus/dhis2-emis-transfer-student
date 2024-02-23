@@ -6,7 +6,8 @@ import { useConfig } from '@dhis2/app-runtime';
 import { useLocation } from 'react-router-dom';
 import { type SideBarSubItemProps } from '../../../../types/sideBar/SideBarTypes';
 
-export default function SideBarSubItem({ icon, label, showBadge, disabled, route, appName, pathName }: SideBarSubItemProps) {
+export default function SideBarSubItem(props: SideBarSubItemProps) {
+    const { icon, label, showBadge, disabled, route, appName, pathName } = props;
     const { baseUrl } = useConfig()
     const location = useLocation()
 
