@@ -1,52 +1,17 @@
-import { IconButton } from '@material-ui/core';
-import { KeyboardArrowLeft, KeyboardArrowRight } from '@material-ui/icons';
 import React from 'react'
 import Select from 'react-select';
 import defaultClasses from '../table.module.css';
+import { TextPagination } from './components/TextPagination';
+import { IconButtonPagination } from './components/IconButtonPagination';
+import { PaginationProps } from '../../../../types/table/PaginationProps';
+import { KeyboardArrowLeft, KeyboardArrowRight } from '@material-ui/icons';
 import { disableNextPage } from '../../../../utils/table/pagination/pagination';
 import { rowsPerPages } from '../../../../utils/constants/pagination/pagination';
 
-interface PaginationProps {
-    page: number
-    rowsPerPage: number
-    onPageChange: (page: number) => void
-    onRowsPerPageChange: (rowsPerPage: number) => void
-    loading: boolean
-    totalPerPage: number
-}
 
-interface IconButtonPaginationProps {
-    onPageChange: (page: number) => void
-    ariaLabel: string
-    disabled: boolean
-    Icon: React.ReactNode
-}
-
-function textPagination(text: string): React.ReactElement {
-    return (
-        <span className={defaultClasses.textPagination}>
-            {text}
-        </span>
-    )
-}
-
-function IconButtonPagination(props: IconButtonPaginationProps): React.ReactElement {
-    return (
-        <>
-            <IconButton
-                style={{ paddingRight: 15 }}
-                // corrigir este erro 👇
-                onClick={props.onPageChange}
-                disabled={props.disabled}
-                aria-label={props.ariaLabel}
-            >
-                {props.Icon}
-            </IconButton>
-        </>
-    )
-}
-
-function Pagination({ page, rowsPerPage, onPageChange, onRowsPerPageChange, loading, totalPerPage }: PaginationProps): React.ReactElement {
+function Pagination(props: PaginationProps): React.ReactElement {
+    const { page, rowsPerPage, onPageChange, onRowsPerPageChange, loading, totalPerPage } = props;
+    
     return (
         <div
             className={defaultClasses.pagination}
@@ -55,7 +20,7 @@ function Pagination({ page, rowsPerPage, onPageChange, onRowsPerPageChange, load
             <div />
 
             <div className={defaultClasses.rootPagination}>
-                {textPagination("Rows per page")}
+                {TextPagination("Rows per page")}
 
                 <Select
                     className={defaultClasses.textPagination}
@@ -68,7 +33,7 @@ function Pagination({ page, rowsPerPage, onPageChange, onRowsPerPageChange, load
                     onChange={onRowsPerPageChange}
                     menuContainerStyle={{ top: 'auto', bottom: '100%' }}
                 />
-                {textPagination(`Page ${page}`)}
+                {TextPagination(`Page ${page}`)}
 
                 <div style={{ marginRight: 10 }} />
 

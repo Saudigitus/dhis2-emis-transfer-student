@@ -1,19 +1,13 @@
+import React, { useState } from 'react'
 import i18n from '@dhis2/d2-i18n';
+import { Button } from 'react-bootstrap';
 import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DragDropList from '../../../dragDrop/DragDropList';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import React, { useState } from 'react'
-import DragDropList from '../../../dragDrop/DragDropList';
-import { Button } from 'react-bootstrap';
-import { type CustomAttributeProps } from '../../../../types/table/AttributeColumns';
-
-interface DialogSelectColumnsProps {
-    open: boolean
-    onClose: () => void
-    headers: any[]
-    updateVariables: (list: any[]) => void
-}
+import { DialogSelectColumnsProps } from '../../../../types/table/ConfigColumnsProps';
+import { type CustomAttributeProps } from '../../../../types/variables/AttributeColumns';
 
 function DialogSelectColumns(props: DialogSelectColumnsProps) {
     const { open, onClose, headers = [], updateVariables } = props

@@ -1,4 +1,3 @@
-
 export const convertArrayToObject = (arr: string[][]) => {
     const obj: any = {};
     arr.forEach((item) => {

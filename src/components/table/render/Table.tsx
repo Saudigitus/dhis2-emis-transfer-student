@@ -17,8 +17,8 @@ import { TabsState } from "../../../schema/tabSchema";
 import ModalComponent from "../../modal/Modal";
 import ApproveTranferContent from "../../modal/ApproveTransferModalContent";
 import { ApprovalButtonClicked } from "../../../schema/approvalButtonClicked";
-import { teiRefetch } from "../../../hooks/tei/useTransfer";
 import { loadingOusState } from "../../../schema/loadingOusSchema";
+import { TeiRefetch } from "../../../schema/refecthTeiSchema";
 
 const usetStyles = makeStyles({
   tableContainer: {
@@ -36,7 +36,7 @@ function Table() {
   const loadingOus = useRecoilValue(loadingOusState);
   const [page, setpage] = useState(1);
   const [pageSize, setpageSize] = useState(10);
-  const [refetch] = useRecoilState(teiRefetch);
+  const [refetch] = useRecoilState(TeiRefetch);
   const [open, setOpen] = useState<boolean>(false);
   const clickedButton = useRecoilValue(ApprovalButtonClicked)
 

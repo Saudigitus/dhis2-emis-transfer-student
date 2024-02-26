@@ -1,7 +1,7 @@
 import React from "react";
-import ConfigTableColumns from "../configTableColumns/ConfigTableColumns";
-import EnrollmentFilters from "../filters/enrollment/EnrollmentFilters";
 import { useHeader } from "../../../../hooks/tableHeader/useHeader";
+import EnrollmentFilters from "../filters/enrollment/EnrollmentFilters";
+import ConfigTableColumns from "../configTableColumns/ConfigTableColumns";
 
 function HeaderFilters() {
   const { columns } = useHeader();

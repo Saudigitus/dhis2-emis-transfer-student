@@ -3,7 +3,6 @@ import i18n from '@dhis2/d2-i18n';
 import classNames from 'classnames';
 import { makeStyles, type Theme, createStyles } from '@material-ui/core/styles';
 import { RowCell, RowTable } from '../components';
-import { type CustomAttributeProps } from '../../../types/table/AttributeColumns';
 import { showValueBasedOnColumn } from '../../../utils/commons/tableRowsColumns';
 import { useRecoilState } from 'recoil';
 import { RowSelectionState } from '../../../schema/tableSelectedRowsSchema';
@@ -12,13 +11,7 @@ import { ApprovalButtonClicked } from '../../../schema/approvalButtonClicked';
 import { getSelectedKey } from '../../../utils/commons/dataStore/getSelectedKey';
 import usetGetOptionColorMapping from '../../../hooks/optionSets/usetGetOptionColorMapping';
 import { useTransferConst } from '../../../utils/constants/transferOptions/statusOptions';
-interface RenderHeaderProps {
-    rowsData: any[]
-    headerData: CustomAttributeProps[]
-    loading: boolean
-    selectedTab: string
-    handleOpenApproval: () => void
-}
+import { RenderRowsProps } from '../../../types/table/TableContentProps';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -44,7 +37,8 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-function RenderRows({ headerData, rowsData, loading, selectedTab, handleOpenApproval }: RenderHeaderProps): React.ReactElement {
+function RenderRows(props: RenderRowsProps): React.ReactElement {
+    const { headerData, rowsData, loading, selectedTab, handleOpenApproval } = props;
     const classes = useStyles()
     const { getDataStoreData } = getSelectedKey();
     const [selected, setSelected] = useRecoilState(RowSelectionState);

@@ -1,10 +1,10 @@
 import React from "react";
-import WithPadding from "../../../../template/WithPadding";
-import TransferActionsButtons from "../../tranferActionsButtons/transferActionsButtons";
-import TabComponent from "../../../../tabs/TabComponent";
-import { type TabElementsProps } from "../../../../../types/tabs/TabsTypes";
 import { useRecoilState } from "recoil";
+import TabComponent from "../../../../tabs/TabComponent";
+import WithPadding from "../../../../template/WithPadding";
 import { TabsState } from "../../../../../schema/tabSchema";
+import { type TabElementsProps } from "../../../../../types/tabs/TabsTypes";
+import TransferActionsButtons from "../../tranferActionsButtons/transferActionsButtons";
 
 const tabsElements: TabElementsProps[] = [
   { name: "Outgoing transfer", value: "outgoing" },

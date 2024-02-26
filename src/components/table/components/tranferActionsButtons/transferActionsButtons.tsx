@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
-import { IconUserGroup16, IconAddCircle24, Button, ButtonStrip } from "@dhis2/ui";
-import ModalComponent from '../../../modal/Modal';
-import ImportContent from '../../../modal/ImportContent';
-import DropdownButtonComponent from '../../../buttons/DropdownButton';
-import { type FlyoutOptionsProps } from '../../../../types/buttons/FlyoutOptions';
-import { useParams } from '../../../../hooks/commons/useQueryParams';
-import { Tooltip } from '@material-ui/core';
 import { useRecoilValue } from 'recoil';
-import { TabsState } from '../../../../schema/tabSchema';
+import { Tooltip } from '@material-ui/core';
 import { useConfig } from '@dhis2/app-runtime';
+import ModalComponent from '../../../modal/Modal';
+import { TabsState } from '../../../../schema/tabSchema';
+import ImportContent from '../../../modal/ImportContent';
+import { useParams } from '../../../../hooks/commons/useQueryParams';
+import DropdownButtonComponent from '../../../buttons/DropdownButton';
+import { type FlyoutOptionsProps } from '../../../../types/menu/FlyoutMenuTypes';
+import { IconUserGroup16, IconAddCircle24, Button, ButtonStrip } from "@dhis2/ui";
 
 function TransferActionsButtons() {
   const [openTranfer, setOpenTranfer] = useState<boolean>(false);

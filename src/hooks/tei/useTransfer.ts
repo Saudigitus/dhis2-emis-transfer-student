@@ -1,11 +1,12 @@
-import { useDataEngine } from '@dhis2/app-runtime'
 import { useState } from 'react'
+import { useRecoilState } from 'recoil'
+import { useDataEngine } from '@dhis2/app-runtime'
+import { TeiRefetch } from '../../schema/refecthTeiSchema'
 import { useEditDataElement } from '../events/useEditDataElement'
-import { atom, useRecoilState } from 'recoil'
 import { getSelectedKey } from '../../utils/commons/dataStore/getSelectedKey'
 import { useTransferConst } from '../../utils/constants/transferOptions/statusOptions'
 
-const TRANSFERQUERY = {
+const TRANSFERQUERY : any = {
     resource: 'tracker',
     data: ({ data }: any) => data,
     type: 'create',
@@ -14,18 +15,13 @@ const TRANSFERQUERY = {
     }
 }
 
-export const teiRefetch = atom({
-    key: "refetch-tei",
-    default: false
-})
-
 export function useTransferTEI() {
     const engine = useDataEngine()
     const { getDataStoreData } = getSelectedKey();
 
     const [loading, setloading] = useState(false)
     const { mutateValues } = useEditDataElement()
-    const [refetch, setRefetch] = useRecoilState<boolean>(teiRefetch)
+    const [refetch, setRefetch] = useRecoilState<boolean>(TeiRefetch)
     const { transferConst } = useTransferConst()
 
     const transferTEI = async (ou: any, selectedTei: any, handleCloseApproval: () => void) => {

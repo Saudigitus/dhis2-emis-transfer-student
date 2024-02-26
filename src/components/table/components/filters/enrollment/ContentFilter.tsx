@@ -1,16 +1,14 @@
-import { Button } from '@material-ui/core';
 import React, { useState, useEffect } from 'react';
-import MenuFilters from './MenuFilters';
-import { type CustomAttributeProps } from '../../../../../types/table/AttributeColumns';
-import SelectButton from "../selectButton/SelectButton";
 import { format } from 'date-fns';
+import MenuFilters from './MenuFilters';
 import { useRecoilState } from 'recoil';
+import { Button } from '@material-ui/core';
+import SelectButton from "../selectButton/SelectButton";
 import { HeaderFieldsState } from '../../../../../schema/headersSchema';
+import { ContentFilterProps } from '../../../../../types/table/ContentFiltersProps';
+import { type CustomAttributeProps } from '../../../../../types/variables/AttributeColumns';
 import { convertArrayToObject } from '../../../../../utils/table/filter/formatArrayToObject';
 
-interface ContentFilterProps {
-    headers: CustomAttributeProps[]
-}
 
 type FiltersValuesProps = Record<string, any | { endDate: string } | { startDate: string }>;
 
@@ -19,18 +17,18 @@ function ContentFilter(props: ContentFilterProps) {
     const [filtersValues, setfiltersValues] = useState<FiltersValuesProps>({})
     const [localFilters, setlocalFilters] = useState<CustomAttributeProps[]>([])
     const [fieldsFilled, setfieldsFilled] = useState<FiltersValuesProps>({})
-    const [anchorEl, setAnchorEl] = useState(null)
+    const [anchorEl, setAnchorEl] = useState<EventTarget | null>(null);
     const [resetValues, setresetValues] = useState("")
     const [headerFieldsStateValues, setHeaderFieldsState] = useRecoilState(HeaderFieldsState)
-    const attributesQuerybuilder: any[][] = [];
-    const dataElementsQuerybuilder: any[][] = [];
+    const attributesQuerybuilder: string[][] = [];
+    const dataElementsQuerybuilder: string[][] = [];
 
     useEffect(() => {
         const copyHeader = [...headers]
         setlocalFilters(copyHeader.slice(0, 4))
     }, [headers])
 
-    const handleClick = (event: any) => {
+    const handleClick = (event: MouseEvent) => {
         setAnchorEl(event.currentTarget);
     };
 
@@ -81,7 +79,6 @@ function ContentFilter(props: ContentFilterProps) {
 
     const onQuerySubmit = () => {
         const copyHeader = { ...filtersValues }
-        console.log("headers", headers)
         for (const [key, value] of Object.entries(copyHeader)) {
             const variableType = headers.find(x => x.id === key)?.type
             if (typeof value === 'object') {

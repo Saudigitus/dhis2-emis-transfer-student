@@ -1,31 +1,17 @@
+import React from 'react'
 import i18n from '@dhis2/d2-i18n';
+import { DndProvider } from 'react-dnd';
 import Table from '@material-ui/core/Table';
+import DragDropListItem from './DragDropItems.js';
+import TableRow from '@material-ui/core/TableRow';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import React from 'react'
-import update from 'react-addons-update';
-import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import DragDropListItem from './DragDropItems.js';
-
-interface DragDropListProps {
-    listItems: any[]
-    handleUpdateListOrder: (list: any[]) => void
-    handleToggle: (id: string) => void
-}
+import { DragDropListProps } from '../../types/dragDrop/DragDropTypes.js';
 
 function DragDropList(props: DragDropListProps) {
-    const { listItems, handleUpdateListOrder, handleToggle } = props;
-    function moveListItem(dragIndex, hoverIndex) {
-        const dragListItem = listItems[dragIndex];
-        let sortedList = [];
-        sortedList = update(listItems, {
-            $splice: [[dragIndex, 1], [hoverIndex, 0, dragListItem]]
-        });
-        handleUpdateListOrder(sortedList);
-    }
+    const { listItems, handleToggle } = props;
 
     return (
         <DndProvider backend={HTML5Backend}>
