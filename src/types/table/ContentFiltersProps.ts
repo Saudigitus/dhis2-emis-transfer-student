@@ -4,6 +4,8 @@ interface ContentFilterProps {
     headers: CustomAttributeProps[]
 }
 
+type FiltersValuesProps = Record<string, any | { endDate: string } | { startDate: string }>;
+
 interface MenuFiltersProps {
     anchorEl: any
     setAnchorEl: (value: any) => void
@@ -124,4 +126,4 @@ interface TooltipProps {
     ref: any
 }
 
-export type { ContentFilterProps, MenuFiltersProps, SelectorContentsProps, FilterComponentProps, DateFilterManagerProps, OptionSetProps, SelectBoxesProps, TextFilterProps, ActiveFilterButtonProps, SelectButtonProps, RenderWithAppliedFilterProps, RenderWithoutAppliedFilterProps, TooltipProps, TrueOnlyProps }
+export type { ContentFilterProps, FiltersValuesProps, MenuFiltersProps, SelectorContentsProps, FilterComponentProps, DateFilterManagerProps, OptionSetProps, SelectBoxesProps, TextFilterProps, ActiveFilterButtonProps, SelectButtonProps, RenderWithAppliedFilterProps, RenderWithoutAppliedFilterProps, TooltipProps, TrueOnlyProps }
