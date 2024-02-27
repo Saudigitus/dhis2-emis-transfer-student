@@ -7,7 +7,8 @@ function headBarData(selectedOptions: SelectedOptionsTypes ): HeadBarTypes[] {
             label: "School",
             value: selectedOptions?.schoolName ?? "Select a school",
             placeholder: "Search for organisation unit",
-            component: "orgUnitTree"
+            component: "orgUnitTree",
+            selected: selectedOptions?.schoolName ? true : false,
         }
     ]
 }

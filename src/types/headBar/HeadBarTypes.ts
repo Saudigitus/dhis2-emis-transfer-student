@@ -2,8 +2,9 @@ interface HeadBarTypes {
     id: string
     label: string
     value: string
-    placeholder: string
+    selected?:boolean
     component?: string
+    placeholder: string
     dataElementId?: string
 }
 
