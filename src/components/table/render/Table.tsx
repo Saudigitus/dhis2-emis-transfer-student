@@ -43,7 +43,6 @@ function Table() {
   useEffect(() => {
     void getData(page, pageSize, selectedTabState?.value);
   }, [
-    columns,
     useQuery(),
     headerFieldsState,
     page,
