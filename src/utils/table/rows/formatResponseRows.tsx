@@ -1,3 +1,5 @@
+import { ProgramConfig } from "../../../types/programConfig/ProgramConfig"
+
 interface dataValuesProps {
     dataElement: string
     value: string
@@ -17,15 +19,16 @@ interface formatResponseRowsProps {
         trackedEntity: string
         attributes: attributesProps[]
     }>
+    trackedEntityAttributes: ProgramConfig['programTrackedEntityAttributes']
 }
 
 type RowsProps = Record<string, string | number | boolean | any>;
 
-export function formatResponseRows({ transferInstances, teiInstances }: formatResponseRowsProps): RowsProps[] {
+export function formatResponseRows({ transferInstances, teiInstances, trackedEntityAttributes }: formatResponseRowsProps): RowsProps[] {
     const allRows: RowsProps[] = []
     for (const event of transferInstances) {
         const teiDetails = teiInstances.find(tei => tei.trackedEntity === event.trackedEntity)
-        allRows.push({teiId: event?.trackedEntity, ...transferDataValues(event?.dataValues), ...(attributes((teiDetails?.attributes) ?? [])) })
+        allRows.push({teiId: event?.trackedEntity, ...transferDataValues(event?.dataValues), ...(attributes((teiDetails?.attributes) ?? [],  trackedEntityAttributes)) })
     }
     return allRows;
 }
@@ -40,12 +43,16 @@ function transferDataValues(data: dataValuesProps[]): RowsProps {
     return localData
 }
 
-function attributes(data: attributesProps[]): RowsProps {
+function attributes(data: attributesProps[], trackedEntityAttributes: ProgramConfig['programTrackedEntityAttributes']): RowsProps {
     const localData: RowsProps = {}
-    if (data) {
-        for (const attribute of data) {
+    for (const attribute of data) {
+        const trackedEntityAttribute : any = trackedEntityAttributes?.find((x: any) => x.trackedEntityAttribute.id == attribute.attribute)?.trackedEntityAttribute
+
+        if(trackedEntityAttribute?.optionSet)
+            localData[attribute.attribute] = trackedEntityAttribute?.optionSet?.options?.find((x: any) => x.value === attribute.value).label
+        
+        else
             localData[attribute.attribute] = attribute.value
-        }
     }
     return localData
 }
