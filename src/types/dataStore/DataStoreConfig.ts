@@ -23,6 +23,10 @@ interface transfer {
     destinySchool: string
     programStage: string
     status: string
+    statusOptions:[{
+        key: string
+        code: string
+    }]
 }
 
 interface defaults {
