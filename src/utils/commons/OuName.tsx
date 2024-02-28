@@ -1,7 +1,9 @@
 import React from 'react'
 import { useGetOusData } from '../../hooks/orgUnits/useGetOrgUnits';
+import { OuNameProps } from '../../types/utils/commons/OuNameTypes';
 
-function OuNameContainer({ ouId }: { ouId: string }): React.ReactElement {
+function OuNameContainer(props: OuNameProps): React.ReactElement {
+    const { ouId } = props;
     const { ouName } = useGetOusData(ouId)
 
     return (

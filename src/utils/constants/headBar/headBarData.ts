@@ -1,6 +1,9 @@
-import { type SelectedOptionsTypes, type HeadBarTypes } from "../../../types/headBar/HeadBarTypes"
+import { type HeadBarTypes } from "../../../types/headBar/HeadBarTypes"
+import { HeadBarDataProps } from "../../../types/utils/constants/HeadBarDataTypes"
 
-function headBarData(selectedOptions: SelectedOptionsTypes ): HeadBarTypes[] {
+function headBarData(props: HeadBarDataProps): HeadBarTypes[] {
+    const { selectedOptions } = props
+
     return [
         {
             id: "c540ac7c",

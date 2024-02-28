@@ -1,32 +1,8 @@
 import { ProgramConfig } from "../../../types/programConfig/ProgramConfig"
+import { FormatResponseRowsProps, RowsDataProps, attributesProps, dataValuesProps } from "../../../types/utils/table/FormatRowsDataTypes";
 
-interface dataValuesProps {
-    dataElement: string
-    value: string
-}
-
-interface attributesProps {
-    attribute: string
-    value: string
-}
-
-interface formatResponseRowsProps {
-    transferInstances: [{
-        trackedEntity: string
-        dataValues: dataValuesProps[]
-    }]
-    teiInstances: Array<{
-        trackedEntity: string
-        attributes: attributesProps[]
-    }>
-    programConfig?: ProgramConfig
-    programStageId?: string | undefined
-}
-
-type RowsProps = Record<string, string | number | boolean | any>;
-
-export function formatResponseRows({ transferInstances, teiInstances, programConfig, programStageId }: formatResponseRowsProps): RowsProps[] {
-    const allRows: RowsProps[] = []
+export function formatResponseRows({ transferInstances, teiInstances, programConfig, programStageId }: FormatResponseRowsProps): RowsDataProps[] {
+    const allRows: RowsDataProps[] = []
     if(programConfig)
         for (const event of transferInstances) {
             const teiDetails = teiInstances.find(tei => tei.trackedEntity === event.trackedEntity)
@@ -35,8 +11,8 @@ export function formatResponseRows({ transferInstances, teiInstances, programCon
     return allRows;
 }
 
-function transferDataValues(data: dataValuesProps[], programConfig: ProgramConfig, programStageId:string | undefined): RowsProps {
-    const localData: RowsProps = {}
+function transferDataValues(data: dataValuesProps[], programConfig: ProgramConfig, programStageId:string | undefined): RowsDataProps {
+    const localData: RowsDataProps = {}
     const currentProgramStage = ((programConfig?.programStages?.find(programStage => programStage.id === programStageId)) ?? {} as ProgramConfig["programStages"][0])
 
     if (data) {
@@ -52,8 +28,8 @@ function transferDataValues(data: dataValuesProps[], programConfig: ProgramConfi
     return localData
 }
 
-function attributes(data: attributesProps[], programConfig: ProgramConfig): RowsProps {
-    const localData: RowsProps = {}
+function attributes(data: attributesProps[], programConfig: ProgramConfig): RowsDataProps {
+    const localData: RowsDataProps = {}
     
     for (const attribute of data) {
         const trackedEntityAttribute : any = programConfig?.programTrackedEntityAttributes?.find((option: any) => option.trackedEntityAttribute.id == attribute.attribute)?.trackedEntityAttribute
@@ -67,7 +43,7 @@ function attributes(data: attributesProps[], programConfig: ProgramConfig): Rows
     return localData
 }
 
-export function formatAllSelectedRow ({ transferInstances, teiInstances }: formatResponseRowsProps) {
+export function formatAllSelectedRow ({ transferInstances, teiInstances }: FormatResponseRowsProps) {
     const formattedRows = [];
     for (const iterator of transferInstances) {
         const newRow = {

@@ -5,8 +5,11 @@ import { Attribute } from '../../types/generated/models';
 import { ButtonStrip, IconThumbUp24, IconThumbDown24 } from "@dhis2/ui"
 import styles from "../../components/table/render/table-render.module.css"
 import { type CustomAttributeProps } from '../../types/variables/AttributeColumns';
+import { RemoveColumByIdProps, ShowValueBasedOnColumnProps } from '../../types/utils/commons/TableRowColumnsTypes';
 
-function showValueBasedOnColumn(column: CustomAttributeProps, value: string, dataStore: any, onToggle: (arg: object) => void, setClickedButton: (arg: string) => void, selected: any, index: number, selectedTab: string, valueColorMapping: Record<string, string>, pendingStatus: string) {
+function showValueBasedOnColumn(props: ShowValueBasedOnColumnProps) {
+    const {column, value, dataStore, onToggle, setClickedButton, selected, index, selectedTab, valueColorMapping, pendingStatus } = props
+
     if (column.id === dataStore?.transfer?.status) {
         if (value === pendingStatus && selectedTab === "incoming") {
             return (
@@ -29,7 +32,9 @@ function showValueBasedOnColumn(column: CustomAttributeProps, value: string, dat
     return value
 }
 
-function removeColumById (columns: CustomAttributeProps[], dataStore: any, selectedTab: string) {
+function removeColumById (props: RemoveColumByIdProps) {
+    const { columns, dataStore, selectedTab } = props
+    
     if (selectedTab === "incoming") {
         const newRowsHeader = columns?.filter((x: any) => x.id !== dataStore?.transfer?.status)
         return newRowsHeader
