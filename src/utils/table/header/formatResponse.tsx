@@ -1,9 +1,11 @@
 import { useMemo } from "react";
 import { Attribute } from "../../../types/generated/models";
 import { type ProgramConfig } from "../../../types/programConfig/ProgramConfig";
+import { HeaderFormatResponseProps } from "../../../types/utils/table/TableTypes";
 import { VariablesTypes, type CustomAttributeProps } from "../../../types/variables/AttributeColumns";
 
-export function formatResponse(data: ProgramConfig, programStageId: string | undefined, tableColumns: CustomAttributeProps[] = []): CustomAttributeProps[] {
+export function formatResponse(props: HeaderFormatResponseProps): CustomAttributeProps[] {
+    const { data, programStageId, tableColumns = []  } = props;
     const headerResponse = useMemo(() => {
         // TODO: Remove this when the API is fixed and solve this bug 👇
         // eslint-disable-next-line @typescript-eslint/consistent-type-assertions

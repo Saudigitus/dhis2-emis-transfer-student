@@ -1,5 +1,8 @@
-export const disableNextPage = ({ totalPerPage, rowsPerPage }:
-    { totalPerPage: number, rowsPerPage: number }): boolean => {
+import { DisableNextPageProps } from "../../../types/utils/table/TableTypes"
+
+export const disableNextPage = (props: DisableNextPageProps): boolean => {
+    const { totalPerPage, rowsPerPage } = props
+
     if (totalPerPage < rowsPerPage) {
         return true
     }

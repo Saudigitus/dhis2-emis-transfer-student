@@ -4,6 +4,7 @@ import { CenteredContent, CircularLoader } from "@dhis2/ui";
 import { useDataStore } from '../../hooks/appwrapper/useDataStore'
 
 export default function AppWrapper(props: AppProps) {
+    const { children } = props;
     const { error, loading } = useDataStore()
 
     if (loading) {
@@ -23,6 +24,6 @@ export default function AppWrapper(props: AppProps) {
     }
 
     return (
-        <>{props.children}</>
+        <>{children}</>
     )
 }

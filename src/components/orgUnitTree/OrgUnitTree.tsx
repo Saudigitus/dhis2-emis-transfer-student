@@ -6,8 +6,10 @@ import { useParams } from '../../hooks/commons/useQueryParams';
 import { CenteredContent, CircularLoader, Help } from "@dhis2/ui"
 import { SearchOu } from '../../types/ouQueryParams/ouQueryParams';
 import { OuQueryString } from '../../schema/headerSearchInputSchema';
+import { OrgUnitTreeProps } from '../../types/orgUnitTree/OrgUnitTreeTypes';
 
-export default function OrgUnitTree({ onToggle }: { onToggle: () => void }): React.ReactElement {
+export default function OrgUnitTree(props: OrgUnitTreeProps): React.ReactElement {
+    const { onToggle } = props;
     const [selectedOu, setSelectedOu] = useState<{ id: string, displayName: string, selected: any }>()
     const [stringQuery, setStringQuery] = useRecoilState(OuQueryString);
     const [key, setKey] = React.useState<any>(undefined);

@@ -4,7 +4,7 @@ import TabComponent from "../../../../tabs/TabComponent";
 import WithPadding from "../../../../template/WithPadding";
 import { TabsState } from "../../../../../schema/tabSchema";
 import { type TabElementsProps } from "../../../../../types/tabs/TabsTypes";
-import TransferActionsButtons from "../../tranferActionsButtons/transferActionsButtons";
+import TransferActionsButtons from "../../tranferActionsButtons/TransferActionsButtons";
 
 const tabsElements: TabElementsProps[] = [
   { name: "Outgoing transfer", value: "outgoing" },

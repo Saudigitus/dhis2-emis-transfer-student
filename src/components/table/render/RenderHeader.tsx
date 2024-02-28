@@ -2,7 +2,7 @@ import React, { useMemo } from 'react'
 import classNames from 'classnames';
 import { RowTable } from '../components'
 import HeaderCell from '../components/head/HeaderCell';
-import { RenderHeaderProps } from '../../../types/table/TableContentProps';
+import { RenderHeaderProps } from '../../../types/table/TableContentTypes';
 import { makeStyles, createStyles, type Theme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme: Theme) =>

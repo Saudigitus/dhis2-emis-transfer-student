@@ -1,10 +1,13 @@
 import { getSelectedKey } from "../../commons/dataStore/getSelectedKey"
+import { StatusOptionsProps } from "../../../types/utils/ConstantsTypes";
 
 export const useTransferConst = () => {
     const { getDataStoreData } = getSelectedKey()
 
-    function transferConst(key: "pending" | "approved" | "reproved") {
-        return getDataStoreData?.transfer.statusOptions.find((option) => option.key === key)?.code
+    function transferConst(props : StatusOptionsProps) {
+        const { key } = props;
+
+        return getDataStoreData?.transfer.statusOptions.find((option : any) => option.key === key)?.code
     }
 
     return {
