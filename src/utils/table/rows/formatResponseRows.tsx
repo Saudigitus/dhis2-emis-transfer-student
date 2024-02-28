@@ -19,37 +19,47 @@ interface formatResponseRowsProps {
         trackedEntity: string
         attributes: attributesProps[]
     }>
-    trackedEntityAttributes: ProgramConfig['programTrackedEntityAttributes']
+    programConfig?: ProgramConfig
+    programStageId?: string | undefined
 }
 
 type RowsProps = Record<string, string | number | boolean | any>;
 
-export function formatResponseRows({ transferInstances, teiInstances, trackedEntityAttributes }: formatResponseRowsProps): RowsProps[] {
+export function formatResponseRows({ transferInstances, teiInstances, programConfig, programStageId }: formatResponseRowsProps): RowsProps[] {
     const allRows: RowsProps[] = []
-    for (const event of transferInstances) {
-        const teiDetails = teiInstances.find(tei => tei.trackedEntity === event.trackedEntity)
-        allRows.push({teiId: event?.trackedEntity, ...transferDataValues(event?.dataValues), ...(attributes((teiDetails?.attributes) ?? [],  trackedEntityAttributes)) })
-    }
+    if(programConfig)
+        for (const event of transferInstances) {
+            const teiDetails = teiInstances.find(tei => tei.trackedEntity === event.trackedEntity)
+            allRows.push({teiId: event?.trackedEntity, ...transferDataValues(event?.dataValues, programConfig, programStageId), ...(attributes((teiDetails?.attributes) ?? [],  programConfig)) })
+        }
     return allRows;
 }
 
-function transferDataValues(data: dataValuesProps[]): RowsProps {
+function transferDataValues(data: dataValuesProps[], programConfig: ProgramConfig, programStageId:string | undefined): RowsProps {
     const localData: RowsProps = {}
+    const currentProgramStage = ((programConfig?.programStages?.find(programStage => programStage.id === programStageId)) ?? {} as ProgramConfig["programStages"][0])
+
     if (data) {
         for (const dataElement of data) {
-            localData[dataElement.dataElement] = dataElement.value
+            const dataElementOptSet = currentProgramStage?.programStageDataElements?.find((option: any) => option.dataElement.id == dataElement.dataElement)?.dataElement?.optionSet
+
+            if(dataElementOptSet)
+                localData[dataElement.dataElement] = dataElementOptSet?.options?.find((option: any) => option.value === dataElement.value).label as unknown as string
+            else
+                localData[dataElement.dataElement] = dataElement.value
         }
     }
     return localData
 }
 
-function attributes(data: attributesProps[], trackedEntityAttributes: ProgramConfig['programTrackedEntityAttributes']): RowsProps {
+function attributes(data: attributesProps[], programConfig: ProgramConfig): RowsProps {
     const localData: RowsProps = {}
+    
     for (const attribute of data) {
-        const trackedEntityAttribute : any = trackedEntityAttributes?.find((x: any) => x.trackedEntityAttribute.id == attribute.attribute)?.trackedEntityAttribute
-
+        const trackedEntityAttribute : any = programConfig?.programTrackedEntityAttributes?.find((option: any) => option.trackedEntityAttribute.id == attribute.attribute)?.trackedEntityAttribute
+        
         if(trackedEntityAttribute?.optionSet)
-            localData[attribute.attribute] = trackedEntityAttribute?.optionSet?.options?.find((x: any) => x.value === attribute.value).label
+            localData[attribute.attribute] = trackedEntityAttribute?.optionSet?.options?.find((option: any) => option.value === attribute.value).label
         
         else
             localData[attribute.attribute] = attribute.value

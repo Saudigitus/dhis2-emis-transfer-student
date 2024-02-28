@@ -109,13 +109,14 @@ export function useTableData() {
             rows: formatAllSelectedRow({
                 transferInstances: tranferResults?.results?.instances,
                 teiInstances: teiResults.results.instances,
-                trackedEntityAttributes: programConfig?.programTrackedEntityAttributes,
             })
         })
         setTableData(formatResponseRows({
             transferInstances: tranferResults?.results?.instances,
             teiInstances: teiResults.results.instances,
-            trackedEntityAttributes: programConfig?.programTrackedEntityAttributes,
+            programConfig: programConfig,
+            programStageId: getDataStoreData?.transfer?.programStage
+
         }));
 
         setLoading(false)
