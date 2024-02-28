@@ -3,12 +3,12 @@ import { format } from 'date-fns';
 import MenuFilters from './MenuFilters';
 import { useRecoilState } from 'recoil';
 import { Button } from '@material-ui/core';
+import style from './enrollment.module.css'
 import SelectButton from "../selectButton/SelectButton";
 import { HeaderFieldsState } from '../../../../../schema/headersSchema';
 import { ContentFilterProps, FiltersValuesProps } from '../../../../../types/table/ContentFiltersTypes';
 import { type CustomAttributeProps } from '../../../../../types/variables/AttributeColumns';
 import { convertArrayToObject } from '../../../../../utils/table/filter/formatArrayToObject';
-
 
 function ContentFilter(props: ContentFilterProps) {
     const { headers = [] } = props;
@@ -124,7 +124,7 @@ function ContentFilter(props: ContentFilterProps) {
     }, [resetValues])
 
     return (
-        <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", marginBottom: 10, marginTop: 10 }}>
+        <div className={style.contentFilterContainer}>
             {
                 localFilters.map((colums, index) => (
                     <SelectButton key={index}
@@ -150,18 +150,13 @@ function ContentFilter(props: ContentFilterProps) {
                         onResetFilters={onResetFilters}
                     />
                 ))
-            }
-            <div style={{ marginTop: 0 }}>
+            } 
+            <div className={style.contentFilterButtonsConatiner}>
                 {headers?.filter(x => !localFilters.includes(x)).length > 0 &&
-                    <Button style={{
-                        color: "rgb(33, 41, 52)",
-                        fontSize: 14,
-                        textTransform: "none",
-                        fontWeight: 400
-                    }}
-
+                    <Button 
                         variant='outlined'
                         onClick={handleClick}
+                        className={style.contentFilterButton}
                     >
                         More filters
                     </Button>

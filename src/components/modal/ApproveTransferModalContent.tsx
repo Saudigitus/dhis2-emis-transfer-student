@@ -1,4 +1,5 @@
 import React from "react";
+import style from './modal.module.css'
 import { useRecoilValue } from "recoil";
 import WithPadding from "../template/WithPadding";
 import { useTransferTEI } from "../../hooks/tei/useTransfer";
@@ -32,7 +33,7 @@ function ApproveTranfer(props: ApproveTranferProps): React.ReactElement {
         : <span><span className="text-danger">Attention:</span> You are about to reject the student&apos;s transfer to this school.</span>
         }
 
-        <div style={{ background: "rgb(243, 245, 247)", height: "5px", margin: "5px 0px 10px 0px" }}></div>
+        <div className={style.divider}></div>
 
         {clickedButton === "approve"
         ? <div className="py-2">
