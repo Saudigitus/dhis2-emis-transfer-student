@@ -9,15 +9,15 @@ const style = {
 };
 
 function DragDropItems(props: DragDropItemsProps) {
-    const { handleToggle, id, text } = props;
+    const { handleToggle, id, text, visible } = props;
     
     return (
-        <tr key={props.id} tabIndex={-1} style={{
+        <tr key={id} tabIndex={-1} style={{
             ...style
         }}>
             <TableCell component="th" scope="row">
                 <Checkbox
-                    checked={props.visible}
+                    checked={visible}
                     tabIndex={-1}
                     onChange={() => { handleToggle(id); }}
                     label={text}

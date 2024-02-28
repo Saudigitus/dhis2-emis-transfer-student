@@ -4,15 +4,16 @@ import defaultClasses from '../../table.module.css';
 import { IconButtonPaginationProps } from '../../../../../types/table/PaginationProps';
 
 export function IconButtonPagination(props: IconButtonPaginationProps): React.ReactElement {
+    const {onPageChange, disabled, ariaLabel, icon } = props;
+
     return (
         <IconButton
             className={defaultClasses.paginationIconButton}
-            // corrigir este erro 👇
-            onClick={props.onPageChange}
-            disabled={props.disabled}
-            aria-label={props.ariaLabel}
+            onClick={onPageChange}
+            disabled={disabled}
+            aria-label={ariaLabel}
         >
-            {props.Icon}
+            {icon}
         </IconButton>
     )
 }

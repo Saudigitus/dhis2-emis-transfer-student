@@ -6,6 +6,7 @@ import { TableComponentProps } from '../../../../types/table/TableContentProps';
 function TableComponent(props: TableComponentProps): React.ReactElement {
     const { children, className, ...passOnProps } = props;
     const classes = classNames(defaultClasses.table, className);
+    
     return (
         <table
             className={classes}

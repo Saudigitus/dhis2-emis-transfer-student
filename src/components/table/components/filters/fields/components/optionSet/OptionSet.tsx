@@ -16,7 +16,7 @@ const getStyles = makeStyles(() => ({
 
 
 function OptionSet(props: OptionSetProps) {
-    const { options, value, singleSelect } = props;
+    const { options, value, singleSelect, onCommitValue } = props;
     const classes = getStyles()
 
     return (
@@ -30,7 +30,7 @@ function OptionSet(props: OptionSetProps) {
                     value={value}
                     orientation={"vertical"}
                     singleSelect={!singleSelect}
-                    onChange={props.onCommitValue}
+                    onChange={onCommitValue}
                 />
             </div>
         </div>
