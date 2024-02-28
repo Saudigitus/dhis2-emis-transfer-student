@@ -21,7 +21,6 @@ function ConfigTableColumns(props: ConfigTableColumnsProps) {
         setopen(true)
     }
 
-    console.log(headers)
     return (
         <div className={styles['config-table__columns']}>
             {

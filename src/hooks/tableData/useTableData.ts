@@ -11,6 +11,7 @@ import { getSelectedKey } from "../../utils/commons/dataStore/getSelectedKey";
 import { EventQueryProps, TransferQueryResults } from "../../types/api/WithoutRegistrationProps";
 import { TeiQueryProps, TeiQueryResults } from "../../types/api/WithRegistrationProps";
 import { TableDataProps } from "../../types/table/TableContentProps";
+import { ProgramConfigState } from "../../schema/programSchema";
 
 const EVENT_QUERY = ({ ouMode, page, pageSize, program, order, programStage, filter, orgUnit, filterAttributes, trackedEntity, programStatus }: EventQueryProps) => ({
     results: {
@@ -53,7 +54,7 @@ export function useTableData() {
     const { getDataStoreData } = getSelectedKey();
     const headerFieldsState = useRecoilValue(HeaderFieldsState)
     const [selected, setSelected] = useRecoilState(RowSelectionState);
-
+    const programConfig = useRecoilValue(ProgramConfigState)
     const { urlParamiters } = useParams()
     const [loading, setLoading] = useState<boolean>(false)
     const [tableData, setTableData] = useState<TableDataProps[]>([])
@@ -107,12 +108,15 @@ export function useTableData() {
             ...selected,
             rows: formatAllSelectedRow({
                 transferInstances: tranferResults?.results?.instances,
-                teiInstances: teiResults.results.instances
+                teiInstances: teiResults.results.instances,
             })
         })
         setTableData(formatResponseRows({
             transferInstances: tranferResults?.results?.instances,
-            teiInstances: teiResults.results.instances
+            teiInstances: teiResults.results.instances,
+            programConfig: programConfig,
+            programStageId: getDataStoreData?.transfer?.programStage
+
         }));
 
         setLoading(false)
