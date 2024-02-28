@@ -45,22 +45,18 @@ export function useTransferTEI() {
                 setRefetch(!refetch)
                 handleCloseApproval()
             }).catch(e => {
-                console.log("Faailed", e)
             })
             setloading(false)
     }
 
     const rejectTEI = async (event: any, handleCloseApproval: () => void) => {
-        console.log("event", event)
         setloading(true)
             await mutateValues(event, getDataStoreData?.transfer?.status, transferConst({status:"reproved"}) as string)
             .then(async (res) => {
-                console.log("Faailed", res)
                 setRefetch(!refetch)
                 handleCloseApproval()
             }).catch(e => {
                 setloading(false)
-                console.log("Faailed", e)
             })
         setloading(false)
     }
