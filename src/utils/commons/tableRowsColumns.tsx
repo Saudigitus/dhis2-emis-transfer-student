@@ -7,8 +7,7 @@ import styles from "../../components/table/render/table-render.module.css"
 import { type CustomAttributeProps } from '../../types/variables/AttributeColumns';
 import { RemoveColumByIdProps, ShowValueBasedOnColumnProps } from '../../types/utils/commons/TableRowColumnsTypes';
 
-function showValueBasedOnColumn(props: ShowValueBasedOnColumnProps) {
-    const {column, value, dataStore, onToggle, setClickedButton, selected, index, selectedTab, valueColorMapping, pendingStatus } = props
+function showValueBasedOnColumn({column, value, dataStore, onToggle, setClickedButton, selected, index, selectedTab, valueColorMapping, pendingStatus }: ShowValueBasedOnColumnProps) {
 
     if (column.id === dataStore?.transfer?.status) {
         if (value === pendingStatus && selectedTab === "incoming") {

@@ -41,7 +41,7 @@ export function useTransferTEI() {
                 }
             })
             .then(async (res) => {
-                await mutateValues(selectedTei?.transferInstance, getDataStoreData?.transfer?.status, transferConst("approved") as string)
+                await mutateValues(selectedTei?.transferInstance, getDataStoreData?.transfer?.status, transferConst({status:"approved"}) as string)
                 setRefetch(!refetch)
                 handleCloseApproval()
             }).catch(e => {
@@ -53,7 +53,7 @@ export function useTransferTEI() {
     const rejectTEI = async (event: any, handleCloseApproval: () => void) => {
         console.log("event", event)
         setloading(true)
-            await mutateValues(event, getDataStoreData?.transfer?.status, transferConst("reproved") as string)
+            await mutateValues(event, getDataStoreData?.transfer?.status, transferConst({status:"reproved"}) as string)
             .then(async (res) => {
                 console.log("Faailed", res)
                 setRefetch(!refetch)

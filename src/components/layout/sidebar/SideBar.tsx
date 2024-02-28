@@ -13,7 +13,7 @@ export default function SideBar(): React.ReactElement {
         <aside className={collapsed ? style.SideBarContainerCollapsed : style.SideBarContainer}>
             <div className={style.SideBarMenu}>
                 {
-                    sideBarData(location.search).map((element, index) => (
+                    sideBarData({locationParms:location.search}).map((element, index) => (
                         <SideBarItem key={index} title={element.title} subItems={element.subItems} />
                     ))
                 }

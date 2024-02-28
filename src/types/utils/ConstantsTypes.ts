@@ -18,7 +18,7 @@ type SideBarDataRouteProps = {
 type StatusOptionsType = "pending" | "approved" | "reproved"
 
 interface StatusOptionsProps {
-    key: StatusOptionsProps
+    status: StatusOptionsType
 }
 
 export type { HeadBarDataProps, SideBarDataProps, SideBarDataRouteProps, StatusOptionsType, StatusOptionsProps }
