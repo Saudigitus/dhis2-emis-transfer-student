@@ -5,7 +5,6 @@ import DragDropItems from "./dragDrop/DragDropItems";
 import InitialMessage from "./initialInstructions/InitialMessage";
 import { SideBar, MainHeader } from "./layout/index"
 import FlyoutMenuComponent from "./menu/FlyoutMenu";
-import { Item, MenuItemContainer } from "./menuItem/index"
 import ModalComponent from "./modal/Modal";
 import { OrgUnitTree } from "./orgUnitTree/index"
 import { SimpleSearch } from "./search/index"
@@ -19,5 +18,5 @@ import Subtitle from "./text/Subtitle";
 export {
     Badge, SideBar, MainHeader, Table, DropdownButtonComponent, DragDropList, DragDropItems,
     FlyoutMenuComponent,WithPadding, WithBorder, InitialMessage, ModalComponent, OrgUnitTree,
-    SimpleSearch, Title, Subtitle, Item, MenuItemContainer, TabComponent
+    SimpleSearch, Title, Subtitle, TabComponent
 }
