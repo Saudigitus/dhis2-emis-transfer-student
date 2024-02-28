@@ -48,7 +48,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
 
     const onToggle = (rawRowData: object) => {
         handleOpenApproval();
-        setSelected({ ...selected, selectedRows: replaceSelectedRow(rawRowData), isAllRowsSelected: selected.rows.length === replaceSelectedRow(rawRowData).length })
+        setSelected({ ...selected, selectedRows: replaceSelectedRow({rawRowData:rawRowData}), isAllRowsSelected: selected.rows.length === replaceSelectedRow({rawRowData:rawRowData}).length })
     }
 
     if (rowsData.length === 0 && !loading) {
@@ -76,7 +76,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                             className={classNames(classes.cell, classes.bodyCell)}
                         >
                             <div>
-                                {showValueBasedOnColumn(column, row[column.id], getDataStoreData, onToggle, setClickedButton, selected, index, selectedTab, valueColorMapping, transferConst("pending") as string)}
+                                {showValueBasedOnColumn({column:column,  value: row[column.id], dataStore:getDataStoreData, onToggle:onToggle, setClickedButton:setClickedButton, selected:selected, index:index, selectedTab:selectedTab, valueColorMapping:valueColorMapping, pendingStatus: transferConst({status: "pending" }) as string})}
                             </div>
                         </RowCell>
                     ));

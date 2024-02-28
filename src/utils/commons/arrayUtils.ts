@@ -1,7 +1,6 @@
 import { CheckIsRowSelectedProps, ReplaceSelectedRowProps } from "../../types/utils/commons/ArrayUtilsTypes";
 
-export const checkIsRowSelected = (props: CheckIsRowSelectedProps) => {
-    const { rawRowData, selected } = props;
+export const checkIsRowSelected = ({ rawRowData, selected }: CheckIsRowSelectedProps) => {
 
     const newArray = [...selected.selectedRows];
     const existingIndex = newArray.findIndex(item => item.teiInstance.trackedEntity === rawRowData.teiInstance.trackedEntity);
@@ -14,8 +13,7 @@ export const checkIsRowSelected = (props: CheckIsRowSelectedProps) => {
     return newArray;
 }
 
-export const replaceSelectedRow = (props: ReplaceSelectedRowProps) => {
-    const { rawRowData } = props;
+export const replaceSelectedRow = ({ rawRowData }: ReplaceSelectedRowProps) => {
 
     const newArray = [rawRowData]; // Cria um novo array com o novo objeto
     return newArray;

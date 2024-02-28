@@ -36,12 +36,12 @@ function ApproveTranfer(props: ApproveTranferProps): React.ReactElement {
 
         {clickedButton === "approve"
         ? <div className="py-2">
-            Are you sure you want to{" "} <span className="text-danger"> approve the transfer </span> of{" "}  <strong> {`${attributeFilter(selectedTei?.teiInstance?.attributes, "gz8w04YBSS0") ?? ""} ${attributeFilter(selectedTei?.teiInstance?.attributes, "ZIDlK6BaAU2") ?? ""}`} </strong>{" "} from{" "}
+            Are you sure you want to{" "} <span className="text-danger"> approve the transfer </span> of{" "}  <strong> {`${attributeFilter({array: selectedTei?.teiInstance?.attributes, attribute: "gz8w04YBSS0"}) ?? ""} ${attributeFilter({array: selectedTei?.teiInstance?.attributes, attribute: "ZIDlK6BaAU2"}) ?? ""}`} </strong>{" "} from{" "}
             <strong>{selectedTei?.transferInstance?.orgUnitName}</strong>{" "} to{" "}
             <strong>{schoolName}</strong>?
           </div>
         : <div className="py-2">
-            Are you sure you want to{" "} <span className="text-danger"> reject the transfer </span> of{" "}  <strong> {`${attributeFilter(selectedTei?.teiInstance?.attributes, "gz8w04YBSS0") ?? ""} ${attributeFilter(selectedTei?.teiInstance?.attributes, "ZIDlK6BaAU2") ?? ""}`} </strong>{" "} from{" "}
+            Are you sure you want to{" "} <span className="text-danger"> reject the transfer </span> of{" "}  <strong> {`${attributeFilter({array: selectedTei?.teiInstance?.attributes, attribute: "gz8w04YBSS0"}) ?? ""} ${attributeFilter({array: selectedTei?.teiInstance?.attributes, attribute: "ZIDlK6BaAU2"}) ?? ""}`} </strong>{" "} from{" "}
             <strong>{selectedTei?.transferInstance?.orgUnitName}</strong>{" "} to{" "}
             <strong>{schoolName}</strong>?
           </div>

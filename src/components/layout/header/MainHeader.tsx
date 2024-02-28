@@ -10,7 +10,7 @@ export default function MainHeader(): React.ReactElement {
 
     return (
         <nav className={style.MainHeaderContainer}>
-            {headBarData(selectedOptions).map(headerItem => (
+            {headBarData({selectedOptions:selectedOptions}).map(headerItem => (
                 <HeaderItem key={headerItem.id} id={headerItem.id} dataElementId={headerItem.dataElementId} component={headerItem.component} placeholder={headerItem.placeholder} label={headerItem.label} value={headerItem.value} selected={headerItem.selected}/>
             ))}
         </nav>

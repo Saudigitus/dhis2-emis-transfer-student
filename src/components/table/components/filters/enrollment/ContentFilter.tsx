@@ -40,7 +40,7 @@ function ContentFilter(props: ContentFilterProps) {
     }
 
     const onChangeFilters = (value: any, key: string, type: string, pos: string) => {
-        let cloneHeader = { ...filtersValues, ...convertArrayToObject(headerFieldsStateValues.dataElements) }
+        let cloneHeader = { ...filtersValues, ...convertArrayToObject({array:headerFieldsStateValues.dataElements}) }
 
         if (type === 'DATE') {
             let date = cloneHeader[key] ?? {}

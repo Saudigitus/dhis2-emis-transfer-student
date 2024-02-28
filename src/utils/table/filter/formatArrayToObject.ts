@@ -1,7 +1,6 @@
 import { ConvertArrayToObjectProps } from "../../../types/utils/table/TableTypes";
 
-export const convertArrayToObject = (props: ConvertArrayToObjectProps) => {
-    const { array } = props
+export const convertArrayToObject = ({ array }: ConvertArrayToObjectProps) => {
     const obj: any = {};
     
     array.forEach((item) => {
