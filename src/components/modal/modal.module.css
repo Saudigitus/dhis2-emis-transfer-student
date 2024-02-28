@@ -17,3 +17,9 @@
     align-items: center;
     margin: 10px 0;
 }
+
+.divider { 
+    height: 5px;
+    margin: 5px 0px 10px 0px;
+    background: rgb(243, 245, 247);
+}
