@@ -3,7 +3,7 @@ import Select from 'react-select';
 import defaultClasses from '../table.module.css';
 import { TextPagination } from './components/TextPagination';
 import { IconButtonPagination } from './components/IconButtonPagination';
-import { PaginationProps } from '../../../../types/table/PaginationProps';
+import { PaginationProps } from '../../../../types/table/PaginationTypes';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@material-ui/icons';
 import { disableNextPage } from '../../../../utils/table/pagination/pagination';
 import { rowsPerPages } from '../../../../utils/constants/pagination/pagination';

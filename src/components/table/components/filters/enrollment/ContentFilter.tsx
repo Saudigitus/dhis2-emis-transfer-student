@@ -5,7 +5,7 @@ import { useRecoilState } from 'recoil';
 import { Button } from '@material-ui/core';
 import SelectButton from "../selectButton/SelectButton";
 import { HeaderFieldsState } from '../../../../../schema/headersSchema';
-import { ContentFilterProps, FiltersValuesProps } from '../../../../../types/table/ContentFiltersProps';
+import { ContentFilterProps, FiltersValuesProps } from '../../../../../types/table/ContentFiltersTypes';
 import { type CustomAttributeProps } from '../../../../../types/variables/AttributeColumns';
 import { convertArrayToObject } from '../../../../../utils/table/filter/formatArrayToObject';
 

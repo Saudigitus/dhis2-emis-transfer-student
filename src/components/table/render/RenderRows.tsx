@@ -11,7 +11,7 @@ import { ApprovalButtonClicked } from '../../../schema/approvalButtonClicked';
 import { getSelectedKey } from '../../../utils/commons/dataStore/getSelectedKey';
 import usetGetOptionColorMapping from '../../../hooks/optionSets/usetGetOptionColorMapping';
 import { useTransferConst } from '../../../utils/constants/transferOptions/statusOptions';
-import { RenderRowsProps } from '../../../types/table/TableContentProps';
+import { RenderRowsProps } from '../../../types/table/TableContentTypes';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({

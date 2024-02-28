@@ -1,7 +1,7 @@
 import React from 'react'
 import { IconButton } from '@material-ui/core';
 import defaultClasses from '../../table.module.css';
-import { IconButtonPaginationProps } from '../../../../../types/table/PaginationProps';
+import { IconButtonPaginationProps } from '../../../../../types/table/PaginationTypes';
 
 export function IconButtonPagination(props: IconButtonPaginationProps): React.ReactElement {
     const {onPageChange, disabled, ariaLabel, icon } = props;

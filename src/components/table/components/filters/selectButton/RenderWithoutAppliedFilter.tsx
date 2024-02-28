@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, IconChevronDown16, IconChevronUp16, Tooltip } from '@dhis2/ui';
-import { RenderWithoutAppliedFilterProps, TooltipProps } from '../../../../../types/table/ContentFiltersProps';
+import { RenderWithoutAppliedFilterProps, TooltipProps } from '../../../../../types/table/ContentFiltersTypes';
 
 
 function RenderWithoutAppliedFilter(props: RenderWithoutAppliedFilterProps): React.ReactElement {

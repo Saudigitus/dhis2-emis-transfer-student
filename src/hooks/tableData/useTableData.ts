@@ -8,9 +8,9 @@ import { HeaderFieldsState } from "../../schema/headersSchema";
 import useShowAlerts from "../commons/useShowAlert";
 import { RowSelectionState } from "../../schema/tableSelectedRowsSchema";
 import { getSelectedKey } from "../../utils/commons/dataStore/getSelectedKey";
-import { EventQueryProps, TransferQueryResults } from "../../types/api/WithoutRegistrationProps";
-import { TeiQueryProps, TeiQueryResults } from "../../types/api/WithRegistrationProps";
-import { TableDataProps } from "../../types/table/TableContentProps";
+import { EventQueryProps, TransferQueryResults } from "../../types/api/WithoutRegistrationTypes";
+import { TeiQueryProps, TeiQueryResults } from "../../types/api/WithRegistrationTypes";
+import { TableDataProps } from "../../types/table/TableContentTypes";
 import { ProgramConfigState } from "../../schema/programSchema";
 
 const EVENT_QUERY = ({ ouMode, page, pageSize, program, order, programStage, filter, orgUnit, filterAttributes, trackedEntity, programStatus }: EventQueryProps) => ({
