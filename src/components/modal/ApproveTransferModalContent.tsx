@@ -5,6 +5,7 @@ import WithPadding from "../template/WithPadding";
 import { useTransferTEI } from "../../hooks/tei/useTransfer";
 import { ModalActions, Button, ButtonStrip } from "@dhis2/ui";
 import { useParams } from "../../hooks/commons/useQueryParams";
+import { ProgramConfigState } from "../../schema/programSchema";
 import { ApproveTranferProps } from "../../types/modal/ModalTypes";
 import { attributeFilter } from "../../utils/tei/getAttributeValue";
 import { RowSelectionState } from "../../schema/tableSelectedRowsSchema";
@@ -12,12 +13,15 @@ import { ApprovalButtonClicked } from "../../schema/approvalButtonClicked";
 
 function ApproveTranfer(props: ApproveTranferProps): React.ReactElement {
   const { setOpen, handleCloseApproval } = props;
+  const { urlParamiters } = useParams();
+  const { school, schoolName } = urlParamiters()
+  const programConfig = useRecoilValue(ProgramConfigState)
   const selectedTei = useRecoilValue(RowSelectionState).selectedRows[0]
   const clickedButton = useRecoilValue(ApprovalButtonClicked)
-  const { useQuery } = useParams();
   const { loading, transferTEI, rejectTEI } = useTransferTEI()
-  const school = useQuery().get("school");
-  const schoolName = useQuery().get("schoolName");
+
+  const trackedEntityAttributes = programConfig?.trackedEntityType?.trackedEntityTypeAttributes
+  const programTrackedEntityAttributes = programConfig?.programTrackedEntityAttributes
 
   const modalActions = [
     { id: "cancel", type: "button", label: "Cancel", disabled: loading, onClick: () => { setOpen(false) } },
@@ -37,14 +41,14 @@ function ApproveTranfer(props: ApproveTranferProps): React.ReactElement {
 
         {clickedButton === "approve"
         ? <div className="py-2">
-            Are you sure you want to{" "} <span className="text-danger"> approve the transfer </span> of{" "}  <strong> {`${attributeFilter({array: selectedTei?.teiInstance?.attributes, attribute: "gz8w04YBSS0"}) ?? ""} ${attributeFilter({array: selectedTei?.teiInstance?.attributes, attribute: "ZIDlK6BaAU2"}) ?? ""}`} </strong>{" "} from{" "}
+            Are you sure you want to{" "} <span className="text-danger"> approve the transfer </span> of{" "}  <strong> {`${attributeFilter({array: selectedTei?.teiInstance?.attributes, attribute: trackedEntityAttributes[1]?.trackedEntityAttribute.id ?? programTrackedEntityAttributes[2]?.trackedEntityAttribute.id }) ?? ""}, ${attributeFilter({array: selectedTei?.teiInstance?.attributes, attribute: trackedEntityAttributes[0]?.trackedEntityAttribute?.id ?? programTrackedEntityAttributes[3]?.trackedEntityAttribute.id}) ?? ""}`} </strong>{" "} from{" "}
             <strong>{selectedTei?.transferInstance?.orgUnitName}</strong>{" "} to{" "}
             <strong>{schoolName}</strong>?
           </div>
         : <div className="py-2">
-            Are you sure you want to{" "} <span className="text-danger"> reject the transfer </span> of{" "}  <strong> {`${attributeFilter({array: selectedTei?.teiInstance?.attributes, attribute: "gz8w04YBSS0"}) ?? ""} ${attributeFilter({array: selectedTei?.teiInstance?.attributes, attribute: "ZIDlK6BaAU2"}) ?? ""}`} </strong>{" "} from{" "}
+            Are you sure you want to{" "} <span className="text-danger"> reject the transfer </span> of{" "}  <strong> {`${attributeFilter({array: selectedTei?.teiInstance?.attributes, attribute: trackedEntityAttributes[1]?.trackedEntityAttribute.id ?? programTrackedEntityAttributes[2]?.trackedEntityAttribute.id }) ?? ""}, ${attributeFilter({array: selectedTei?.teiInstance?.attributes, attribute: trackedEntityAttributes[0]?.trackedEntityAttribute?.id ?? programTrackedEntityAttributes[3]?.trackedEntityAttribute.id}) ?? ""}`} </strong>{" "} from{" "}
             <strong>{selectedTei?.transferInstance?.orgUnitName}</strong>{" "} to{" "}
-            <strong>{schoolName}</strong>?
+            <strong>{schoolName}</strong>
           </div>
         }
       </WithPadding>

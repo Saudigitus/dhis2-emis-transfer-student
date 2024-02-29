@@ -31,30 +31,29 @@ export interface ProgramConfig {
             ]
         }
     ]
-    programTrackedEntityAttributes: [
-        {
-            trackedEntityAttribute: {
-                generated: boolean
-                pattern?: string
-                displayName: string
-                formName: string
-                id: string
-                valueType: string
-                optionSet: { id: string, options: [{ value: string, label: string }] }
-            }
-            searchable: boolean
-            displayInList: boolean
-            mandatory: boolean
+    programTrackedEntityAttributes:
+    {
+        trackedEntityAttribute: {
+            generated: boolean
+            pattern?: string
+            displayName: string
+            formName: string
+            id: string
+            valueType: string
+            optionSet: { id: string, options: [{ value: string, label: string }] }
         }
-    ]
+        searchable: boolean
+        displayInList: boolean
+        mandatory: boolean
+    }[]
+    
     trackedEntityType: {
-        trackedEntityTypeAttributes: [
-            {
-                trackedEntityAttribute: {
-                    id: string
-                }
+        trackedEntityTypeAttributes: {
+            trackedEntityAttribute: {
+                id: string
             }
-        ]
+        }[]
+        
         id: string
     }
 }
