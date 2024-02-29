@@ -48,13 +48,12 @@ export interface ProgramConfig {
         }
     ]
     trackedEntityType: {
-        trackedEntityTypeAttributes: [
-            {
-                trackedEntityAttribute: {
-                    id: string
-                }
+        trackedEntityTypeAttributes: {
+            trackedEntityAttribute: {
+                id: string
             }
-        ]
+        }[]
+        
         id: string
     }
 }

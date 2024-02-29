@@ -12,9 +12,8 @@ import { IconUserGroup16, IconAddCircle24, Button, ButtonStrip } from "@dhis2/ui
 
 function TransferActionsButtons() {
   const [openTranfer, setOpenTranfer] = useState<boolean>(false);
-  const { useQuery } = useParams();
-  const orgUnit = useQuery().get("school")
-  const orgUnitName = useQuery().get("schoolName")
+  const { urlParamiters} = useParams();
+  const { school: orgUnit, schoolName: orgUnitName } = urlParamiters()
   const selectedTabState = useRecoilValue(TabsState).value
   const { baseUrl } = useConfig();
 
