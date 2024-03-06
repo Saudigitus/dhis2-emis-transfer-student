@@ -1,4 +1,4 @@
-import { FlyoutOptionsProps } from "./FlyoutOptions"
+import { FlyoutOptionsProps } from "../menu/FlyoutMenuTypes"
 
 interface DropdownButtonProps {
     name: string
