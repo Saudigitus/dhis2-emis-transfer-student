@@ -5,6 +5,7 @@ import glyph from "../../../assets/images/sidebar/Glyph.svg"
 import listAdd from "../../../assets/images/sidebar/listAdd.svg"
 import logOut from "../../../assets/images/sidebar/log-out.svg"
 import userGroup from "../../../assets/images/sidebar/user-group.svg"
+import home from "../../../assets/images/sidebar/home.svg"
 import { type SideBarItemProps } from "../../../types/sideBar/SideBarTypes"
 import { SideBarDataProps } from "../../../types/utils/ConstantsTypes"
 
@@ -21,7 +22,7 @@ function sideBarData({ locationParms } : SideBarDataProps): SideBarItemProps[] {
                     disabled: false,
                     appName: "SEMIS-Enrollment",
                     route: `enrollment?${subItemRoute({location: locationParms.slice(1), sectionType: 'student'})}`, 
-                    pathName: "/enrollment"
+                    pathName: "/enrollment/student"
                 },
                 {
                     icon: glyph,
@@ -30,7 +31,7 @@ function sideBarData({ locationParms } : SideBarDataProps): SideBarItemProps[] {
                     disabled: false,
                     appName: "SEMIS-Attendance",
                     route: `attendance?${subItemRoute({location: locationParms.slice(1), sectionType: 'student'})}`, 
-                    pathName: "/attendance"
+                    pathName: "/attendance/student"
                 },
                 {
                     icon: fileDocument,
@@ -39,7 +40,7 @@ function sideBarData({ locationParms } : SideBarDataProps): SideBarItemProps[] {
                     disabled: false,
                     appName: "SEMIS-Performance",
                     route: `performance?${subItemRoute({location: locationParms.slice(1), sectionType: 'student'})}`, 
-                    pathName: "/performance"
+                    pathName: "/performance/student"
                 },
                 {
                     icon: gauge,
@@ -48,7 +49,7 @@ function sideBarData({ locationParms } : SideBarDataProps): SideBarItemProps[] {
                     disabled: false,
                     appName: "SEMIS-Final-Result",
                     route: `final-result?${subItemRoute({location: locationParms.slice(1), sectionType: 'student'})}`, 
-                    pathName: "/final-result"
+                    pathName: "/final-result/student"
                 },
                 {
                     icon: logOut,
@@ -56,8 +57,8 @@ function sideBarData({ locationParms } : SideBarDataProps): SideBarItemProps[] {
                     showBadge: false,
                     disabled: false,
                     appName: "SEMIS-Student-Transfer",
-                    route: `student-transfer?${subItemRoute({location: locationParms.slice(1), sectionType: 'student'})}`, 
-                    pathName: "/student-transfer"
+                    route: `transfer?${subItemRoute({location: locationParms.slice(1), sectionType: 'student'})}`, 
+                    pathName: "/transfer/student"
                 }
             ]
         },
@@ -70,8 +71,8 @@ function sideBarData({ locationParms } : SideBarDataProps): SideBarItemProps[] {
                     showBadge: false,
                     disabled: false,
                     appName: "SEMIS-Enrollment-Staff",
-                    route:`enrollment-teacher?${subItemRoute({location: locationParms.slice(1), sectionType: 'staff'})}`, 
-                    pathName: "/enrollment-teacher"
+                    route:`enrollment?${subItemRoute({location: locationParms.slice(1), sectionType: 'staff'})}`, 
+                    pathName: "/enrollment/staff"
                 },
                 {
                     icon: glyph,
@@ -79,8 +80,8 @@ function sideBarData({ locationParms } : SideBarDataProps): SideBarItemProps[] {
                     showBadge: false,
                     disabled: false,
                     appName: "SEMIS-Attendance-Staff",
-                    route: `staff-attendance?${subItemRoute({location: locationParms.slice(1), sectionType: 'staff'})}`, 
-                    pathName: "/staff-attendance"
+                    route: `attendance?${subItemRoute({location: locationParms.slice(1), sectionType: 'staff'})}`, 
+                    pathName: "/attendance/staff"
                 },
                 {
                     icon: logOut,
@@ -88,8 +89,22 @@ function sideBarData({ locationParms } : SideBarDataProps): SideBarItemProps[] {
                     showBadge: false,
                     disabled: false,
                     appName: "SEMIS-Staff-Transfer",
-                    route: `staff-transfer?${subItemRoute({location: locationParms.slice(1), sectionType: 'staff'})}`, 
-                    pathName: "/staff-transfer"
+                    route: `transfer?${subItemRoute({location: locationParms.slice(1), sectionType: 'staff'})}`, 
+                    pathName: "/transfer/staff"
+                }
+            ]
+        },
+        {
+            title: "Home",
+            subItems: [
+                {
+                    icon: home,
+                    label: "Home",
+                    showBadge: false,
+                    disabled: false,
+                    appName: "SEMIS",
+                    route: `home`,
+                    pathName: "/home"
                 }
             ]
         }
