@@ -39,6 +39,7 @@ interface EventQueryResults {
 interface TransferQueryResults {
     results: {
         instances: [{
+            createdAt: string
             trackedEntity: string
             orgUnit: string
             dataValues: dataValuesProps[]

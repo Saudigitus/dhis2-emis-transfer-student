@@ -5,6 +5,7 @@ import { CustomAttributeProps } from "../../variables/AttributeColumns"
 
 interface FormatResponseRowsProps {
     transferInstances: [{
+        createdAt: string
         trackedEntity: string
         dataValues: dataValuesProps[]
     }]
@@ -14,6 +15,8 @@ interface FormatResponseRowsProps {
     }>
     programConfig?: ProgramConfig
     programStageId?: string | undefined
+    statusDataElementId?: string
+    pendingStatus?: string
 }
 
 type RowsDataProps = Record<string, string | number | boolean | any>;

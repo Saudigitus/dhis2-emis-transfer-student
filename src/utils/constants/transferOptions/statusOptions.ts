@@ -6,7 +6,7 @@ export const useTransferConst = () => {
 
     function transferConst({ status } : StatusOptionsProps) {
 
-        return getDataStoreData?.transfer.statusOptions.find((option : any) => option.key === status)?.code
+        return getDataStoreData?.transfer?.statusOptions?.find((option : any) => option.key === status)?.code
     }
 
     return {

@@ -5,9 +5,29 @@ import { HeaderFormatResponseProps } from "../../../types/utils/table/TableTypes
 import { VariablesTypes, type CustomAttributeProps } from "../../../types/variables/AttributeColumns";
 
 export function formatResponse({ data, programStageId, tableColumns = []  }: HeaderFormatResponseProps): CustomAttributeProps[] {
+    let actionColumns: any[] = [{id: "requestTime", name: "Resquest time"}];
+
+    const staticColumns: CustomAttributeProps[] = actionColumns.map((column) => ({
+        id: column.id,
+        displayName: column.name,
+        header: column.name,
+        required: true,
+        name: column.name,
+        labelName: column.name,
+        valueType: Attribute.valueType.TEXT as unknown as CustomAttributeProps["valueType"],
+        options: { optionSet: undefined as unknown as CustomAttributeProps["options"]["optionSet"] },
+        visible: true,
+        disabled: false,
+        pattern: '',
+        searchable: false,
+        error: false,
+        content: '',
+        key: column.id,
+        type: VariablesTypes.DataElement
+    }));
+    
     const headerResponse = useMemo(() => {
-        // TODO: Remove this when the API is fixed and solve this bug 👇
-        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+
         const originalData = ((data?.programStages?.find(programStge => programStge.id === programStageId)) ?? {} as ProgramConfig["programStages"][0])
 
         return tableColumns?.length > 0 ? tableColumns : data?.programTrackedEntityAttributes?.map((item) => {
@@ -51,8 +71,8 @@ export function formatResponse({ data, programStageId, tableColumns = []  }: Hea
                         type: VariablesTypes.DataElement
                     }
                 }) as []
-                : []
-        )
+                : [], 
+            staticColumns as [])
     }, [tableColumns]);
 
     return headerResponse;
