@@ -5,6 +5,7 @@ import glyph from "../../../assets/images/sidebar/Glyph.svg"
 import listAdd from "../../../assets/images/sidebar/listAdd.svg"
 import logOut from "../../../assets/images/sidebar/log-out.svg"
 import userGroup from "../../../assets/images/sidebar/user-group.svg"
+import home from "../../../assets/images/sidebar/home.svg"
 import { type SideBarItemProps } from "../../../types/sideBar/SideBarTypes"
 import { SideBarDataProps } from "../../../types/utils/ConstantsTypes"
 
@@ -12,7 +13,7 @@ function sideBarData({ locationParms } : SideBarDataProps): SideBarItemProps[] {
 
     return [
         {
-            title: "student",
+            title: "Student",
             subItems: [
                 {
                     icon: listAdd,
@@ -62,7 +63,7 @@ function sideBarData({ locationParms } : SideBarDataProps): SideBarItemProps[] {
             ]
         },
         {
-            title: "staff",
+            title: "Staff",
             subItems: [
                 {
                     icon: userGroup,
@@ -90,6 +91,20 @@ function sideBarData({ locationParms } : SideBarDataProps): SideBarItemProps[] {
                     appName: "SEMIS-Staff-Transfer",
                     route: `staff-transfer?${subItemRoute({location: locationParms.slice(1), sectionType: 'staff'})}`, 
                     pathName: "/staff-transfer"
+                }
+            ]
+        },
+        {
+            title: "Home",
+            subItems: [
+                {
+                    icon: home,
+                    label: "Home",
+                    showBadge: false,
+                    disabled: false,
+                    appName: "SEMIS",
+                    route: `home`,
+                    pathName: "/home"
                 }
             ]
         }
