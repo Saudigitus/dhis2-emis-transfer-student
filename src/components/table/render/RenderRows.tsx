@@ -49,7 +49,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
     const [selectedTei, setSelectedTei] = useRecoilState(SelectedTeiState);
 
     const onClickActions = (row: any) => {
-        setSelectedTei(row); 
+    setSelectedTei(row); 
     }
 
     const onToggle = (rawRowData: object) => {
@@ -80,7 +80,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                         <RowCell
                             key={column.id}
                             className={classNames(classes.cell, classes.bodyCell)}
-                            onClick={() => onClickActions(row)}
+                            onClick={() => {isRowSelected ? onClickActions(row) : null}}
                             style={{ backgroundColor: (isRowSelected && (row.id === selectedTei?.id)) ? 'rgba(160, 201, 255,0.5)' : "#fff", cursor: isRowSelected ? "pointer" : "default" }}
                             >
                             <div>

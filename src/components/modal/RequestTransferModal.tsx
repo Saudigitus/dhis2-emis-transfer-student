@@ -149,7 +149,7 @@ const onRowsPerPageChange = (event: any) => {
 
   const modalActions = [
     { id: "cancel", type: "button", label: "Cancel", disabled: loadingTeis, onClick: () => handleCloseRequest() },
-    { id: "confirm", type: "button", label: "Contitue", primary: true, disabled: loadingTeis || !Object.keys(selectedTei).length, onClick: () => handleCloseRequest() }
+    { id: "confirm", type: "button", label: "Continue", primary: true, disabled: loadingTeis || !Object.keys(selectedTei).length, onClick: () => handleCloseRequest() }
   ];
 
   return (
@@ -237,6 +237,7 @@ const onRowsPerPageChange = (event: any) => {
               loading={loadingTeis}
               selectedTab={selectedTabState?.value}
               handleOpenApproval={() => {}}
+              isRowSelected={true}
             />
           </TableComponent>
           <div className="d-flex align-items-end justify-content-between pl-4">
