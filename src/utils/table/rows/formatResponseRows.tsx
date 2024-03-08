@@ -1,12 +1,20 @@
 import { ProgramConfig } from "../../../types/programConfig/ProgramConfig"
 import { FormatResponseRowsProps, RowsDataProps, attributesProps, dataValuesProps } from "../../../types/utils/table/FormatRowsDataTypes";
+import { OptionsProps } from "../../../types/variables/AttributeColumns";
+import { getRelativeTime } from "../../commons/getRelativeTime";
 
-export function formatResponseRows({ transferInstances, teiInstances, programConfig, programStageId }: FormatResponseRowsProps): RowsDataProps[] {
+export function formatResponseRows({ transferInstances, teiInstances, programConfig, programStageId, statusDataElementId, pendingStatus }: FormatResponseRowsProps): RowsDataProps[] {
     const allRows: RowsDataProps[] = []
+
     if(programConfig)
         for (const event of transferInstances) {
             const teiDetails = teiInstances.find(tei => tei.trackedEntity === event.trackedEntity)
-            allRows.push({teiId: event?.trackedEntity, ...transferDataValues(event?.dataValues, programConfig, programStageId), ...(attributes((teiDetails?.attributes) ?? [],  programConfig)) })
+            allRows.push({
+                "requestTime": transferDataValues(event?.dataValues, programConfig, programStageId)[statusDataElementId as unknown as string] === pendingStatus ? getRelativeTime(new Date(event?.createdAt)) : "---",
+                teiId: event?.trackedEntity,
+                ...transferDataValues(event?.dataValues, programConfig, programStageId), 
+                ...(attributes((teiDetails?.attributes) ?? [], programConfig))
+            })
         }
     return allRows;
 }
@@ -20,7 +28,7 @@ function transferDataValues(data: dataValuesProps[], programConfig: ProgramConfi
             const dataElementOptSet = currentProgramStage?.programStageDataElements?.find((option: any) => option.dataElement.id == dataElement.dataElement)?.dataElement?.optionSet
 
             if(dataElementOptSet)
-                localData[dataElement.dataElement] = dataElementOptSet?.options?.find((option: any) => option.value === dataElement.value).label as unknown as string
+                localData[dataElement.dataElement] = dataElementOptSet?.options?.find((option: OptionsProps) => option.value === dataElement.value)?.label as unknown as string
             else
                 localData[dataElement.dataElement] = dataElement.value
         }
@@ -35,7 +43,7 @@ function attributes(data: attributesProps[], programConfig: ProgramConfig): Rows
         const trackedEntityAttribute : any = programConfig?.programTrackedEntityAttributes?.find((option: any) => option.trackedEntityAttribute.id == attribute.attribute)?.trackedEntityAttribute
         
         if(trackedEntityAttribute?.optionSet)
-            localData[attribute.attribute] = trackedEntityAttribute?.optionSet?.options?.find((option: any) => option.value === attribute.value).label
+            localData[attribute.attribute] = trackedEntityAttribute?.optionSet?.options?.find((option: OptionsProps) => option.value === attribute.value).label
         
         else
             localData[attribute.attribute] = attribute.value

@@ -12,6 +12,7 @@ import { EventQueryProps, TransferQueryResults } from "../../types/api/WithoutRe
 import { TeiQueryProps, TeiQueryResults } from "../../types/api/WithRegistrationTypes";
 import { TableDataProps } from "../../types/table/TableContentTypes";
 import { ProgramConfigState } from "../../schema/programSchema";
+import { useTransferConst } from "../../utils/constants/transferOptions/statusOptions";
 
 const EVENT_QUERY = ({ ouMode, page, pageSize, program, order, programStage, filter, orgUnit, filterAttributes, trackedEntity, programStatus }: EventQueryProps) => ({
     results: {
@@ -60,6 +61,7 @@ export function useTableData() {
     const [tableData, setTableData] = useState<TableDataProps[]>([])
     const { hide, show } = useShowAlerts()
     const school = urlParamiters().school as unknown as string
+    const { transferConst } = useTransferConst()
 
     const incomingInitialFilter = [`${getDataStoreData?.transfer?.destinySchool as unknown as string}:in:${school}`, ...headerFieldsState?.dataElements];
 
@@ -115,7 +117,9 @@ export function useTableData() {
             transferInstances: tranferResults?.results?.instances,
             teiInstances: teiResults.results.instances,
             programConfig: programConfig,
-            programStageId: getDataStoreData?.transfer?.programStage
+            programStageId: getDataStoreData?.transfer?.programStage,
+            statusDataElementId: getDataStoreData?.transfer?.status,
+            pendingStatus: transferConst({status: "pending" }) as string
 
         }));
 
