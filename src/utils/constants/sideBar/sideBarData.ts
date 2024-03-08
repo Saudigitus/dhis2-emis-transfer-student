@@ -56,7 +56,7 @@ function sideBarData({ locationParms } : SideBarDataProps): SideBarItemProps[] {
                     label: "Transfer",
                     showBadge: false,
                     disabled: false,
-                    appName: "SEMIS-Student-Transfer",
+                    appName: "SEMIS-Transfer",
                     route: `transfer?${subItemRoute({location: locationParms.slice(1), sectionType: 'student'})}`, 
                     pathName: "/transfer/student"
                 }
@@ -70,7 +70,7 @@ function sideBarData({ locationParms } : SideBarDataProps): SideBarItemProps[] {
                     label: "Staff registry",
                     showBadge: false,
                     disabled: false,
-                    appName: "SEMIS-Enrollment-Staff",
+                    appName: "SEMIS-Enrollment",
                     route:`enrollment?${subItemRoute({location: locationParms.slice(1), sectionType: 'staff'})}`, 
                     pathName: "/enrollment/staff"
                 },
@@ -79,7 +79,7 @@ function sideBarData({ locationParms } : SideBarDataProps): SideBarItemProps[] {
                     label: "Attendance",
                     showBadge: false,
                     disabled: false,
-                    appName: "SEMIS-Attendance-Staff",
+                    appName: "SEMIS-Attendance",
                     route: `attendance?${subItemRoute({location: locationParms.slice(1), sectionType: 'staff'})}`, 
                     pathName: "/attendance/staff"
                 },
@@ -88,7 +88,7 @@ function sideBarData({ locationParms } : SideBarDataProps): SideBarItemProps[] {
                     label: "Transfer",
                     showBadge: false,
                     disabled: false,
-                    appName: "SEMIS-Staff-Transfer",
+                    appName: "SEMIS-Transfer",
                     route: `transfer?${subItemRoute({location: locationParms.slice(1), sectionType: 'staff'})}`, 
                     pathName: "/transfer/staff"
                 }
