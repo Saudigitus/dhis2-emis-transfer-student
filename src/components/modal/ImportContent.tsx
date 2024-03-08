@@ -3,11 +3,14 @@ import Subtitle from "../text/Subtitle";
 import WithPadding from "../template/WithPadding";
 import { ImportContentProps } from "../../types/modal/ModalTypes";
 import { ModalActions, Button, ButtonStrip, Divider } from "@dhis2/ui";
+import useGetSectionTypeLabel from "../../hooks/commons/useGetSectionTypeLabel";
 
 
 
 function ImportContent(props: ImportContentProps): React.ReactElement {
   const { setOpen } = props;
+  const { sectionName } = useGetSectionTypeLabel();
+
   const modalActions = [
     { label: "Cancel", disabled: false, loading: false, onClick: () => { setOpen(false) } },
     { label: "Import", primary: true, disabled: false, loading: false, onClick: () => { setOpen(false) } }
@@ -16,7 +19,7 @@ function ImportContent(props: ImportContentProps): React.ReactElement {
   return (
     <div>
       <WithPadding>
-        <Subtitle label={"Transfer students modal content component"} />
+        <Subtitle label={`Transfer ${sectionName} modal content component`} />
         <Divider />
       </WithPadding>
 

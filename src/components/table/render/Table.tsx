@@ -19,6 +19,7 @@ import ApproveTranferContent from "../../modal/ApproveTransferModalContent";
 import { ApprovalButtonClicked } from "../../../schema/approvalButtonClicked";
 import { loadingOusState } from "../../../schema/loadingOusSchema";
 import { TeiRefetch } from "../../../schema/refecthTeiSchema";
+import useGetSectionTypeLabel from "../../../hooks/commons/useGetSectionTypeLabel";
 
 const usetStyles = makeStyles({
   tableContainer: {
@@ -28,6 +29,7 @@ const usetStyles = makeStyles({
 
 function Table() {
   const classes = usetStyles();
+  const { sectionName } = useGetSectionTypeLabel();
   const { columns } = useHeader();
   const { getData, loading, tableData } = useTableData();
   const { useQuery } = useParams();
@@ -109,7 +111,7 @@ function Table() {
       </WithPadding>
       {open && (
         <ModalComponent
-          title={`${clickedButton === "approve" ? "Approve" : "Reject"} Incomming Student Transfer`}
+          title={`${clickedButton === "approve" ? "Approve" : "Reject"} Incomming ${sectionName} Transfer`}
           open={open}
           setOpen={setOpen}
         >
