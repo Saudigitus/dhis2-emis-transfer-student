@@ -1,5 +1,7 @@
 import React from 'react'
 import { useSearchParams } from 'react-router-dom'
+import { useRecoilValue } from 'recoil'
+import { DataStoreState } from '../../schema/dataStoreSchema'
 
 const useParams = () => {
     const [searchParams, setSearchParams] = useSearchParams()
@@ -15,14 +17,19 @@ const useParams = () => {
         return React.useMemo(() => new URLSearchParams(searchParams), [searchParams])
     }
 
+    const filterItemsParams: Record<string, any> = {};
+
+    const filterItems = useRecoilValue(DataStoreState).find(data => data.key === useQuery().get('sectionType'))?.filters?.dataElements.map(filterItem => {
+        filterItemsParams[filterItem.code] = useQuery().get(filterItem.code);
+    });
+
     const urlParamiters = () => {
         return {
             school: useQuery().get('school'),
             schoolName: useQuery().get('schoolName'),
             academicYear: useQuery().get('academicYear'),
             sectionType: useQuery().get('sectionType'),
-            grade: useQuery().get('grade'),
-            class: useQuery().get('class'),
+            ...filterItemsParams
         }
     }
     return { add, remove, useQuery, urlParamiters }

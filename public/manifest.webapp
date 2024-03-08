@@ -1,8 +1,8 @@
 {
   "appType": "APP",
-  "short_name": "SEMIS-Student-Transfer",
-  "name": "SEMIS-Student-Transfer",
-  "description": "SEMIS-Student-Transfer",
+  "short_name": "SEMIS-Transfer",
+  "name": "SEMIS-Transfer",
+  "description": "SEMIS-Transfer",
   "version": "1.0.0",
   "launch_path": "index.html",
   "default_locale": "en",

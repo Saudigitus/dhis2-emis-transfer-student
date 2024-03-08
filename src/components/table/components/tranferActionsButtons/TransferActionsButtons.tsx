@@ -9,16 +9,18 @@ import { useParams } from '../../../../hooks/commons/useQueryParams';
 import DropdownButtonComponent from '../../../buttons/DropdownButton';
 import { type FlyoutOptionsProps } from '../../../../types/menu/FlyoutMenuTypes';
 import { IconUserGroup16, IconAddCircle24, Button, ButtonStrip } from "@dhis2/ui";
+import useGetSectionTypeLabel from '../../../../hooks/commons/useGetSectionTypeLabel';
 
 function TransferActionsButtons() {
   const [openTranfer, setOpenTranfer] = useState<boolean>(false);
   const { urlParamiters} = useParams();
-  const { school: orgUnit, schoolName: orgUnitName } = urlParamiters()
+  const { school: orgUnit, schoolName: orgUnitName, sectionType } = urlParamiters()
   const selectedTabState = useRecoilValue(TabsState).value
   const { baseUrl } = useConfig();
+  const { sectionName } = useGetSectionTypeLabel();
 
   const enrollmentOptions: FlyoutOptionsProps[] = [
-    { label: "Transfer students", divider: true, onClick: () => { setOpenTranfer(true); } }
+    { label: `Transfer ${sectionName}`, divider: true, onClick: () => { setOpenTranfer(true); } }
   ];
 
   return (
@@ -37,14 +39,14 @@ function TransferActionsButtons() {
         </Tooltip>
         : <Tooltip title={orgUnit === null ? "Please select an organisation unit before" : ""}>
           <span>
-             <a href={`${baseUrl}/api/apps/SEMIS-Student-Transfer-Execute/index.html#/transfer?sectionType=student&school=${orgUnit}&schoolName=${orgUnitName}`}>
+             <a href={`${baseUrl}/api/apps/SEMIS-Transfer-Execute/index.html#/transfer?sectionType=${sectionType}&school=${orgUnit}&schoolName=${orgUnitName}`}>
             <Button disabled={orgUnit === null} icon={<IconAddCircle24 />}>Perfom transfer</Button></a>
           </span>
         </Tooltip>
 }
       </ButtonStrip>
 
-      {openTranfer && <ModalComponent title="Transfer Students" open={openTranfer} setOpen={setOpenTranfer}><ImportContent setOpen={setOpenTranfer} /></ModalComponent>}
+      {openTranfer && <ModalComponent title={`Transfer ${sectionName}`} open={openTranfer} setOpen={setOpenTranfer}><ImportContent setOpen={setOpenTranfer} /></ModalComponent>}
     </div>
   )
 }

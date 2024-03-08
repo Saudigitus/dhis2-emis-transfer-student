@@ -10,6 +10,7 @@ import { ApproveTranferProps } from "../../types/modal/ModalTypes";
 import { attributeFilter } from "../../utils/tei/getAttributeValue";
 import { RowSelectionState } from "../../schema/tableSelectedRowsSchema";
 import { ApprovalButtonClicked } from "../../schema/approvalButtonClicked";
+import useGetSectionTypeLabel from "../../hooks/commons/useGetSectionTypeLabel";
 
 function ApproveTranfer(props: ApproveTranferProps): React.ReactElement {
   const { setOpen, handleCloseApproval } = props;
@@ -19,6 +20,7 @@ function ApproveTranfer(props: ApproveTranferProps): React.ReactElement {
   const selectedTei = useRecoilValue(RowSelectionState).selectedRows[0]
   const clickedButton = useRecoilValue(ApprovalButtonClicked)
   const { loading, transferTEI, rejectTEI } = useTransferTEI()
+  const { sectionName } = useGetSectionTypeLabel();
 
   const trackedEntityAttributes = programConfig?.trackedEntityType?.trackedEntityTypeAttributes
   const programTrackedEntityAttributes = programConfig?.programTrackedEntityAttributes
@@ -33,8 +35,8 @@ function ApproveTranfer(props: ApproveTranferProps): React.ReactElement {
       <WithPadding p="10px 0px">
 
         {clickedButton === "approve"
-        ? <span><span className="text-danger">Attention:</span> This action will transfer this student into this school.</span>
-        : <span><span className="text-danger">Attention:</span> You are about to reject the student&apos;s transfer to this school.</span>
+        ? <span><span className="text-danger">Attention:</span> This action will transfer this {sectionName} into this school.</span>
+        : <span><span className="text-danger">Attention:</span> You are about to reject the {sectionName}&apos;s transfer to this school.</span>
         }
 
         <div className={style.divider}></div>

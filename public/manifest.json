@@ -1,7 +1,7 @@
 {
-  "short_name": "SEMIS-Student-Transfer",
-  "name": "SEMIS-Student-Transfer",
-  "description": "SEMIS-Student-Transfer",
+  "short_name": "SEMIS-Transfer",
+  "name": "SEMIS-Transfer",
+  "description": "SEMIS-Transfer",
   "icons": [
     {
       "src":"dhis2-app-icon.png",
