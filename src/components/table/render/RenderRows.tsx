@@ -12,6 +12,7 @@ import { getSelectedKey } from '../../../utils/commons/dataStore/getSelectedKey'
 import usetGetOptionColorMapping from '../../../hooks/optionSets/usetGetOptionColorMapping';
 import { useTransferConst } from '../../../utils/constants/transferOptions/statusOptions';
 import { RenderRowsProps } from '../../../types/table/TableContentTypes';
+import { SelectedTeiState } from '../../../schema/selectedTeiSchema';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -38,13 +39,18 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 function RenderRows(props: RenderRowsProps): React.ReactElement {
-    const { headerData, rowsData, loading, selectedTab, handleOpenApproval } = props;
+    const { headerData, rowsData, loading, selectedTab, handleOpenApproval, isRowSelected } = props;
     const classes = useStyles()
     const { getDataStoreData } = getSelectedKey();
     const [selected, setSelected] = useRecoilState(RowSelectionState);
     const [, setClickedButton] = useRecoilState(ApprovalButtonClicked)
     const valueColorMapping = usetGetOptionColorMapping()
     const { transferConst } = useTransferConst()
+    const [selectedTei, setSelectedTei] = useRecoilState(SelectedTeiState);
+
+    const onClickActions = (row: any) => {
+        setSelectedTei(row); 
+    }
 
     const onToggle = (rawRowData: object) => {
         handleOpenApproval();
@@ -74,7 +80,9 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                         <RowCell
                             key={column.id}
                             className={classNames(classes.cell, classes.bodyCell)}
-                        >
+                            onClick={() => onClickActions(row)}
+                            style={{ backgroundColor: (isRowSelected && (row.id === selectedTei?.id)) ? 'rgba(160, 201, 255,0.5)' : "#fff", cursor: isRowSelected ? "pointer" : "default" }}
+                            >
                             <div>
                                 {showValueBasedOnColumn({column:column,  value: row[column.id], dataStore:getDataStoreData, onToggle:onToggle, setClickedButton:setClickedButton, selected:selected, index:index, selectedTab:selectedTab, valueColorMapping:valueColorMapping, pendingStatus: transferConst({status: "pending" }) as string})}
                             </div>

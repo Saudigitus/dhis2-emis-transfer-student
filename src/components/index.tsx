@@ -14,9 +14,10 @@ import WithPadding from "./template/WithPadding";
 import WithBorder from "./template/WithBorder";
 import Title from "./text/Title";
 import Subtitle from "./text/Subtitle";
+import GenericFields from "./genericFields/GenericFields";
 
 export {
     Badge, SideBar, MainHeader, Table, DropdownButtonComponent, DragDropList, DragDropItems,
     FlyoutMenuComponent,WithPadding, WithBorder, InitialMessage, ModalComponent, OrgUnitTree,
-    SimpleSearch, Title, Subtitle, TabComponent
+    SimpleSearch, Title, Subtitle, TabComponent, GenericFields
 }

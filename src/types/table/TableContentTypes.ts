@@ -43,6 +43,7 @@ interface RenderRowsProps {
     loading: boolean, 
     selectedTab: any, 
     handleOpenApproval: () => void;
+    isRowSelected?: boolean
 }
 
 interface TableSortProps {
@@ -62,6 +63,8 @@ interface RowCellProps {
     passOnProps?: object,
     table?: tableProps,
     colspan?: number,
+    onClick?: () => void
+    style?: any
 }
 
 interface RowTableProps {

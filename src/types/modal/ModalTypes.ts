@@ -7,6 +7,10 @@ interface ApproveTranferProps {
     handleCloseApproval: () => void  
 }
 
+interface RequestTranferProps {
+    setOpen: (value: boolean) => void
+}
+
 
 interface ModalProps {
     open: boolean
@@ -16,4 +20,4 @@ interface ModalProps {
   }
   
 
-export type { ImportContentProps, ApproveTranferProps, ModalProps }
+export type { ImportContentProps, ApproveTranferProps, RequestTranferProps, ModalProps }
