@@ -44,7 +44,7 @@ function Table() {
 
   useEffect(() => {
     void getData(page, pageSize, selectedTabState?.value);
-  }, [headerFieldsState, page, pageSize, refetch])
+  }, [headerFieldsState, page, pageSize, refetch, selectedTabState])
 
   const onPageChange = (newPage: number) => {
     setpage(newPage);
