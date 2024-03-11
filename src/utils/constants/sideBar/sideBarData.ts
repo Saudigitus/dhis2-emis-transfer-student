@@ -13,6 +13,20 @@ function sideBarData({ locationParms } : SideBarDataProps): SideBarItemProps[] {
 
     return [
         {
+            title: "Navigation",
+            subItems: [
+                {
+                    icon: home,
+                    label: "Home",
+                    showBadge: false,
+                    disabled: false,
+                    appName: "SEMIS",
+                    route: `home`,
+                    pathName: "/home"
+                }
+            ]
+        },
+        {
             title: "student",
             subItems: [
                 {
@@ -91,20 +105,6 @@ function sideBarData({ locationParms } : SideBarDataProps): SideBarItemProps[] {
                     appName: "SEMIS-Transfer",
                     route: `transfer?${subItemRoute({location: locationParms.slice(1), sectionType: 'staff'})}`, 
                     pathName: "/transfer/staff"
-                }
-            ]
-        },
-        {
-            title: "Home",
-            subItems: [
-                {
-                    icon: home,
-                    label: "Home",
-                    showBadge: false,
-                    disabled: false,
-                    appName: "SEMIS",
-                    route: `home`,
-                    pathName: "/home"
                 }
             ]
         }
