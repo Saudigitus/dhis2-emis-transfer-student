@@ -13,7 +13,21 @@ function sideBarData({ locationParms } : SideBarDataProps): SideBarItemProps[] {
 
     return [
         {
-            title: "student",
+            title: "Navigation",
+            subItems: [
+                {
+                    icon: home,
+                    label: "Home",
+                    showBadge: false,
+                    disabled: false,
+                    appName: "SEMIS",
+                    route: `home`,
+                    pathName: "/home"
+                }
+            ]
+        },
+        {
+            title: "Student",
             subItems: [
                 {
                     icon: listAdd,
@@ -63,7 +77,7 @@ function sideBarData({ locationParms } : SideBarDataProps): SideBarItemProps[] {
             ]
         },
         {
-            title: "staff",
+            title: "Staff",
             subItems: [
                 {
                     icon: userGroup,
@@ -91,20 +105,6 @@ function sideBarData({ locationParms } : SideBarDataProps): SideBarItemProps[] {
                     appName: "SEMIS-Transfer",
                     route: `transfer?${subItemRoute({location: locationParms.slice(1), sectionType: 'staff'})}`, 
                     pathName: "/transfer/staff"
-                }
-            ]
-        },
-        {
-            title: "Home",
-            subItems: [
-                {
-                    icon: home,
-                    label: "Home",
-                    showBadge: false,
-                    disabled: false,
-                    appName: "SEMIS",
-                    route: `home`,
-                    pathName: "/home"
                 }
             ]
         }
