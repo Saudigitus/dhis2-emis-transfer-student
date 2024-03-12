@@ -27,7 +27,7 @@ function sideBarData({ locationParms } : SideBarDataProps): SideBarItemProps[] {
             ]
         },
         {
-            title: "student",
+            title: "Student",
             subItems: [
                 {
                     icon: listAdd,
@@ -77,7 +77,7 @@ function sideBarData({ locationParms } : SideBarDataProps): SideBarItemProps[] {
             ]
         },
         {
-            title: "staff",
+            title: "Staff",
             subItems: [
                 {
                     icon: userGroup,
