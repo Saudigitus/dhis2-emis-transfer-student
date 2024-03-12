@@ -8,7 +8,7 @@ import { HeaderFieldsState } from "../../schema/headersSchema";
 import useShowAlerts from "../commons/useShowAlert";
 import { RowSelectionState } from "../../schema/tableSelectedRowsSchema";
 import { getSelectedKey } from "../../utils/commons/dataStore/getSelectedKey";
-import { EventQueryProps, TransferQueryResults } from "../../types/api/WithoutRegistrationTypes";
+import { EventQueryProps, RegistrationQueryResults, TransferQueryResults } from "../../types/api/WithoutRegistrationTypes";
 import { TeiQueryProps, TeiQueryResults } from "../../types/api/WithRegistrationTypes";
 import { TableDataProps } from "../../types/table/TableContentTypes";
 import { ProgramConfigState } from "../../schema/programSchema";
@@ -67,6 +67,11 @@ export function useTableData() {
 
     async function getData(page: number, pageSize: number, selectedTab: string) {
         setLoading(true)
+        const registrationValuesByTei: RegistrationQueryResults = {
+            results: {
+                instances: [] as unknown as RegistrationQueryResults["results"]["instances"]
+            }
+        }
 
         const tranferResults: TransferQueryResults = await engine.query(EVENT_QUERY({
             ouMode: undefined as unknown as string,
@@ -88,9 +93,34 @@ export function useTableData() {
             setTimeout(hide, 5000);
         }) as unknown as TransferQueryResults
 
+        const trackedEntityIds = tranferResults?.results?.instances.map((x: { trackedEntity: string, orgUnit: string }) => ({trackedEntity: x.trackedEntity, orgUnit: x.orgUnit}))
         const trackedEntityToFetch = tranferResults?.results?.instances.map((x: { trackedEntity: string }) => x.trackedEntity).toString().replaceAll(",", ";")
 
-        const teiResults: TeiQueryResults = trackedEntityToFetch?.length > 0
+        if (trackedEntityIds?.length) {
+            for (const tei of trackedEntityIds) {
+                const registrationResults: RegistrationQueryResults = await engine.query(EVENT_QUERY({
+                    ouMode: undefined as unknown as string,
+                    page,
+                    pageSize,
+                    program: getDataStoreData?.program as unknown as string,
+                    order: "createdAt:desc",
+                    programStatus: "ACTIVE",
+                    programStage: getDataStoreData?.registration?.programStage as unknown as string,
+                    orgUnit: tei.orgUnit,
+                    trackedEntity: tei.trackedEntity
+                })).catch((error) => {
+                    show({
+                        message: `${("Could not get data")}: ${error.message}`,
+                        type: { critical: true }
+                    });
+                    setTimeout(hide, 5000);
+                }) as unknown as RegistrationQueryResults;
+
+                registrationValuesByTei.results.instances.push(...registrationResults?.results?.instances)
+            }
+        }
+
+        const teiResults: TeiQueryResults = trackedEntityToFetch?.length
             ? await engine.query(TEI_QUERY({
                 ouMode: "ALL",
                 order: "created:desc",
@@ -106,15 +136,18 @@ export function useTableData() {
                 setTimeout(hide, 5000);
             }) as unknown as TeiQueryResults
             : { results: { instances: [] } } as unknown as TeiQueryResults
+
         setSelected({
             ...selected,
             rows: formatAllSelectedRow({
                 transferInstances: tranferResults?.results?.instances,
+                registrationInstances: registrationValuesByTei?.results?.instances,
                 teiInstances: teiResults.results.instances,
             })
         })
         setTableData(formatResponseRows({
             transferInstances: tranferResults?.results?.instances,
+            registrationInstances: registrationValuesByTei?.results?.instances,
             teiInstances: teiResults.results.instances,
             programConfig: programConfig,
             programStageId: getDataStoreData?.transfer?.programStage,

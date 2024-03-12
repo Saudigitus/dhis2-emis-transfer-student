@@ -3,20 +3,31 @@ import { FormatResponseRowsProps, RowsDataProps, attributesProps, dataValuesProp
 import { OptionsProps } from "../../../types/variables/AttributeColumns";
 import { getRelativeTime } from "../../commons/getRelativeTime";
 
-export function formatResponseRows({ transferInstances, teiInstances, programConfig, programStageId, statusDataElementId, pendingStatus }: FormatResponseRowsProps): RowsDataProps[] {
+export function formatResponseRows({ transferInstances, teiInstances, registrationInstances, programConfig, programStageId, statusDataElementId, pendingStatus }: FormatResponseRowsProps): RowsDataProps[] {
     const allRows: RowsDataProps[] = []
-
     if(programConfig)
-        for (const event of transferInstances) {
+        for (const event of transferInstances ?? []) {
             const teiDetails = teiInstances.find(tei => tei.trackedEntity === event.trackedEntity)
+            const registrationDetails = registrationInstances.find(tei => tei.trackedEntity === event.trackedEntity)
             allRows.push({
                 "requestTime": transferDataValues(event?.dataValues, programConfig, programStageId)[statusDataElementId as unknown as string] === pendingStatus ? getRelativeTime(new Date(event?.createdAt)) : "---",
                 teiId: event?.trackedEntity,
                 ...transferDataValues(event?.dataValues, programConfig, programStageId), 
-                ...(attributes((teiDetails?.attributes) ?? [], programConfig))
+                ...(attributes((teiDetails?.attributes) ?? [], programConfig)),
+                ...registrationDataValues(registrationDetails?.dataValues ?? [])
             })
         }
     return allRows;
+}
+
+function registrationDataValues(data: dataValuesProps[]): RowsDataProps {
+    const localData: RowsDataProps = {}
+    if (data) {
+       for (const dataElement of data) {
+            localData[dataElement.dataElement] = dataElement.value
+        }
+    }
+    return localData
 }
 
 function transferDataValues(data: dataValuesProps[], programConfig: ProgramConfig, programStageId:string | undefined): RowsDataProps {
@@ -51,11 +62,12 @@ function attributes(data: attributesProps[], programConfig: ProgramConfig): Rows
     return localData
 }
 
-export function formatAllSelectedRow ({ transferInstances, teiInstances }: FormatResponseRowsProps) {
+export function formatAllSelectedRow ({ transferInstances, registrationInstances, teiInstances }: FormatResponseRowsProps) {
     const formattedRows = [];
-    for (const iterator of transferInstances) {
+    for (const iterator of transferInstances ?? []) {
         const newRow = {
             teiInstance: teiInstances.find(tei => tei.trackedEntity === iterator.trackedEntity),
+            registrationInstance: registrationInstances.find((ev: any) => ev.trackedEntity === iterator.trackedEntity),
             transferInstance: iterator
         }
         formattedRows.push(newRow);

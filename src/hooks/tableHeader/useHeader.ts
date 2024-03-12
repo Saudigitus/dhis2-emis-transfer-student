@@ -12,7 +12,7 @@ export function useHeader() {
     const tableColumns = useRecoilValue(TableColumnState)
 
     return {
-        columns: formatResponse({data:programConfigState, programStageId:getDataStoreData?.transfer?.programStage, tableColumns:tableColumns}),
+        columns: formatResponse({data:programConfigState, programStageId:getDataStoreData?.transfer?.programStage, registrationId: getDataStoreData?.registration?.programStage, tableColumns:tableColumns}),
         columnHeader,
         setcolumnHeader
     }

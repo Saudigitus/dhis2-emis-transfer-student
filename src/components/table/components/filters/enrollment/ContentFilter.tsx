@@ -78,6 +78,7 @@ function ContentFilter(props: ContentFilterProps) {
     const onQuerySubmit = () => {
         const copyHeader = { ...filtersValues }
         for (const [key, value] of Object.entries(copyHeader)) {
+        if(value) {
             const variableType = headers.find(x => x.id === key)?.type
             if (typeof value === 'object') {
                 if (variableType === "dataElement") {
@@ -99,7 +100,11 @@ function ContentFilter(props: ContentFilterProps) {
                             dataElementsQuerybuilder.push([`${key}:like:${value}`])
                         } else attributesQuerybuilder.push([`${key}:like:${value}`])
                     }
+            } 
+            } else {
+                onResetFilters(key)
             }
+            
         }
         setfieldsFilled(copyHeader)
         setHeaderFieldsState({
