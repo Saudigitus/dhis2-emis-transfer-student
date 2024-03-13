@@ -17,7 +17,7 @@ const PROGRAMQUERY : any = {
                 "id,displayName,description,programType,version",
                 "trackedEntityType[id,trackedEntityTypeAttributes[trackedEntityAttribute[id]]]",
                 "programTrackedEntityAttributes[mandatory,displayInList,trackedEntityAttribute[generated,pattern,id,displayName,formName,valueType,optionSet[options[code~rename(value),displayName~rename(label)]]]]",
-                "programStages[id,displayName,autoGenerateEvent,programStageDataElements[displayInReports,compulsory,dataElement[id,displayName,formName,valueType,optionSet[options[code~rename(value),displayName~rename(label)]]]]]"
+                "programStages[id,displayName,autoGenerateEvent,programStageDataElements[displayInReports,compulsory,programStage[id],dataElement[id,displayName,formName,valueType,optionSet[options[code~rename(value),displayName~rename(label)]]]]]"
             ]
         }
     }

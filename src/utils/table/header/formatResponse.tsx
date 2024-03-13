@@ -68,6 +68,7 @@ export function formatResponse({ data, programStageId, registrationId, tableColu
                 error: false,
                 content: '',
                 key: programStageDataElement.dataElement.id,
+                programStage: programStageDataElement?.programStage?.id,
                 type: VariablesTypes.DataElement
             }
         }) as []
@@ -90,6 +91,7 @@ export function formatResponse({ data, programStageId, registrationId, tableColu
                         error: false,
                         content: '',
                         key: programStageDataElement.dataElement.id,
+                        programStage: programStageDataElement?.programStage?.id,
                         type: VariablesTypes.DataElement
                     }
                 }) as []
