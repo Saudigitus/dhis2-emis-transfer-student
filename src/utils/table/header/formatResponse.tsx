@@ -1,8 +1,8 @@
 import { useMemo } from "react";
 import { Attribute } from "../../../types/generated/models";
-import { type ProgramConfig } from "../../../types/programConfig/ProgramConfig";
 import { HeaderFormatResponseProps } from "../../../types/utils/table/TableTypes";
 import { VariablesTypes, type CustomAttributeProps } from "../../../types/variables/AttributeColumns";
+import { ProgramStageConfig } from "../../../types/programStageConfig/ProgramStageConfig";
 
 export function formatResponse({ data, programStageId, registrationId, tableColumns = []  }: HeaderFormatResponseProps): CustomAttributeProps[] {
     let actionColumns: any[] = [{id: "requestTime", name: "Resquest time"}];
@@ -28,8 +28,8 @@ export function formatResponse({ data, programStageId, registrationId, tableColu
     
     const headerResponse = useMemo(() => {
 
-        const originalData = ((data?.programStages?.find(programStge => programStge.id === programStageId)) ?? {} as ProgramConfig["programStages"][0])
-        const registrationData = ((data?.programStages?.find(programStge => programStge.id === registrationId)) ?? {} as ProgramConfig["programStages"][0])
+        const originalData = ((data?.programStages?.find(programStge => programStge.id === programStageId)) ?? {} as ProgramStageConfig)
+        const registrationData = ((data?.programStages?.find(programStge => programStge.id === registrationId)) ?? {} as ProgramStageConfig)
 
         return tableColumns?.length > 0 ? tableColumns : data?.programTrackedEntityAttributes?.map((item) => {
             return {
