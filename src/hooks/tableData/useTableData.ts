@@ -14,37 +14,22 @@ import { TableDataProps } from "../../types/table/TableContentTypes";
 import { ProgramConfigState } from "../../schema/programSchema";
 import { useTransferConst } from "../../utils/constants/transferOptions/statusOptions";
 
-const EVENT_QUERY = ({ ouMode, page, pageSize, program, order, programStage, filter, orgUnit, filterAttributes, trackedEntity, programStatus }: EventQueryProps) => ({
+const EVENT_QUERY = (queryProps: EventQueryProps) => ({
     results: {
         resource: "tracker/events",
         params: {
-            order,
-            page,
-            pageSize,
-            programStatus,
-            ouMode,
-            program,
-            programStage,
-            orgUnit,
-            filter,
-            filterAttributes,
             fields: "*",
-            trackedEntity
+            ...queryProps
         }
     }
 })
 
-const TEI_QUERY = ({ ouMode, pageSize, program, trackedEntity, orgUnit, order }: TeiQueryProps) => ({
+const TEI_QUERY = (queryProps: TeiQueryProps) => ({
     results: {
         resource: "tracker/trackedEntities",
         params: {
-            program,
-            order,
-            ouMode,
-            pageSize,
-            trackedEntity,
-            orgUnit,
-            fields: "trackedEntity,trackedEntityType,createdAt,orgUnit,attributes[attribute,value],enrollments[enrollment,status,orgUnit,orgUnitName,enrolledAt]"
+            fields: "trackedEntity,trackedEntityType,createdAt,orgUnit,attributes[attribute,value],enrollments[enrollment,status,orgUnit,orgUnitName,enrolledAt]",
+            ...queryProps
         }
     }
 })
@@ -79,7 +64,6 @@ export function useTableData() {
             pageSize,
             program: getDataStoreData?.program as unknown as string,
             order: "createdAt:desc",
-            programStatus: "ACTIVE",
             programStage: getDataStoreData?.transfer?.programStage as unknown as string,
             filter: (getDataStoreData != null) && selectedTab === "incoming" ? incomingInitialFilter : headerFieldsState?.dataElements,
             filterAttributes: headerFieldsState?.attributes,
@@ -100,11 +84,8 @@ export function useTableData() {
             for (const tei of trackedEntityIds) {
                 const registrationResults: RegistrationQueryResults = await engine.query(EVENT_QUERY({
                     ouMode: undefined as unknown as string,
-                    page,
-                    pageSize,
                     program: getDataStoreData?.program as unknown as string,
                     order: "createdAt:desc",
-                    programStatus: "ACTIVE",
                     programStage: getDataStoreData?.registration?.programStage as unknown as string,
                     orgUnit: tei.orgUnit,
                     trackedEntity: tei.trackedEntity
