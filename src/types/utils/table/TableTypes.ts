@@ -8,6 +8,7 @@ interface ConvertArrayToObjectProps {
 interface HeaderFormatResponseProps {
     data: ProgramConfig
     programStageId: string | undefined
+    registrationId: string | undefined
     tableColumns: CustomAttributeProps[]
 }
 

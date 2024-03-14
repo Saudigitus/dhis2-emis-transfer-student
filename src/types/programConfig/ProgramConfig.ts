@@ -1,3 +1,4 @@
+import { ProgramStageConfig } from "../programStageConfig/ProgramStageConfig"
 
 export interface ProgramConfig {
     displayName: string
@@ -5,32 +6,7 @@ export interface ProgramConfig {
     description: string
     access?: any
     programType: string
-    programStages: [
-        {
-            autoGenerateEvent: boolean
-            displayName: string
-            id: string
-            programStageDataElements: [
-                {
-                    displayInReports: boolean
-                    compulsory: boolean
-                    dataElement: {
-                        displayName: string
-                        formName: string
-                        id: string
-                        valueType: string
-                        optionSet: {
-                            id: string
-                            options: [{
-                                value: string
-                                label: string
-                            }]
-                        }
-                    }
-                }
-            ]
-        }
-    ]
+    programStages: ProgramStageConfig[]
     programTrackedEntityAttributes:
     {
         trackedEntityAttribute: {

@@ -27,7 +27,7 @@ interface dataValuesProps {
     value: string
 }
 
-interface EventQueryResults {
+interface RegistrationQueryResults {
     results: {
         instances: [{
             trackedEntity: string
@@ -47,4 +47,4 @@ interface TransferQueryResults {
     }
 }
 
-export type { EventQueryProps, GeTDataElementsProps, EventQueryResults, dataValuesProps, TransferQueryResults }
+export type { EventQueryProps, GeTDataElementsProps, RegistrationQueryResults, dataValuesProps, TransferQueryResults }

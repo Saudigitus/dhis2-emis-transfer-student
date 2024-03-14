@@ -1,10 +1,10 @@
 import { useMemo } from "react";
 import { Attribute } from "../../../types/generated/models";
-import { type ProgramConfig } from "../../../types/programConfig/ProgramConfig";
 import { HeaderFormatResponseProps } from "../../../types/utils/table/TableTypes";
 import { VariablesTypes, type CustomAttributeProps } from "../../../types/variables/AttributeColumns";
+import { ProgramStageConfig } from "../../../types/programStageConfig/ProgramStageConfig";
 
-export function formatResponse({ data, programStageId, tableColumns = []  }: HeaderFormatResponseProps): CustomAttributeProps[] {
+export function formatResponse({ data, programStageId, registrationId, tableColumns = []  }: HeaderFormatResponseProps): CustomAttributeProps[] {
     let actionColumns: any[] = [{id: "requestTime", name: "Resquest time"}];
 
     const staticColumns: CustomAttributeProps[] = actionColumns.map((column) => ({
@@ -28,7 +28,8 @@ export function formatResponse({ data, programStageId, tableColumns = []  }: Hea
     
     const headerResponse = useMemo(() => {
 
-        const originalData = ((data?.programStages?.find(programStge => programStge.id === programStageId)) ?? {} as ProgramConfig["programStages"][0])
+        const originalData = ((data?.programStages?.find(programStge => programStge.id === programStageId)) ?? {} as ProgramStageConfig)
+        const registrationData = ((data?.programStages?.find(programStge => programStge.id === registrationId)) ?? {} as ProgramStageConfig)
 
         return tableColumns?.length > 0 ? tableColumns : data?.programTrackedEntityAttributes?.map((item) => {
             return {
@@ -49,7 +50,29 @@ export function formatResponse({ data, programStageId, tableColumns = []  }: Hea
                 key: item.trackedEntityAttribute.id,
                 type: VariablesTypes.Attribute
             }
-        }).concat(
+        }).concat(Object.keys(registrationData).length > 0
+        ? registrationData?.programStageDataElements?.map((programStageDataElement) => {
+            return {
+                id: programStageDataElement.dataElement.id,
+                displayName: programStageDataElement.dataElement.formName ?? programStageDataElement.dataElement.displayName,
+                header: programStageDataElement.dataElement.formName ?? programStageDataElement.dataElement.displayName,
+                required: programStageDataElement.compulsory,
+                name: programStageDataElement.dataElement.formName ?? programStageDataElement.dataElement.displayName,
+                labelName: programStageDataElement.dataElement.formName ?? programStageDataElement.dataElement.displayName,
+                valueType: programStageDataElement.dataElement.optionSet?.options?.length > 0 ? Attribute.valueType.LIST as unknown as CustomAttributeProps["valueType"] : programStageDataElement.dataElement.valueType as unknown as CustomAttributeProps["valueType"],
+                options: { optionSet: programStageDataElement.dataElement.optionSet },
+                visible: programStageDataElement.displayInReports,
+                disabled: false,
+                pattern: '',
+                searchable: false,
+                error: false,
+                content: '',
+                key: programStageDataElement.dataElement.id,
+                programStage: programStageDataElement?.programStage?.id,
+                type: VariablesTypes.DataElement
+            }
+        }) as []
+        : [],
             Object.keys(originalData).length > 0
                 ? originalData?.programStageDataElements?.map((programStageDataElement) => {
                     return {
@@ -68,6 +91,7 @@ export function formatResponse({ data, programStageId, tableColumns = []  }: Hea
                         error: false,
                         content: '',
                         key: programStageDataElement.dataElement.id,
+                        programStage: programStageDataElement?.programStage?.id,
                         type: VariablesTypes.DataElement
                     }
                 }) as []

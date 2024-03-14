@@ -4,15 +4,19 @@ import { ProgramConfig } from "../../programConfig/ProgramConfig"
 import { CustomAttributeProps } from "../../variables/AttributeColumns"
 
 interface FormatResponseRowsProps {
-    transferInstances: [{
+    transferInstances: {
         createdAt: string
         trackedEntity: string
         dataValues: dataValuesProps[]
-    }]
-    teiInstances: Array<{
+    }[]
+    teiInstances: {
         trackedEntity: string
         attributes: attributesProps[]
-    }>
+    }[]
+    registrationInstances: {
+        trackedEntity: string
+        dataValues: dataValuesProps[]
+    }[]
     programConfig?: ProgramConfig
     programStageId?: string | undefined
     statusDataElementId?: string

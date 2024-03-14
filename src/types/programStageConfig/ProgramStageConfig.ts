@@ -7,6 +7,9 @@ export interface ProgramStageConfig {
         {
             displayInReports: boolean
             compulsory: boolean
+            programStage: {
+                id: string
+            }
             dataElement: {
                 displayInReports: boolean | undefined
                 displayName: string
