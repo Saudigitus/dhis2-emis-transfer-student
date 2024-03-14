@@ -23,6 +23,7 @@ export function formatResponse({ data, programStageId, registrationId, tableColu
         error: false,
         content: '',
         key: column.id,
+        displayInFilters: false,
         type: VariablesTypes.DataElement
     }));
     
@@ -48,6 +49,7 @@ export function formatResponse({ data, programStageId, registrationId, tableColu
                 error: false,
                 content: '',
                 key: item.trackedEntityAttribute.id,
+                displayInFilters: true,
                 type: VariablesTypes.Attribute
             }
         }).concat(Object.keys(registrationData).length > 0
@@ -68,6 +70,7 @@ export function formatResponse({ data, programStageId, registrationId, tableColu
                 error: false,
                 content: '',
                 key: programStageDataElement.dataElement.id,
+                displayInFilters: false,
                 programStage: programStageDataElement?.programStage?.id,
                 type: VariablesTypes.DataElement
             }
@@ -92,6 +95,7 @@ export function formatResponse({ data, programStageId, registrationId, tableColu
                         content: '',
                         key: programStageDataElement.dataElement.id,
                         programStage: programStageDataElement?.programStage?.id,
+                        displayInFilters: true,
                         type: VariablesTypes.DataElement
                     }
                 }) as []

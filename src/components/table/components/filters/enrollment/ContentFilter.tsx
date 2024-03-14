@@ -9,7 +9,6 @@ import { HeaderFieldsState } from '../../../../../schema/headersSchema';
 import { ContentFilterProps, FiltersValuesProps } from '../../../../../types/table/ContentFiltersTypes';
 import { type CustomAttributeProps } from '../../../../../types/variables/AttributeColumns';
 import { convertArrayToObject } from '../../../../../utils/table/filter/formatArrayToObject';
-import { getDataStoreKeys } from '../../../../../utils/commons/dataStore/getDataStoreKeys';
 
 function ContentFilter(props: ContentFilterProps) {
     const { headers = [] } = props;
@@ -19,7 +18,6 @@ function ContentFilter(props: ContentFilterProps) {
     const [anchorEl, setAnchorEl] = useState<EventTarget | null>(null);
     const [resetValues, setresetValues] = useState("")
     const [headerFieldsStateValues, setHeaderFieldsState] = useRecoilState(HeaderFieldsState)
-    const { registration } = getDataStoreKeys()
     const attributesQuerybuilder: string[][] = [];
     const dataElementsQuerybuilder: string[][] = [];
 
@@ -133,7 +131,7 @@ function ContentFilter(props: ContentFilterProps) {
     return (
         <div className={style.contentFilterContainer}>
             {
-                localFilters.filter(column => column.programStage !== registration.programStage).map((colums, index) => (
+                localFilters.filter(x => x.displayInFilters === true).map((colums, index) => (
                     <SelectButton key={index}
                         tooltipContent=''
                         title={colums.displayName}
@@ -159,7 +157,7 @@ function ContentFilter(props: ContentFilterProps) {
                 ))
             } 
             <div className={style.contentFilterButtonsConatiner}>
-                {headers?.filter(x => !localFilters.includes(x) && x.programStage !== registration.programStage).length > 0 &&
+                {headers?.filter(x => !localFilters.includes(x) && x.displayInFilters).length > 0 &&
                     <Button 
                         variant='outlined'
                         onClick={handleClick}
@@ -171,7 +169,7 @@ function ContentFilter(props: ContentFilterProps) {
                 <MenuFilters
                     anchorEl={anchorEl}
                     setAnchorEl={setAnchorEl}
-                    options={headers?.filter(x => !localFilters.includes(x) && x.programStage !== registration.programStage)}
+                    options={headers?.filter(x => !localFilters.includes(x) && x.displayInFilters)}
                     addSearchableHeaders={addSearchableHeaders}
                 />
             </div>
