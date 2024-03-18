@@ -11,7 +11,7 @@ export function formatResponseRows({ transferInstances, teiInstances, registrati
             const registrationDetails = registrationInstances.find(tei => tei.trackedEntity === event.trackedEntity)
             allRows.push({
                 "requestTime": transferDataValues(event?.dataValues, programConfig, programStageId)[statusDataElementId as unknown as string] === pendingStatus ? getRelativeTime(new Date(event?.createdAt)) : "---",
-                teiId: event?.trackedEntity,
+                trackedEntity: event?.trackedEntity,
                 ...transferDataValues(event?.dataValues, programConfig, programStageId), 
                 ...(attributes((teiDetails?.attributes) ?? [], programConfig)),
                 ...registrationDataValues(registrationDetails?.dataValues ?? [])
