@@ -7,7 +7,7 @@ import useDataElementsParamMapping from "../dataElements/useDataElementsParamMap
 let localLocation: string = ""
 export function useGetInitialValues() {
     const location = useLocation()
-    const { urlParamiters } = useParams()
+    const { urlParamiters, remove } = useParams()
     const paramsMapping = useDataElementsParamMapping();
     const setHeaderFields = useSetRecoilState(HeaderFieldsState)
     const entries = location?.search?.split('?')?.[1]?.split('&')?.map((item) => item.split('='))
@@ -18,7 +18,7 @@ export function useGetInitialValues() {
         for (const [key, value] of entries) {
             const keys = Object.entries(paramsMapping)
             for (const [dataElement, name] of keys) {
-                if (name.includes(key)) {
+                if (name.includes(key) && key !== "academicYear") {
                     if (!localLocation.includes(value)) {
                         diff = diff + 1
                     }

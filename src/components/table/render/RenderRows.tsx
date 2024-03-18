@@ -12,6 +12,11 @@ import { getSelectedKey } from '../../../utils/commons/dataStore/getSelectedKey'
 import usetGetOptionColorMapping from '../../../hooks/optionSets/usetGetOptionColorMapping';
 import { useTransferConst } from '../../../utils/constants/transferOptions/statusOptions';
 import { RenderRowsProps } from '../../../types/table/TableContentTypes';
+import { formatKeyValueTypeHeader } from '../../../utils/programRules/formatKeyValueType';
+import { IconButton } from '@material-ui/core';
+import { CropOriginal } from '@material-ui/icons';
+import { useGetImageUrl } from '../../../hooks/fileResources/useGetImageUrl';
+import { Attribute } from '../../../types/generated/models';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -45,6 +50,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
     const [, setClickedButton] = useRecoilState(ApprovalButtonClicked)
     const valueColorMapping = usetGetOptionColorMapping()
     const { transferConst } = useTransferConst()
+    const { imageUrl } = useGetImageUrl()
 
     const onToggle = (rawRowData: object) => {
         handleOpenApproval();
@@ -76,7 +82,18 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                             className={classNames(classes.cell, classes.bodyCell)}
                         >
                             <div>
-                                {showValueBasedOnColumn({column:column,  value: row[column.id], dataStore:getDataStoreData, onToggle:onToggle, setClickedButton:setClickedButton, selected:selected, index:index, selectedTab:selectedTab, valueColorMapping:valueColorMapping, pendingStatus: transferConst({status: "pending" }) as string})}
+                            {
+                                formatKeyValueTypeHeader(headerData)[column.id] === Attribute.valueType.IMAGE ?
+                                    <a href={imageUrl({ attribute: column.id, trackedEntity: row.trackedEntity })} target='_blank'>
+                                        {row[column.id] && 
+                                            <IconButton> 
+                                                <CropOriginal />
+                                            </IconButton>
+                                        }
+                                    </a>
+                                    :
+                                    showValueBasedOnColumn({column:column,  value: row[column.id], dataStore:getDataStoreData, onToggle:onToggle, setClickedButton:setClickedButton, selected:selected, index:index, selectedTab:selectedTab, valueColorMapping:valueColorMapping, pendingStatus: transferConst({status: "pending" }) as string})
+                                }
                             </div>
                         </RowCell>
                     ));
