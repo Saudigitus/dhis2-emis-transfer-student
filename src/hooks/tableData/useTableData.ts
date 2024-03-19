@@ -104,7 +104,6 @@ export function useTableData() {
         const teiResults: TeiQueryResults = trackedEntityToFetch?.length
             ? await engine.query(TEI_QUERY({
                 ouMode: "ALL",
-                order: "created:desc",
                 pageSize,
                 program: getDataStoreData?.program as unknown as string,
                 orgUnit: undefined as unknown as string,
