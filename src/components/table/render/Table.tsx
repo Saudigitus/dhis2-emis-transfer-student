@@ -32,7 +32,8 @@ function Table() {
   const { sectionName } = useGetSectionTypeLabel();
   const { columns } = useHeader();
   const { getData, loading, tableData } = useTableData();
-  const { useQuery } = useParams();
+  const { urlParamiters } = useParams();
+  const school = urlParamiters().school
   const headerFieldsState = useRecoilValue(HeaderFieldsState);
   const selectedTabState = useRecoilValue(TabsState);
   const loadingOus = useRecoilValue(loadingOusState);
@@ -44,7 +45,7 @@ function Table() {
 
   useEffect(() => {
     void getData(page, pageSize, selectedTabState?.value);
-  }, [headerFieldsState, page, pageSize, refetch, selectedTabState])
+  }, [headerFieldsState, page, pageSize, refetch, selectedTabState, school])
 
   const onPageChange = (newPage: number) => {
     setpage(newPage);

@@ -7,12 +7,13 @@ import { getSelectedKey } from '../../utils/commons/dataStore/getSelectedKey'
 import { useTransferConst } from '../../utils/constants/transferOptions/statusOptions'
 
 const TRANSFERQUERY : any = {
-    resource: 'tracker',
-    data: ({ data }: any) => data,
-    type: 'create',
-    params: {
-        async: false
-    }
+    resource: 'tracker/ownership/transfer',
+    type: 'update',
+    params: ({ program, ou, trackedEntityInstance }: any) => ({
+        program,
+        ou,
+        trackedEntityInstance
+    })
 }
 
 export function useTransferTEI() {
@@ -28,16 +29,9 @@ export function useTransferTEI() {
         setloading(true)
             await engine.mutate(TRANSFERQUERY, {
                 variables: {
-                    data: {
-                        trackedEntities: [
-                            {
-                                attributes: selectedTei?.teiInstance.attributes,
-                                trackedEntity: selectedTei?.teiInstance.trackedEntity,
-                                trackedEntityType: selectedTei?.teiInstance.trackedEntityType,
-                                orgUnit: ou
-                            }
-                        ]
-                    }
+                    program: selectedTei?.transferInstance?.program,
+                    ou,
+                    trackedEntityInstance: selectedTei?.teiInstance?.trackedEntity
                 }
             })
             .then(async (res) => {
