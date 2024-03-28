@@ -10,7 +10,7 @@ export function useGetInitialValues() {
     const { urlParamiters, remove } = useParams()
     const paramsMapping = useDataElementsParamMapping();
     const setHeaderFields = useSetRecoilState(HeaderFieldsState)
-    const entries = location?.search?.split('?')?.[1]?.split('&')?.map((item) => item.split('='))
+    const entries = location?.search?.split('?')?.[1]?.split('&')?.map((item) => item.split('=')).filter(x => x.length === 2)
     const dataElementsQuerybuilder = []
     let diff: number = 0
 
