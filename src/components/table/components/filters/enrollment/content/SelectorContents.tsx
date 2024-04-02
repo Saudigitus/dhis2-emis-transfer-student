@@ -23,8 +23,14 @@ function SelectorContents(props: SelectorContentsProps) {
     const loading = useRecoilValue(TableDataLoadingState)
     const classes = getStyles()
 
+    const handleKeyDown = (event: any) => {
+        if (event.key === "Enter" && !(disabledUpdate || !value?.replace(/\s/g, '').length || loading)) {
+            onQuerySubmit();
+        }
+    };
+
     return (
-        <>
+        <form onKeyDown={handleKeyDown}>
             <FilterComponents
                 {...props}
                 column={colum}
@@ -59,7 +65,7 @@ function SelectorContents(props: SelectorContentsProps) {
                     </Button>
                 </div>
             </div>
-        </>
+        </form>
     )
 }
 
