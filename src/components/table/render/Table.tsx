@@ -11,7 +11,7 @@ import WorkingLits from "../components/filters/tableTopActions/TableTopActions";
 import { useHeader } from "../../../hooks/tableHeader/useHeader";
 import { useTableData } from "../../../hooks/tableData/useTableData";
 import { useParams } from "../../../hooks/commons/useQueryParams";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { HeaderFieldsState } from "../../../schema/headersSchema";
 import { TabsState } from "../../../schema/tabSchema";
 import ModalComponent from "../../modal/Modal";
@@ -20,6 +20,7 @@ import { ApprovalButtonClicked } from "../../../schema/approvalButtonClicked";
 import { loadingOusState } from "../../../schema/loadingOusSchema";
 import { TeiRefetch } from "../../../schema/refecthTeiSchema";
 import useGetSectionTypeLabel from "../../../hooks/commons/useGetSectionTypeLabel";
+import { TableDataLoadingState } from "../../../schema/tableDataLoadingSchema";
 
 const usetStyles = makeStyles({
   tableContainer: {
@@ -42,10 +43,15 @@ function Table() {
   const [refetch] = useRecoilState(TeiRefetch);
   const [open, setOpen] = useState<boolean>(false);
   const clickedButton = useRecoilValue(ApprovalButtonClicked)
+  const setLoading = useSetRecoilState(TableDataLoadingState)
 
   useEffect(() => {
     void getData(page, pageSize, selectedTabState?.value);
   }, [headerFieldsState, page, pageSize, refetch, selectedTabState, school])
+
+  useEffect(() => {
+    setLoading(loading)
+}, [loading])
 
   const onPageChange = (newPage: number) => {
     setpage(newPage);
@@ -87,11 +93,11 @@ function Table() {
                 )}
               </>
             </TableComponent>
-            {(loading || loadingOus) && (
+            {(loading || loadingOus) ? (
               <CenteredContent className="p-4">
                 <CircularLoader />
               </CenteredContent>
-            )}
+            ) : null}
           </div>
           <Pagination
             loading={loading || loadingOus}
