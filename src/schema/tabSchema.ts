@@ -1,9 +1,5 @@
 import { atom } from "recoil"
-import { z } from "zod"
-
-export const selectedTabSchema = z.object({name: z.string(), value: z.string()})
-
-export type SelectedTabSchema = z.infer<typeof selectedTabSchema>
+import { SelectedTabSchema } from "../types/table/SelectedTabTypes"
 
 export const TabsState = atom<SelectedTabSchema>({
     key: "tabs-state",
