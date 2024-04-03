@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { makeStyles, type Theme, createStyles } from '@material-ui/core/styles';
 import { RowCell, RowTable } from '../components';
 import { showValueBasedOnColumn } from '../../../utils/commons/tableRowsColumns';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { RowSelectionState } from '../../../schema/tableSelectedRowsSchema';
 import { replaceSelectedRow } from '../../../utils/commons/arrayUtils';
 import { ApprovalButtonClicked } from '../../../schema/approvalButtonClicked';
@@ -17,6 +17,7 @@ import { IconButton } from '@material-ui/core';
 import { CropOriginal } from '@material-ui/icons';
 import { useGetImageUrl } from '../../../hooks/fileResources/useGetImageUrl';
 import { Attribute } from '../../../types/generated/models';
+import { ProgramConfigState } from '../../../schema/programSchema';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -45,6 +46,7 @@ const useStyles = makeStyles((theme: Theme) =>
 function RenderRows(props: RenderRowsProps): React.ReactElement {
     const { headerData, rowsData, loading, selectedTab, handleOpenApproval } = props;
     const classes = useStyles()
+    const programConfigState = useRecoilValue(ProgramConfigState);
     const { getDataStoreData } = getSelectedKey();
     const [selected, setSelected] = useRecoilState(RowSelectionState);
     const [, setClickedButton] = useRecoilState(ApprovalButtonClicked)
@@ -92,7 +94,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                                         }
                                     </a>
                                     :
-                                    showValueBasedOnColumn({column:column,  value: row[column.id], dataStore:getDataStoreData, onToggle:onToggle, setClickedButton:setClickedButton, selected:selected, index:index, selectedTab:selectedTab, valueColorMapping:valueColorMapping, pendingStatus: transferConst({status: "pending" }) as string})
+                                    showValueBasedOnColumn({column, value: row[column.id], dataStore:getDataStoreData, onToggle, setClickedButton, selected, index, selectedTab, valueColorMapping, pendingStatus: transferConst({status: "pending" }) as string, program: programConfigState})
                                 }
                             </div>
                         </RowCell>

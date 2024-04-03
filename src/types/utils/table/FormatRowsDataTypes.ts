@@ -1,7 +1,6 @@
 import { attributesProps } from "../../api/WithRegistrationTypes"
 import { dataValuesProps } from "../../api/WithoutRegistrationTypes"
 import { ProgramConfig } from "../../programConfig/ProgramConfig"
-import { CustomAttributeProps } from "../../variables/AttributeColumns"
 
 interface FormatResponseRowsProps {
     transferInstances: {
@@ -17,20 +16,18 @@ interface FormatResponseRowsProps {
         trackedEntity: string
         dataValues: dataValuesProps[]
     }[]
-    programConfig?: ProgramConfig
-    programStageId?: string | undefined
     statusDataElementId?: string
     pendingStatus?: string
 }
 
 type RowsDataProps = Record<string, string | number | boolean | any>;
 
-interface DefaultProps {
-    attribute: string
+interface defaultProps {
+    metaData: string
+    program: ProgramConfig
     value: string
-    headers: CustomAttributeProps[]
 }
 
 
 
-export type { FormatResponseRowsProps, RowsDataProps, DefaultProps, attributesProps, dataValuesProps }
+export type { FormatResponseRowsProps, RowsDataProps, defaultProps, attributesProps, dataValuesProps }
