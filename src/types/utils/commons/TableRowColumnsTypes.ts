@@ -1,3 +1,4 @@
+import { ProgramConfig } from "../../programConfig/ProgramConfig"
 import { CustomAttributeProps } from "../../variables/AttributeColumns"
 
 interface ShowValueBasedOnColumnProps {
@@ -11,6 +12,7 @@ interface ShowValueBasedOnColumnProps {
     setClickedButton: (arg: string) => void
     pendingStatus: string
     valueColorMapping: Record<string, string>
+    program: ProgramConfig
 }
 
 interface RemoveColumByIdProps {

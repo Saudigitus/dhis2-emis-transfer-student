@@ -6,8 +6,9 @@ import { ButtonStrip, IconThumbUp24, IconThumbDown24 } from "@dhis2/ui"
 import styles from "../../components/table/render/table-render.module.css"
 import { type CustomAttributeProps } from '../../types/variables/AttributeColumns';
 import { RemoveColumByIdProps, ShowValueBasedOnColumnProps } from '../../types/utils/commons/TableRowColumnsTypes';
+import { getDisplayName } from '../table/rows/getDisplayNameByOption';
 
-function showValueBasedOnColumn({column, value, dataStore, onToggle, setClickedButton, selected, index, selectedTab, valueColorMapping, pendingStatus }: ShowValueBasedOnColumnProps) {
+function showValueBasedOnColumn({column, value, dataStore, onToggle, setClickedButton, selected, index, selectedTab, valueColorMapping, pendingStatus, program }: ShowValueBasedOnColumnProps) {
 
     if (column.id === dataStore?.transfer?.status) {
         if (value === pendingStatus && selectedTab === "incoming") {
@@ -22,13 +23,13 @@ function showValueBasedOnColumn({column, value, dataStore, onToggle, setClickedB
                 </ButtonStrip>
             )
         } else {
-            return <h6 className={styles.transferStatusLabel} style={{color: valueColorMapping[value]}}>{value ?? "---"}</h6>
+            return <h6 className={styles.transferStatusLabel} style={{color: valueColorMapping[value]}}>{getDisplayName({ metaData: column.id, value, program }) ?? "---"}</h6>
         }
     }
     if (column.valueType === Attribute.valueType.ORGANISATION_UNIT as unknown as CustomAttributeProps["valueType"] && (value !== "")) {
         return <OuNameContainer ouId={value}/>
     }
-    return value
+    return getDisplayName({ metaData: column.id, value, program }) ?? "---"
 }
 
 function removeColumById (props: RemoveColumByIdProps) {

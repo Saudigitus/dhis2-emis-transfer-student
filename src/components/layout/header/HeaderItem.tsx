@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import classNames from 'classnames'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import style from "./mainHeader.module.css"
 import { SimpleSearch } from '../../search'
 import { DropdownButton, FlyoutMenu } from "@dhis2/ui"
@@ -11,6 +11,8 @@ import { type HeadBarTypes } from '../../../types/headBar/HeadBarTypes'
 import { componentMapping } from '../../../utils/commons/componentMapping'
 import { OuQueryString } from '../../../schema/headerSearchInputSchema'
 import useDataElementsParamMapping from '../../../hooks/dataElements/useDataElementsParamMapping'
+import { ProgramConfigState } from '../../../schema/programSchema'
+import { getDisplayName } from '../../../utils/table/rows/getDisplayNameByOption'
 
 export default function HeaderItem(props: HeadBarTypes): React.ReactElement {
     const { label, value, placeholder, component, dataElementId, id, selected } = props;
@@ -19,6 +21,7 @@ export default function HeaderItem(props: HeadBarTypes): React.ReactElement {
     const [, setStringQuery] = useRecoilState(OuQueryString);
     const [openDropDown, setOpenDropDown] = useState<boolean>(false);
     const Component = (component != null) ? componentMapping[component] : null;
+    const programConfigState = useRecoilValue(ProgramConfigState);
 
     const onToggle = () => {
         setStringQuery(undefined)
@@ -48,7 +51,7 @@ export default function HeaderItem(props: HeadBarTypes): React.ReactElement {
                 </FlyoutMenu >
             }
         >
-            <h5>{label} <span>{value}</span></h5>
+            <h5>{label} <span>{(dataElementId && programConfigState) ? getDisplayName({ metaData: dataElementId, value: value, program: programConfigState }) : value}</span></h5>
             { selected && <HeaderResetItemValue onReset={onReset}/> }
             <img src={info} />
         </DropdownButton >

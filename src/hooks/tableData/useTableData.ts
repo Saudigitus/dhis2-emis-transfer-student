@@ -129,8 +129,6 @@ export function useTableData() {
             transferInstances: tranferResults?.results?.instances,
             registrationInstances: registrationValuesByTei?.results?.instances,
             teiInstances: teiResults.results.instances,
-            programConfig: programConfig,
-            programStageId: getDataStoreData?.transfer?.programStage,
             statusDataElementId: getDataStoreData?.transfer?.status,
             pendingStatus: transferConst({status: "pending" }) as string
 
