@@ -16,16 +16,6 @@ const TRANSFERQUERY : any = {
     })
 }
 
-const POST_TEI: any = {
-    resource: "tracker",
-    type: 'create',
-    data: ({ data }: any) => data,
-    params: {
-        async: false,
-        importStrategy: 'CREATE_AND_UPDATE'
-    }
-}
-
 export function useTransferTEI() {
     const engine = useDataEngine()
     const { getDataStoreData } = getSelectedKey();
@@ -34,24 +24,6 @@ export function useTransferTEI() {
     const { mutateValues } = useEditDataElement()
     const [refetch, setRefetch] = useRecoilState<boolean>(TeiRefetch)
     const { transferConst } = useTransferConst()
-
-    const transferTEIEnrollments = async (ou: any, selectedTei: any, handleCloseApproval: () => void) => {
-        setloading(true)
-            await engine.mutate(TRANSFERQUERY, {
-                variables: {
-                    program: selectedTei?.transferInstance?.program,
-                    ou,
-                    trackedEntityInstance: selectedTei?.teiInstance?.trackedEntity
-                }
-            })
-            .then(async (res) => {
-                await mutateValues(selectedTei?.transferInstance, getDataStoreData?.transfer?.status, transferConst({status:"approved"}) as string)
-                setRefetch(!refetch)
-                handleCloseApproval()
-            }).catch(e => {
-            })
-            setloading(false)
-    }
 
     const transferTEI = async (ou: any, selectedTei: any, handleCloseApproval: () => void) => {
         setloading(true)
