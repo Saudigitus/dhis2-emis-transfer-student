@@ -6,7 +6,7 @@ export const fieldsType = {
 interface EventQueryProps {
     page?: number
     pageSize?: number
-    ouMode: string
+    ouMode?: string
     program: string
     order: string
     programStage: string
@@ -14,6 +14,7 @@ interface EventQueryProps {
     filter?: string[]
     filterAttributes?: string[]
     trackedEntity: string
+    fields?: string
 }
 
 interface GeTDataElementsProps {
