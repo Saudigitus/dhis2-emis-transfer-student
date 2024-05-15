@@ -20,7 +20,7 @@ function ApproveTranfer(props: ApproveTranferProps): React.ReactElement {
   const programConfig = useRecoilValue(ProgramConfigState)
   const selectedTei = useRecoilValue(RowSelectionState).selectedRows[0]
   const clickedButton = useRecoilValue(ApprovalButtonClicked)
-  const { loading, transferTEI, rejectTEI, loadingRegistration } = useTransferTEI()
+  const { loading, transferTEI, rejectTEI, loadingEvents } = useTransferTEI()
   const { sectionName } = useGetSectionTypeLabel();
 
   const trackedEntityAttributes = programConfig?.trackedEntityType?.trackedEntityTypeAttributes
@@ -33,7 +33,7 @@ function ApproveTranfer(props: ApproveTranferProps): React.ReactElement {
 
   return (
     <div>
-      {loadingRegistration ? 
+      {loadingEvents ? 
       <CenteredContent>
         <CircularLoader />
       </CenteredContent> :<>

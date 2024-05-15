@@ -22,6 +22,7 @@ interface SelectionSchemaConfig {
             orgUnit: string,
             orgUnitName: string,
             dataValues: dataValuesProps[]
+            enrollment: string
         },
         registrationInstance: {
             event: string,

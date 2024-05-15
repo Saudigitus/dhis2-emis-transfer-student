@@ -1,11 +1,8 @@
-import { useDataEngine } from "@dhis2/app-runtime";
 import { useState } from "react";
-import { EventQueryProps } from "../../types/api/WithoutRegistrationTypes";
 import { useGetEvent } from "../events/useGetEvent";
 import { getDataStoreKeys } from "../../utils/commons/dataStore/getDataStoreKeys";
 
 export function useGetRegistrationEvent() {
-    const engine = useDataEngine();
     const { getEvent,  } = useGetEvent()
     const { program, registration } = getDataStoreKeys();
 
