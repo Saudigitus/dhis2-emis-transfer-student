@@ -1,5 +1,5 @@
 import React from 'react'
-import { OrganisationUnitTree } from '@dhis2/ui';
+import { OrganisationUnitTree, Help } from '@dhis2/ui';
 import { usePreviousOrganizationUnit } from '../../hooks/organisationUnit/usePreviousOrganizationUnit';
 import { OrgUnitTreeComponentProps } from '../../types/orgUnitTree/OrgUnitTreeTypes';
 
@@ -13,7 +13,7 @@ const OrgUnitTreeComponent = (props: OrgUnitTreeComponentProps) => {
         if (roots && roots.length === 1) {
             return [`/${roots[0].id}`];
         } else if (roots?.length > 1) {
-            return roots.map(root => root.path);
+            return roots?.map(root => root?.path);
         }
 
         return undefined;
@@ -62,10 +62,16 @@ const OrgUnitTreeComponent = (props: OrgUnitTreeComponentProps) => {
         return null;
     }
 
+    if (roots.length === 0) {
+        return <Help error>
+            No organisation units to show!
+        </Help>
+    }
+
     return (
         <OrganisationUnitTree
             key={treeKey}
-            roots={roots.map(item => item.id)}
+            roots={roots?.map(item => item?.id)}
             expanded={expanded}
             handleExpand={handleExpand}
             handleCollapse={handleCollapse}
