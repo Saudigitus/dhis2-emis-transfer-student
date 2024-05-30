@@ -1,26 +1,26 @@
-import React, {useEffect, useState} from "react";
-import {CenteredContent, CircularLoader} from "@dhis2/ui";
-import {HeaderFilters, Pagination, TableComponent} from "../components";
+import React, { useEffect, useState } from "react";
+import { CenteredContent, CircularLoader } from "@dhis2/ui";
+import { HeaderFilters, Pagination, TableComponent } from "../components";
 import RenderHeader from "./RenderHeader";
 import RenderRows from "./RenderRows";
-import {makeStyles} from "@material-ui/core/styles";
-import {Paper} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import { Paper } from "@material-ui/core";
 import WithBorder from "../../template/WithBorder";
 import WithPadding from "../../template/WithPadding";
 import WorkingLits from "../components/filters/tableTopActions/TableTopActions";
-import {useHeader} from "../../../hooks/tableHeader/useHeader";
-import {useTableData} from "../../../hooks/tableData/useTableData";
-import {useParams} from "../../../hooks/commons/useQueryParams";
-import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
-import {HeaderFieldsState} from "../../../schema/headersSchema";
-import {TabsState} from "../../../schema/tabSchema";
+import { useHeader } from "../../../hooks/tableHeader/useHeader";
+import { useTableData } from "../../../hooks/tableData/useTableData";
+import { useParams } from "../../../hooks/commons/useQueryParams";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { HeaderFieldsState } from "../../../schema/headersSchema";
+import { TabsState } from "../../../schema/tabSchema";
 import ModalComponent from "../../modal/Modal";
 import ApproveTranferContent from "../../modal/ApproveTransferModalContent";
-import {ApprovalButtonClicked} from "../../../schema/approvalButtonClicked";
-import {loadingOusState} from "../../../schema/loadingOusSchema";
-import {TeiRefetch} from "../../../schema/refecthTeiSchema";
+import { ApprovalButtonClicked } from "../../../schema/approvalButtonClicked";
+import { loadingOusState } from "../../../schema/loadingOusSchema";
+import { TeiRefetch } from "../../../schema/refecthTeiSchema";
 import useGetSectionTypeLabel from "../../../hooks/commons/useGetSectionTypeLabel";
-import {TableDataLoadingState} from "../../../schema/tableDataLoadingSchema";
+import { TableDataLoadingState } from "../../../schema/tableDataLoadingSchema";
 
 const usetStyles = makeStyles({
     tableContainer: {
@@ -41,10 +41,10 @@ const usetStyles = makeStyles({
 
 function Table() {
     const classes = usetStyles();
-    const {sectionName} = useGetSectionTypeLabel();
-    const {columns} = useHeader();
-    const {getData, loading, tableData} = useTableData();
-    const {urlParamiters} = useParams();
+    const { sectionName } = useGetSectionTypeLabel();
+    const { columns } = useHeader();
+    const { getData, loading, tableData } = useTableData();
+    const { urlParamiters } = useParams();
     const school = urlParamiters().school
     const headerFieldsState = useRecoilValue(HeaderFieldsState);
     const selectedTabState = useRecoilValue(TabsState);
@@ -84,39 +84,41 @@ function Table() {
         <Paper>
             <div className={classes.workingListsContainer}>
                 <h4 className={classes.h4}>Transfer</h4>
-                <WorkingLits/>
+                <WorkingLits />
             </div>
-            <WithBorder type="bottom"/>
+            <WithBorder type="bottom" />
             <WithPadding>
                 <WithBorder type="all">
-                    <HeaderFilters/>
+                    <HeaderFilters />
                     <div className={classes.tableContainer}>
-                        <TableComponent>
-                            <>
-                                <RenderHeader
-                                    createSortHandler={() => {
-                                    }}
-                                    order="asc"
-                                    orderBy="desc"
-                                    rowsHeader={columns}
-                                    selectedTab={selectedTabState?.value}
-                                />
-                                {!loading && !loadingOus && (
-                                    <RenderRows
-                                        headerData={columns}
-                                        rowsData={tableData}
-                                        loading={loading || loadingOus}
-                                        selectedTab={selectedTabState?.value}
-                                        handleOpenApproval={handleOpenApproval}
-                                    />
-                                )}
-                            </>
-                        </TableComponent>
                         {(loading || loadingOus) ? (
                             <CenteredContent className="p-4">
-                                <CircularLoader/>
+                                <CircularLoader />
                             </CenteredContent>
-                        ) : null}
+                        )
+                            :
+                            <TableComponent>
+                                <>
+                                    <RenderHeader
+                                        createSortHandler={() => {
+                                        }}
+                                        order="asc"
+                                        orderBy="desc"
+                                        rowsHeader={columns}
+                                        selectedTab={selectedTabState?.value}
+                                    />
+                                    {!loading && !loadingOus && (
+                                        <RenderRows
+                                            headerData={columns}
+                                            rowsData={tableData}
+                                            loading={loading || loadingOus}
+                                            selectedTab={selectedTabState?.value}
+                                            handleOpenApproval={handleOpenApproval}
+                                        />
+                                    )}
+                                </>
+                            </TableComponent>
+                        }
                     </div>
                     <Pagination
                         loading={loading || loadingOus}
@@ -134,7 +136,7 @@ function Table() {
                     open={open}
                     setOpen={setOpen}
                 >
-                    <ApproveTranferContent setOpen={setOpen} handleCloseApproval={handleCloseApproval}/>
+                    <ApproveTranferContent setOpen={setOpen} handleCloseApproval={handleCloseApproval} />
                 </ModalComponent>
             )}
         </Paper>
