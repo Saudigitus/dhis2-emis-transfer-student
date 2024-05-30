@@ -20,6 +20,7 @@ const useParams = () => {
             schoolName: useQuery().get('schoolName'),
             academicYear: useQuery().get('academicYear'),
             sectionType: useQuery().get('sectionType'),
+            transferTab: useQuery().get('transferTab'),
         }
     }
     return { add, remove, useQuery, urlParamiters }
