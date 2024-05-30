@@ -23,9 +23,9 @@ function ConfigTableColumns(props: ConfigTableColumnsProps) {
 
     return (
         <div className={styles['config-table__columns']}>
-            {
+            {/* {
                 selected.selectedRows.length > 0 && <NoticeBox title={`${selected.selectedRows.length} rows selected`} />
-            }
+            } */}
             <Tooltip
                 disableFocusListener
                 disableTouchListener
