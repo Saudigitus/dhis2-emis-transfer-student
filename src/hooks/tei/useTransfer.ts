@@ -78,7 +78,7 @@ export function useTransferTEI() {
             }
         ]
 
-        return await updateTei({ data: { trackedEntities } }).then(() => { handleCloseApproval() });
+        return await updateTei({ data: { trackedEntities } }).then(() => { handleCloseApproval(); setRefetch(!refetch) });
 
     }
 
@@ -94,7 +94,6 @@ export function useTransferTEI() {
         })
             .then(async (res) => {
                 formatEnrollmentBody(ou, selectedTei?.transferInstance, selectedTei?.teiInstance, handleCloseApproval)
-                setRefetch(!refetch)
             }).catch(e => {
             })
         setloading(false)
