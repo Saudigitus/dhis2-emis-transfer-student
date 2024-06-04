@@ -11,6 +11,7 @@ import { attributeFilter } from "../../utils/tei/getAttributeValue";
 import { RowSelectionState } from "../../schema/tableSelectedRowsSchema";
 import { ApprovalButtonClicked } from "../../schema/approvalButtonClicked";
 import useGetSectionTypeLabel from "../../hooks/commons/useGetSectionTypeLabel";
+import { CircularLoader, CenteredContent } from "@dhis2/ui";
 
 function ApproveTranfer(props: ApproveTranferProps): React.ReactElement {
   const { setOpen, handleCloseApproval } = props;
@@ -19,7 +20,7 @@ function ApproveTranfer(props: ApproveTranferProps): React.ReactElement {
   const programConfig = useRecoilValue(ProgramConfigState)
   const selectedTei = useRecoilValue(RowSelectionState).selectedRows[0]
   const clickedButton = useRecoilValue(ApprovalButtonClicked)
-  const { loading, transferTEI, rejectTEI } = useTransferTEI()
+  const { loading, transferTEI, rejectTEI, loadingEvents } = useTransferTEI()
   const { sectionName } = useGetSectionTypeLabel();
 
   const trackedEntityAttributes = programConfig?.trackedEntityType?.trackedEntityTypeAttributes
@@ -32,6 +33,11 @@ function ApproveTranfer(props: ApproveTranferProps): React.ReactElement {
 
   return (
     <div>
+      {loadingEvents ? 
+      <CenteredContent>
+        <CircularLoader />
+      </CenteredContent> :<>
+                
       <WithPadding p="10px 0px">
 
         {clickedButton === "approve"
@@ -60,7 +66,7 @@ function ApproveTranfer(props: ApproveTranferProps): React.ReactElement {
             <Button key={i} {...action}> {action.label} </Button>
           ))}
         </ButtonStrip>
-      </ModalActions>
+      </ModalActions></>}
     </div>
   );
 }

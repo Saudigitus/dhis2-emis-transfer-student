@@ -1,0 +1,51 @@
+import { useRecoilState } from 'recoil';
+import { useDataMutation } from "@dhis2/app-runtime";
+import useShowAlerts from '../commons/useShowAlert';
+import { TeiRefetch } from '../../schema/refecthTeiSchema';
+
+const POST_EVENT: any = {
+    resource: 'tracker',
+    type: 'create',
+    data: ({ data }: any) => data,
+    params: {
+        importStrategy: 'CREATE_AND_UPDATE',
+        async: false
+    }
+}
+
+
+const UPDATE_TEI: any = {
+    resource: "tracker",
+    type: 'create',
+    data: ({ data }: any) => data,
+    params: {
+        importStrategy: 'CREATE_AND_UPDATE',
+        async: false
+    }
+}
+
+export function useUpdateTei() {
+    const { hide, show } = useShowAlerts()
+    const [refetch, setRefetch] = useRecoilState<boolean>(TeiRefetch)
+
+    const [create, { loading, data, error }] = useDataMutation(POST_EVENT, {
+        onComplete: () => {
+            show({ message: "Transfer updated successfully", type: { success: true } })
+            setRefetch(!refetch)
+        },
+        onError: (error) => {
+            console.log("error", error)
+            show({
+                message: `Could not save the transfer details: ${error.message}`,
+                type: { critical: true }
+            });
+            setTimeout(hide, 5000);
+        }
+    });
+
+    return {
+        loadUpdateTei: loading,
+        updateTei: create,
+        data
+    }
+}
