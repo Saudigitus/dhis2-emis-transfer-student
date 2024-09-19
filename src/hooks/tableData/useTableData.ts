@@ -85,7 +85,7 @@ export function useTableData() {
                 const registrationResults: RegistrationQueryResults = await engine.query(EVENT_QUERY({
                     ouMode: undefined as unknown as string,
                     program: getDataStoreData?.program as unknown as string,
-                    order: "createdAt:desc",
+                    order: getDataStoreData?.defaults?.defaultOrder || "createdAt:desc",
                     programStage: getDataStoreData?.registration?.programStage as unknown as string,
                     orgUnit: tei.orgUnit,
                     trackedEntity: tei.trackedEntity
