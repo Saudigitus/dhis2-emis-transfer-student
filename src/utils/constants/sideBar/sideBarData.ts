@@ -105,6 +105,14 @@ function sideBarData({ locationParms } : SideBarDataProps): SideBarItemProps[] {
                     appName: "SEMIS-Transfer",
                     route: `transfer?${subItemRoute({location: locationParms.slice(1), sectionType: 'staff'})}`, 
                     pathName: "/transfer/staff"
+                },{
+                    icon: gauge,
+                    label: "Re-enroll",
+                    showBadge: false,
+                    disabled: false,
+                    appName: "SEMIS-Staff-Re-enroll",
+                    route: `final-result?${subItemRoute({location: locationParms.slice(1), sectionType: 'staff'})}`, 
+                    pathName: "/final-result/staff"
                 }
             ]
         }
