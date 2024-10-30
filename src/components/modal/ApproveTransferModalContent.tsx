@@ -49,12 +49,12 @@ function ApproveTranfer(props: ApproveTranferProps): React.ReactElement {
 
         {clickedButton === "approve"
         ? <div className="py-2">
-            Are you sure you want to{" "} <span className="text-danger"> approve the transfer </span> of{" "}  <strong> {`${attributeFilter({array: selectedTei?.teiInstance?.attributes, attribute: trackedEntityAttributes[1]?.trackedEntityAttribute.id ?? programTrackedEntityAttributes[2]?.trackedEntityAttribute.id }) ?? ""}, ${attributeFilter({array: selectedTei?.teiInstance?.attributes, attribute: trackedEntityAttributes[0]?.trackedEntityAttribute?.id ?? programTrackedEntityAttributes[3]?.trackedEntityAttribute.id}) ?? ""}`} </strong>{" "} from{" "}
+            Are you sure you want to{" "} <span className="text-danger"> approve the transfer </span> of{" "}  <strong> {`${attributeFilter({array: selectedTei?.teiInstance?.attributes, attribute: trackedEntityAttributes[1]?.trackedEntityAttribute?.id ?? programTrackedEntityAttributes[2]?.trackedEntityAttribute?.id }) ?? ""}, ${attributeFilter({array: selectedTei?.teiInstance?.attributes, attribute: trackedEntityAttributes[0]?.trackedEntityAttribute?.id ?? programTrackedEntityAttributes[3]?.trackedEntityAttribute?.id}) ?? ""}`} </strong>{" "} from{" "}
             <strong>{selectedTei?.transferInstance?.orgUnitName}</strong>{" "} to{" "}
             <strong>{schoolName}</strong>?
           </div>
         : <div className="py-2">
-            Are you sure you want to{" "} <span className="text-danger"> reject the transfer </span> of{" "}  <strong> {`${attributeFilter({array: selectedTei?.teiInstance?.attributes, attribute: trackedEntityAttributes[1]?.trackedEntityAttribute.id ?? programTrackedEntityAttributes[2]?.trackedEntityAttribute.id }) ?? ""}, ${attributeFilter({array: selectedTei?.teiInstance?.attributes, attribute: trackedEntityAttributes[0]?.trackedEntityAttribute?.id ?? programTrackedEntityAttributes[3]?.trackedEntityAttribute.id}) ?? ""}`} </strong>{" "} from{" "}
+            Are you sure you want to{" "} <span className="text-danger"> reject the transfer </span> of{" "}  <strong> {`${attributeFilter({array: selectedTei?.teiInstance?.attributes, attribute: trackedEntityAttributes[1]?.trackedEntityAttribute?.id ?? programTrackedEntityAttributes[2]?.trackedEntityAttribute?.id }) ?? ""}, ${attributeFilter({array: selectedTei?.teiInstance?.attributes, attribute: trackedEntityAttributes[0]?.trackedEntityAttribute?.id ?? programTrackedEntityAttributes[3]?.trackedEntityAttribute?.id}) ?? ""}`} </strong>{" "} from{" "}
             <strong>{selectedTei?.transferInstance?.orgUnitName}</strong>{" "} to{" "}
             <strong>{schoolName}</strong>
           </div>
