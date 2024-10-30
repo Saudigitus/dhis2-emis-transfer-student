@@ -45,7 +45,7 @@ export function useTransferTEI() {
         getEventsByEnrollment(selectedTei?.transferInstance?.enrollment, selectedTei?.teiInstance?.trackedEntity, programStagesToTransfer)
     }, []);
 
-    const registrationEvent: any = events?.find((x: any) => x.programStage == getDataStoreData.registration.programStage) ?? {}
+    const registrationEvent: any = events?.find((x: any) => x?.programStage == getDataStoreData.registration.programStage) ?? {}
 
     async function formatEnrollmentBody(newOu: any, transferEvent: any, tei: any, handleCloseApproval: () => void) {
         const trackedEntities = [
@@ -64,7 +64,7 @@ export function useTransferTEI() {
                         occurredAt: registrationEvent?.occurredAt,
                         enrolledAt: registrationEvent?.occurredAt,
                         events: [
-                            ...events?.map((event: any) => ({
+                            ...events?.filter(Boolean)?.map((event: any) => ({
                                 ...event,
                                 orgUnit: newOu,
                             })),
