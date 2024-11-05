@@ -47,44 +47,45 @@ export function useTransferTEI() {
 
     const registrationEvent: any = events?.find((x: any) => x.programStage == getDataStoreData.registration.programStage) ?? {}
 
-    async function formatEnrollmentBody(newOu: any, transferEvent: any, tei: any, handleCloseApproval: () => void) {
-        const trackedEntities = [
-            {
-                orgUnit: newOu,
-                trackedEntity: tei?.trackedEntity,
-                trackedEntityType: tei?.trackedEntityType,
-                enrollments: [
-                    {
-                        orgUnit: newOu,
-                        program: registrationEvent?.program,
-                        status: "COMPLETED",
-                        enrollment: registrationEvent?.enrollment,
-                        attributes: tei?.attributes,
-                        createdAt: registrationEvent?.createdAt,
-                        occurredAt: registrationEvent?.occurredAt,
-                        enrolledAt: registrationEvent?.occurredAt,
-                        events: [
-                            ...events?.map((event: any) => ({
-                                ...event,
-                                orgUnit: newOu,
-                            })),
-                            {
-                                ...transferEvent,
-                                dataValues: [{ dataElement: getDataStoreData?.transfer?.status, value: transferConst({ status: "approved" }) as string }]
-                            }
-                        ]
-                    }
-                ]
-            }
-        ]
-
-        return await updateTei({ data: { trackedEntities } }).then(() => { handleCloseApproval(); setRefetch(!refetch) });
-
+    function formatEnrollmentBody(newOu: any, transferEvent: any, tei: any) {
+        return {
+            trackedEntities: [
+                {
+                    orgUnit: newOu,
+                    trackedEntity: tei?.trackedEntity,
+                    trackedEntityType: tei?.trackedEntityType,
+                    enrollments: [
+                        {
+                            orgUnit: newOu,
+                            program: registrationEvent?.program,
+                            status: "COMPLETED",
+                            enrollment: registrationEvent?.enrollment,
+                            attributes: tei?.attributes,
+                            createdAt: registrationEvent?.createdAt,
+                            occurredAt: registrationEvent?.occurredAt,
+                            enrolledAt: registrationEvent?.occurredAt,
+                            events: [
+                                ...events?.map((event: any) => ({
+                                    ...event,
+                                    orgUnit: newOu,
+                                })),
+                                {
+                                    ...transferEvent,
+                                    dataValues: [{ dataElement: getDataStoreData?.transfer?.status, value: transferConst({ status: "approved" }) as string }]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
     }
 
 
     const transferTEI = async (ou: any, selectedTei: any, handleCloseApproval: () => void) => {
         setloading(true)
+        const originOrgUnit = selectedTei?.registrationInstance?.orgUnit
+
         await engine.mutate(TRANSFERQUERY, {
             variables: {
                 program: selectedTei?.transferInstance?.program,
@@ -92,10 +93,23 @@ export function useTransferTEI() {
                 trackedEntityInstance: selectedTei?.teiInstance?.trackedEntity
             }
         })
-            .then(async (res) => {
-                formatEnrollmentBody(ou, selectedTei?.transferInstance, selectedTei?.teiInstance, handleCloseApproval)
-            }).catch(e => {
+
+        try {
+            const data = formatEnrollmentBody(ou, selectedTei?.transferInstance, selectedTei?.teiInstance)
+            await updateTei(data)
+                .then(() => { handleCloseApproval(); setRefetch(!refetch) });
+
+        } catch (error) {
+            await engine.mutate(TRANSFERQUERY, {
+                variables: {
+                    program: selectedTei?.transferInstance?.program,
+                    ou: originOrgUnit,
+                    trackedEntityInstance: selectedTei?.teiInstance?.trackedEntity
+                }
             })
+                .then(() => { handleCloseApproval(); setRefetch(!refetch) });
+        }
+
         setloading(false)
     }
 
