@@ -64,7 +64,7 @@ export function useTransferTEI() {
                         occurredAt: registrationEvent?.occurredAt,
                         enrolledAt: registrationEvent?.occurredAt,
                         events: [
-                            ...events?.map((event: any) => ({
+                            ...events?.filter(Boolean)?.map((event: any) => ({
                                 ...event,
                                 orgUnit: newOu,
                             })),
