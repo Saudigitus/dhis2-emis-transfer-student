@@ -21,7 +21,6 @@ function WorkingLits() {
     if (urlParamiters().transferTab) {
       const tab = tabsElements.find((x: any) => x.value == urlParamiters().transferTab)
       setSelectedValue(tab as unknown as SelectedTabSchema)
-      console.log(tab)
     }
     // add("transferType", selectedValue.value)
   }, [])

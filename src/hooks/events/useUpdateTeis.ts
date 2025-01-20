@@ -13,17 +13,6 @@ const POST_EVENT: any = {
     }
 }
 
-
-const UPDATE_TEI: any = {
-    resource: "tracker",
-    type: 'create',
-    data: ({ data }: any) => data,
-    params: {
-        importStrategy: 'CREATE_AND_UPDATE',
-        async: false
-    }
-}
-
 export function useUpdateTei() {
     const { hide, show } = useShowAlerts()
     const [refetch, setRefetch] = useRecoilState<boolean>(TeiRefetch)
@@ -34,7 +23,6 @@ export function useUpdateTei() {
             setRefetch(!refetch)
         },
         onError: (error) => {
-            console.log("error", error)
             show({
                 message: `Could not save the transfer details: ${error.message}`,
                 type: { critical: true }

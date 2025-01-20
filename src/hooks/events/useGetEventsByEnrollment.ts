@@ -19,7 +19,7 @@ export function useGetEventsByEnrollment() {
             getEvent(program, stage, [], trackedEntity, "*")
                 .then(response => {
                     const event = response?.results?.instances?.find((instance: any) => instance.enrollment === enrollment);
-                    return  event ;
+                    return event;
                 })
                 .catch(() => {
                     return null;
